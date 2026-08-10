@@ -2,121 +2,98 @@
 @import "katex/dist/katex.min.css";
 
 :root {
-  --background: #0A0908;
-  --card: rgba(20, 18, 16, 0.70);
-  --surface: rgba(28, 25, 22, 0.80);
-  --warm-paper: #E8E0D2;
-  --foreground: #E8E0D2;
-  --secondary-text: #B8AF9F;
-  --muted-text: #8C8275;
+  --background: #000000;
+  --card: #000000;
+  --surface: #000000;
+  --foreground: #FFFFFF;
+  --secondary-text: #E0E0E0;
+  --muted-text: #A0A0A0;
   
-  --royal-bronze: #8C6B4A;
-  --royal-gold: #A68A64;
-  --gold-highlight: #C5A880;
-
-  --border-newspaper: rgba(232, 224, 210, 0.12);
-  --border-bronze: rgba(140, 107, 74, 0.30);
+  --border-print: #FFFFFF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-card: var(--card);
-  --color-surface: var(--surface);
-  --color-warm-paper: var(--warm-paper);
-  --color-foreground: var(--foreground);
-  --color-secondary-text: var(--secondary-text);
-  --color-muted-text: var(--muted-text);
-  
-  --color-bronze: var(--royal-bronze);
-  --color-gold: var(--royal-gold);
+  --color-background: #000000;
+  --color-card: #000000;
+  --color-surface: #000000;
+  --color-foreground: #FFFFFF;
+  --color-secondary-text: #E0E0E0;
+  --color-muted-text: #A0A0A0;
 
-  --font-serif: var(--font-serif-editorial), "Playfair Display", "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-sans-ui), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-mono-code), "JetBrains Mono", monospace;
+  --font-serif: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
+  --font-sans: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
+  --font-mono: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
 }
 
 * {
   box-sizing: border-box;
+  border-radius: 0px !important;
+  box-shadow: none !important;
 }
 
 html {
   color-scheme: dark;
-  background-color: #0A0908;
-  color: #E8E0D2;
+  background-color: #000000;
+  color: #FFFFFF;
   scroll-behavior: smooth;
-  font-size: 110%; /* 110% Baseline Scale Bump globally */
+  font-size: 15px;
+  font-family: var(--font-serif);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 body {
-  background-color: #0A0908;
-  color: #E8E0D2;
-  font-family: var(--font-sans);
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-serif);
   min-height: 100vh;
   overflow-x: hidden;
-  selection-background-color: rgba(140, 107, 74, 0.35);
+  selection-background-color: rgba(255, 255, 255, 0.3);
   font-size: 1rem;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, .serif-title {
+h1, h2, h3, h4, h5, h6, .serif-title, button, input, a, span, p, div {
   font-family: var(--font-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-p {
-  line-height: 1.6;
-  color: #E8E0D2;
 }
 
 ::selection {
-  background-color: rgba(140, 107, 74, 0.35);
-  color: #E8E0D2;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
 }
 
 /* Page Entry Fade Up Animation */
 @keyframes pageFadeUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 main {
-  animation: pageFadeUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageFadeUp 0.15s ease-out forwards;
 }
 
-/* Sharp Editorial Newspaper Card Utility */
-.newspaper-card {
-  background-color: rgba(20, 18, 16, 0.75);
-  border: 1px solid rgba(232, 224, 210, 0.12);
-  border-radius: 4px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.newspaper-card:hover {
-  border-color: rgba(140, 107, 74, 0.45);
+/* Classic Print Newspaper Card Utility */
+.print-newspaper-card {
+  background-color: #000000;
+  border: 1px solid #FFFFFF;
+  border-radius: 0px;
+  box-shadow: none;
 }
 
 /* KaTeX tweaks */
 .katex {
-  color: #E8E0D2 !important;
+  color: #FFFFFF !important;
   font-size: 1.1em;
+  font-family: var(--font-serif);
 }
 .katex-display {
   margin: 1.2em 0 !important;
   padding: 1rem;
-  background-color: rgba(28, 25, 22, 0.8);
-  border-radius: 4px;
-  border: 1px solid rgba(140, 107, 74, 0.25);
+  background-color: #000000;
+  border-radius: 0px;
+  border: 1px solid #FFFFFF;
   overflow-x: auto;
 }

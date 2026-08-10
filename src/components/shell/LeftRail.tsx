@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { 
   Compass, 
   FileText, 
@@ -32,38 +31,37 @@ export const LeftRail: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 font-sans text-sm antialiased">
-      {/* Clean Smooth Navigation Links (14px font-medium, no pixel font, no wide tracking) */}
-      <div className="pb-4 border-b border-[#E8E0D2]/10 space-y-2">
-        <h3 className="text-xs font-sans text-[#8C8275] uppercase tracking-wider mb-3 font-semibold px-2">
-          Navigation
+    <div className="space-y-6 font-serif text-sm">
+      {/* Newspaper Column Navigation */}
+      <div className="pb-4 border-b border-white space-y-2">
+        <h3 className="text-xs font-serif uppercase tracking-widest mb-3 font-bold px-1 text-white border-b border-white/30 pb-1">
+          NAVIGATION
         </h3>
         <nav className="space-y-1">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
             return (
-              <motion.div key={item.name} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-md font-sans text-sm font-medium transition-all ${
-                    isActive
-                      ? 'text-[#E8E0D2] bg-[#8C6B4A]/20 border-l-2 border-[#8C6B4A] pl-3.5 font-semibold'
-                      : 'text-[#B8AF9F] hover:text-[#E8E0D2] hover:bg-white/5'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#C5A880]' : 'text-[#8C8275]'}`} />
-                  <span>{item.name}</span>
-                </Link>
-              </motion.div>
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2 text-sm font-serif transition-colors ${
+                  isActive
+                    ? 'bg-white text-black font-bold'
+                    : 'text-white hover:bg-white/20'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{item.name}</span>
+              </Link>
             );
           })}
         </nav>
       </div>
 
-      {/* Editorial Quote */}
-      <div className="px-2">
-        <p className="text-xs font-serif italic text-[#8C8275] leading-relaxed">
+      {/* Editorial Motto */}
+      <div className="px-1">
+        <p className="text-xs font-serif italic text-white/80 leading-relaxed border-l border-white pl-2">
           "Review to Submit. Match to Collaborate. Publish Free."
         </p>
       </div>

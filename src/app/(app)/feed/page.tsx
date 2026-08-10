@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { ThumbsUp, MessageSquare, Bookmark } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
@@ -19,136 +18,117 @@ const FEED_COVER_IMAGES: Record<string, string> = {
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1600';
 
-export default function FeedStreamPage() {
+export default function ClassicPrintNewspaperFeedPage() {
   const { posts, toggleUpvotePost, toggleBookmarkPost } = useApp();
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 8 }} 
-      animate={{ opacity: 1, y: 0 }} 
-      transition={{ type: 'spring', stiffness: 280, damping: 24 }}
-      className="space-y-8 font-sans antialiased"
-    >
-      {/* PRESERVE SERIF HEADER */}
-      <div className="border-b border-[#E8E0D2]/10 pb-5 flex items-center justify-between">
+    <div className="space-y-8 font-serif antialiased bg-[#000000] text-[#FFFFFF]">
+      {/* Newspaper Header Banner */}
+      <div className="border-b-2 border-white pb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl sm:text-4xl serif-title font-bold text-[#E8E0D2] mb-1">
-            The Living Stream
+          <h1 className="text-3xl sm:text-5xl font-serif font-extrabold uppercase tracking-tight text-white mb-1">
+            THE LIVING STREAM
           </h1>
-          <p className="text-sm font-sans text-[#B8AF9F] leading-relaxed">
-            Open-source research, blogs, projects, and collaboration calls.
+          <p className="text-xs font-serif italic text-white/80 uppercase tracking-widest">
+            Open-Source Research • Dispatch & Review Journal • Est. 2026
           </p>
         </div>
 
-        <motion.div whileTap={{ scale: 0.95 }}>
-          <Link
-            href="/submit"
-            className="px-4 py-2 bg-[#8C6B4A] hover:bg-[#A68A64] text-[#0A0908] rounded-md font-sans text-xs font-semibold transition-all shadow-sm shrink-0 inline-block"
-          >
-            + Publish
-          </Link>
-        </motion.div>
+        <Link
+          href="/submit"
+          className="px-4 py-2 bg-white text-black font-serif text-xs font-bold uppercase transition-all border border-white hover:bg-black hover:text-white shrink-0"
+        >
+          + Publish
+        </Link>
       </div>
 
-      {/* Substack-Style Feed Cards */}
+      {/* Classic Print Newspaper Article Stream */}
       <div className="space-y-8">
         {posts.map(post => {
           const coverImg = (post.paperSlug && FEED_COVER_IMAGES[post.paperSlug]) || DEFAULT_COVER;
 
           return (
-            <motion.div 
+            <div 
               key={post.id}
-              whileHover={{ y: -2 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-              className="newspaper-card overflow-hidden group border border-[#E8E0D2]/10 hover:border-[#8C6B4A]/50 transition-colors"
+              className="border border-white p-6 bg-black space-y-4 shadow-none rounded-none"
             >
-              {/* TOP OF CARD: Edge-to-Edge Cover Image */}
-              <div className="relative w-full aspect-[16/9] overflow-hidden bg-[#0A0908]">
+              {/* Cover Image Banner (Sharp 1px border) */}
+              <div className="relative w-full h-56 sm:h-72 overflow-hidden border border-white bg-black">
                 <img 
                   src={coverImg} 
                   alt={post.title || post.authorName}
-                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 ease-out" 
+                  className="w-full h-full object-cover grayscale contrast-125" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0908]/90 via-transparent to-transparent" />
                 <div className="absolute top-3 left-3">
                   <DisciplineTag domain={post.authorDomain} size="sm" />
                 </div>
               </div>
 
-              {/* BOTTOM OF CARD: Smooth Content */}
-              <div className="p-5 sm:p-6 space-y-3.5">
-                {/* Author Info */}
-                <div className="flex items-center gap-2.5">
-                  <img 
-                    src={post.authorAvatar} 
-                    alt={post.authorName} 
-                    className="w-8 h-8 rounded-full object-cover border border-[#E8E0D2]/20" 
-                  />
-                  <div>
-                    <span className="text-sm font-semibold font-sans text-[#E8E0D2] block leading-tight">{post.authorName}</span>
-                    <span className="text-xs font-sans text-[#8C8275]">
-                      {formatDate(post.createdAt)} • {post.type.replace(/_/g, ' ')}
-                    </span>
-                  </div>
-                </div>
-
-                {/* PRESERVE ELEGANT SERIF TITLE */}
-                {post.title && (
-                  <h2 className="text-xl sm:text-2xl serif-title font-bold text-[#E8E0D2] group-hover:text-[#C5A880] transition-colors leading-snug">
-                    <Link href={post.paperSlug ? `/papers/${post.paperSlug}` : '/feed'}>
-                      {post.title}
-                    </Link>
-                  </h2>
-                )}
-
-                {/* Abstract Text */}
-                <p className="text-sm sm:text-base text-[#B8AF9F] font-serif leading-relaxed line-clamp-3">
-                  {post.content}
-                </p>
-
-                {/* Bottom Actions */}
-                <div className="flex items-center justify-between pt-3 border-t border-[#E8E0D2]/10 text-xs font-sans text-[#8C8275]">
-                  <div className="flex items-center gap-5">
-                    <motion.button
-                      whileTap={{ scale: 0.92 }}
-                      onClick={() => toggleUpvotePost(post.id)}
-                      className={`flex items-center gap-1.5 transition-colors ${post.isUpvoted ? 'text-[#C5A880] font-semibold' : 'hover:text-[#E8E0D2]'}`}
-                    >
-                      <ThumbsUp className="w-3.5 h-3.5" />
-                      <span>{post.upvotes}</span>
-                    </motion.button>
-
-                    <div className="flex items-center gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5" />
-                      <span>{post.commentsCount} Comments</span>
-                    </div>
-
-                    <motion.button
-                      whileTap={{ scale: 0.92 }}
-                      onClick={() => toggleBookmarkPost(post.id)}
-                      className={`flex items-center gap-1.5 transition-colors ${post.isBookmarked ? 'text-[#C5A880] font-semibold' : 'hover:text-[#E8E0D2]'}`}
-                    >
-                      <Bookmark className="w-3.5 h-3.5" />
-                      <span>Save</span>
-                    </motion.button>
-                  </div>
-
-                  {post.paperSlug && (
-                    <motion.div whileTap={{ scale: 0.95 }}>
-                      <Link
-                        href={`/papers/${post.paperSlug}`}
-                        className="px-3.5 py-1.5 bg-[#8C6B4A]/20 hover:bg-[#8C6B4A]/35 text-[#C5A880] font-semibold rounded-md text-xs font-sans transition-colors border border-[#8C6B4A]/40 inline-block"
-                      >
-                        Read Full →
-                      </Link>
-                    </motion.div>
-                  )}
+              {/* Author Metadata */}
+              <div className="flex items-center gap-3 border-b border-white/30 pb-2">
+                <img 
+                  src={post.authorAvatar} 
+                  alt={post.authorName} 
+                  className="w-7 h-7 object-cover border border-white" 
+                />
+                <div className="text-xs font-serif">
+                  <span className="font-bold text-white uppercase">{post.authorName}</span>
+                  <span className="text-white/70 italic font-serif"> • {formatDate(post.createdAt)} • {post.type.replace(/_/g, ' ')}</span>
                 </div>
               </div>
-            </motion.div>
+
+              {/* Article Serif Title */}
+              {post.title && (
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white leading-tight hover:underline">
+                  <Link href={post.paperSlug ? `/papers/${post.paperSlug}` : '/feed'}>
+                    {post.title}
+                  </Link>
+                </h2>
+              )}
+
+              {/* Print Justified Body Abstract */}
+              <p className="text-sm font-serif leading-relaxed text-white/90 text-justify line-clamp-3">
+                {post.content}
+              </p>
+
+              {/* Bottom Actions Bar */}
+              <div className="flex items-center justify-between pt-3 border-t border-white text-xs font-serif text-white">
+                <div className="flex items-center gap-6">
+                  <button
+                    onClick={() => toggleUpvotePost(post.id)}
+                    className={`flex items-center gap-1.5 uppercase font-bold hover:underline ${post.isUpvoted ? 'underline font-extrabold' : ''}`}
+                  >
+                    <ThumbsUp className="w-3.5 h-3.5" />
+                    <span>{post.upvotes} Upvotes</span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5 uppercase font-bold">
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>{post.commentsCount} Comments</span>
+                  </div>
+
+                  <button
+                    onClick={() => toggleBookmarkPost(post.id)}
+                    className={`flex items-center gap-1.5 uppercase font-bold hover:underline ${post.isBookmarked ? 'underline font-extrabold' : ''}`}
+                  >
+                    <Bookmark className="w-3.5 h-3.5" />
+                    <span>Save</span>
+                  </button>
+                </div>
+
+                {post.paperSlug && (
+                  <Link
+                    href={`/papers/${post.paperSlug}`}
+                    className="px-3 py-1 bg-white text-black font-serif text-xs font-bold uppercase border border-white hover:bg-black hover:text-white"
+                  >
+                    Read Full Article →
+                  </Link>
+                )}
+              </div>
+            </div>
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }

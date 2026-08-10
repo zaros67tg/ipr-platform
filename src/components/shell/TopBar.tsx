@@ -21,24 +21,24 @@ export const TopBar: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-[#0A0908]/90 backdrop-blur-md border-b border-[#E8E0D2]/10 px-4 sm:px-6 lg:px-10 flex items-center justify-between font-sans antialiased">
-        {/* RESPONSIVE SERIF BRAND LOGO */}
+      <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-[#000000] border-b border-white px-6 lg:px-10 flex items-center justify-between font-serif">
+        {/* BRAND TITLE */}
         <div className="flex items-center gap-4">
           <Link href="/" className="group flex items-center gap-3">
-            <h1 className="text-lg sm:text-2xl md:text-3xl serif-title font-bold tracking-tight text-[#E8E0D2] hover:text-[#C5A880] transition-colors truncate">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold tracking-tight text-white hover:underline transition-colors uppercase">
               INDEPENDENT PRESS OF REPUBLIC
             </h1>
           </Link>
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-sans">
+        <div className="flex items-center gap-3 font-serif">
           {/* Quick Submit CTA */}
           <Link
             href="/submit"
-            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#8C6B4A]/25 hover:bg-[#8C6B4A]/40 text-[#E8E0D2] border border-[#8C6B4A]/50 rounded-md text-xs font-sans font-semibold transition-all shadow-sm"
+            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 bg-white text-black font-serif text-xs font-bold transition-all border border-white hover:bg-black hover:text-white"
           >
-            <PlusCircle className="w-3.5 h-3.5 text-[#C5A880]" />
+            <PlusCircle className="w-3.5 h-3.5" />
             <span>Publish</span>
           </Link>
 
@@ -48,22 +48,22 @@ export const TopBar: React.FC = () => {
           {/* Search Trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="p-1.5 sm:p-2 rounded-md bg-[#141210] border border-[#E8E0D2]/10 hover:border-[#8C6B4A]/50 text-[#B8AF9F] hover:text-[#E8E0D2] transition-colors flex items-center gap-1.5 text-xs font-sans"
+            className="p-1.5 bg-black border border-white text-white hover:bg-white hover:text-black transition-colors flex items-center gap-2 text-xs font-serif"
             title="Global Search"
           >
-            <Search className="w-3.5 h-3.5 text-[#C5A880]" />
-            <span className="hidden lg:inline text-[#8C8275]">Search...</span>
+            <Search className="w-3.5 h-3.5" />
+            <span className="hidden lg:inline">Search...</span>
           </button>
 
           {/* Notifications Trigger */}
           <button
             onClick={() => setIsNotifOpen(true)}
-            className="relative p-1.5 sm:p-2 rounded-md bg-[#141210] border border-[#E8E0D2]/10 hover:border-[#8C6B4A]/50 text-[#B8AF9F] hover:text-[#E8E0D2] transition-colors"
+            className="relative p-1.5 bg-black border border-white text-white hover:bg-white hover:text-black transition-colors"
             title="Notifications"
           >
             <Bell className="w-3.5 h-3.5" />
             {unreadNotificationsCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#8C6B4A] text-[#0A0908] rounded-full text-[9px] font-bold font-sans flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-white text-black text-[9px] font-bold flex items-center justify-center">
                 {unreadNotificationsCount}
               </span>
             )}
@@ -73,21 +73,19 @@ export const TopBar: React.FC = () => {
           {session?.user ? (
             <Link
               href="/profile"
-              className="flex items-center gap-2 p-1 rounded-md bg-[#141210] border border-[#E8E0D2]/10 hover:border-[#8C6B4A]/50 transition-colors"
+              className="flex items-center gap-2 p-1 bg-black border border-white hover:bg-white hover:text-black transition-colors text-xs font-serif"
             >
               <img
                 src={activeAvatar}
                 alt={activeName}
-                className="w-7 h-7 rounded-full object-cover border border-[#8C6B4A]/60"
+                className="w-6 h-6 object-cover border border-white"
               />
-              <div className="hidden md:block text-left pr-1 text-xs font-sans">
-                <span className="font-semibold text-[#E8E0D2] block leading-none">{activeName}</span>
-              </div>
+              <span className="hidden md:inline font-semibold">{activeName}</span>
             </Link>
           ) : (
             <Link
               href="/auth"
-              className="px-3 py-1.5 bg-[#8C6B4A] hover:bg-[#A68A64] text-[#0A0908] rounded-md text-xs font-sans font-bold transition-all inline-flex items-center gap-1.5"
+              className="px-3 py-1 bg-white text-black font-serif text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-white hover:bg-black hover:text-white"
             >
               <User className="w-3.5 h-3.5" />
               <span>Sign In</span>

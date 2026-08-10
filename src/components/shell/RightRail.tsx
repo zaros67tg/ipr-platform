@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { Sparkles, ArrowUpRight, Users } from 'lucide-react';
 import { DisciplineTag } from '../common/DisciplineTag';
@@ -14,34 +13,34 @@ export const RightRail: React.FC = () => {
   const featuredResearchers = researchers.slice(1, 4);
 
   return (
-    <div className="space-y-6 font-sans text-sm antialiased">
+    <div className="space-y-6 font-serif text-sm">
       {/* ACTIVE MATCHES */}
       {topMatch && (
-        <div className="pb-5 border-b border-[#E8E0D2]/10 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5 font-semibold text-[#C5A880] text-xs uppercase tracking-wider">
-              <Sparkles className="w-4 h-4 text-[#C5A880]" /> Active Match
+        <div className="pb-5 border-b border-white space-y-3">
+          <div className="flex items-center justify-between border-b border-white/30 pb-1">
+            <span className="flex items-center gap-1.5 font-bold text-white uppercase text-xs">
+              <Sparkles className="w-3.5 h-3.5" /> ACTIVE MATCH
             </span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#8C6B4A]/20 text-[#C5A880] font-semibold border border-[#8C6B4A]/40">
-              {topMatch.compatibilityScore}% Match
+            <span className="text-xs px-2 py-0.5 border border-white bg-white text-black font-bold">
+              {topMatch.compatibilityScore}% MATCH
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <img src={topMatch.candidate.avatarUrl} alt={topMatch.candidate.name} className="w-9 h-9 rounded-full object-cover border border-[#8C6B4A]/50" />
+            <img src={topMatch.candidate.avatarUrl} alt={topMatch.candidate.name} className="w-8 h-8 object-cover border border-white" />
             <div>
-              <h4 className="text-sm font-semibold text-[#E8E0D2]">{topMatch.candidate.name}</h4>
-              <p className="text-xs text-[#B8AF9F]">{topMatch.candidate.primaryDomains[0]}</p>
+              <h4 className="text-sm font-bold text-white">{topMatch.candidate.name}</h4>
+              <p className="text-xs text-white/70">{topMatch.candidate.primaryDomains[0]}</p>
             </div>
           </div>
 
-          <p className="text-sm text-[#B8AF9F] line-clamp-2 leading-relaxed font-serif italic">
+          <p className="text-xs text-white/80 line-clamp-2 leading-relaxed italic border-l border-white/50 pl-2">
             "{topMatch.reason}"
           </p>
 
           <Link
             href="/match"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-[#C5A880] hover:underline"
+            className="inline-flex items-center gap-1 text-xs font-bold text-white hover:underline uppercase"
           >
             <span>View Pitch</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -50,22 +49,22 @@ export const RightRail: React.FC = () => {
       )}
 
       {/* LOOKING FOR COLLABORATORS */}
-      <div className="pb-5 border-b border-[#E8E0D2]/10 space-y-3">
-        <h3 className="text-xs font-sans text-[#8C8275] uppercase tracking-wider font-semibold">
-          Collaborators Needed
+      <div className="pb-5 border-b border-white space-y-3">
+        <h3 className="text-xs font-serif uppercase tracking-widest font-bold text-white border-b border-white/30 pb-1">
+          COLLABORATORS NEEDED
         </h3>
         <div className="space-y-3">
           {projects.slice(0, 2).map(proj => (
-            <div key={proj.id} className="space-y-1.5">
+            <div key={proj.id} className="space-y-1.5 p-2 border border-white/40">
               <div className="flex items-center justify-between">
                 <DisciplineTag domain={proj.domain} size="sm" />
-                <span className="text-xs text-[#C5A880] font-medium">Open</span>
+                <span className="text-xs text-white font-bold uppercase">Open</span>
               </div>
-              <h4 className="text-sm font-semibold text-[#E8E0D2]">{proj.title}</h4>
-              <p className="text-xs text-[#B8AF9F] line-clamp-1">Needs: {proj.openRoles.join(', ')}</p>
+              <h4 className="text-sm font-bold text-white">{proj.title}</h4>
+              <p className="text-xs text-white/70 line-clamp-1">Needs: {proj.openRoles.join(', ')}</p>
               <Link
                 href={`/projects/${proj.slug}`}
-                className="text-xs font-semibold text-[#C5A880] hover:underline inline-flex items-center gap-1 pt-0.5"
+                className="text-xs font-bold text-white hover:underline inline-flex items-center gap-1 uppercase"
               >
                 <span>Offer Collaboration</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -77,24 +76,24 @@ export const RightRail: React.FC = () => {
 
       {/* PEOPLE TO KNOW */}
       <div className="space-y-3">
-        <h3 className="text-xs font-sans text-[#8C8275] uppercase tracking-wider font-semibold flex items-center gap-1.5">
-          <Users className="w-3.5 h-3.5 text-[#C5A880]" /> People to Know
+        <h3 className="text-xs font-serif uppercase tracking-widest font-bold text-white border-b border-white/30 pb-1 flex items-center gap-1.5">
+          <Users className="w-3.5 h-3.5" /> PEOPLE TO KNOW
         </h3>
         <div className="space-y-2.5">
           {featuredResearchers.map(r => (
             <Link
               key={r.id}
               href={`/people/${r.id}`}
-              className="flex items-center justify-between group"
+              className="flex items-center justify-between group p-1.5 border border-transparent hover:border-white transition-colors"
             >
               <div className="flex items-center gap-2.5">
-                <img src={r.avatarUrl} alt={r.name} className="w-8 h-8 rounded-full object-cover border border-[#E8E0D2]/10" />
+                <img src={r.avatarUrl} alt={r.name} className="w-7 h-7 object-cover border border-white" />
                 <div>
-                  <h4 className="text-sm font-semibold text-[#E8E0D2] group-hover:text-[#C5A880] transition-colors">{r.name}</h4>
-                  <p className="text-xs text-[#8C8275] truncate max-w-[130px]">{r.primaryDomains[0]}</p>
+                  <h4 className="text-sm font-bold text-white group-hover:underline">{r.name}</h4>
+                  <p className="text-xs text-white/60 truncate max-w-[120px]">{r.primaryDomains[0]}</p>
                 </div>
               </div>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#8C8275] group-hover:text-[#C5A880] transition-colors" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
             </Link>
           ))}
         </div>

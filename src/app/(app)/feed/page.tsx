@@ -42,15 +42,15 @@ export default function FeedPage() {
   const { posts, toggleUpvotePost, toggleBookmarkPost } = useApp();
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
-      {/* ── Masthead ── */}
-      <div className="border-b border-foreground/10 pb-8 flex items-end justify-between">
+    <div className="bg-black min-h-screen w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
+      {/* ── Masthead — fixed top padding ── */}
+      <div className="border-b border-white/10 pb-8 flex items-end justify-between">
         <div>
-          <p className="font-ui text-[11px] uppercase tracking-[0.3em] opacity-40 mb-3">
+          <p className="font-ui text-[11px] uppercase tracking-[0.3em] text-white/30 mb-3">
             Volume I · Issue 1 · Open Edition
           </p>
           <h1
-            className="font-display text-foreground leading-none"
+            className="font-display text-white leading-none"
             style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 600, letterSpacing: '-0.04em' }}
           >
             The Living Stream
@@ -58,14 +58,14 @@ export default function FeedPage() {
         </div>
         <Link
           href="/submit"
-          className="hidden sm:inline-block font-ui text-[12px] border border-foreground/30 px-5 py-2.5 bg-foreground text-background font-bold hover:opacity-80 transition-opacity"
+          className="hidden sm:inline-block font-ui text-[12px] border border-white/30 px-5 py-2.5 text-white hover:bg-white hover:text-black transition-colors"
         >
           + Publish
         </Link>
       </div>
 
-      {/* ── Poster Grid — Full native color images untouched ── */}
-      <div className="poster-grid my-8">
+      {/* ── Poster Grid — full color, zoom on hover ── */}
+      <div className="poster-grid">
         {posts.map((post, i) => {
           const img = (post.paperSlug && COVER_IMAGES[post.paperSlug]) || DEFAULT_IMG;
           const span = SPANS[i % SPANS.length];
@@ -82,25 +82,25 @@ export default function FeedPage() {
               transition={{ duration: 0.45, delay: (i % 4) * 0.07 }}
             >
               <Link href={href} className="block h-full w-full relative">
-                {/* ── Full Color Image — untouched native photos ── */}
+                {/* ── Full Color Image — cinematic zoom on hover ── */}
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src={img}
                     alt={post.title || post.authorName}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
                   />
-                  {/* Dark readability gradient over photo for text */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:from-black/75 group-hover:via-black/25" />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:from-black/70 group-hover:via-black/20" />
                 </div>
 
                 {/* ── Domain pill ── */}
                 <div className="absolute top-5 left-5 z-10">
-                  <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-white/90 border border-white/30 bg-black/50 backdrop-blur-sm px-2.5 py-1">
+                  <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-white/70 border border-white/20 bg-black/40 px-2 py-1">
                     {post.authorDomain || 'Research'}
                   </span>
                 </div>
 
-                {/* ── Bottom content overlay — slides up on hover ── */}
+                {/* ── Bottom content — slides up on hover ── */}
                 <div className="absolute bottom-0 left-0 right-0 z-10 p-6 translate-y-1 group-hover:translate-y-0 transition-transform duration-500">
                   {post.title && (
                     <h2
@@ -117,25 +117,25 @@ export default function FeedPage() {
                       alt={post.authorName}
                       className="w-6 h-6 object-cover"
                     />
-                    <span className="font-ui text-[10px] uppercase tracking-[0.15em] text-white/70">
+                    <span className="font-ui text-[10px] uppercase tracking-[0.15em] text-white/60">
                       {post.authorName} · {formatDate(post.createdAt)}
                     </span>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-5 border-t border-white/20 pt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center gap-5 border-t border-white/10 pt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       onClick={e => { e.preventDefault(); toggleUpvotePost(post.id); }}
-                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest text-white transition-opacity ${post.isUpvoted ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest transition-opacity ${post.isUpvoted ? 'opacity-100' : 'opacity-50 hover:opacity-100'}`}
                     >
                       <ThumbsUp className="w-3 h-3" /> {post.upvotes}
                     </button>
-                    <span className="flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest text-white opacity-60">
+                    <span className="flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest opacity-50">
                       <MessageSquare className="w-3 h-3" /> {post.commentsCount}
                     </span>
                     <button
                       onClick={e => { e.preventDefault(); toggleBookmarkPost(post.id); }}
-                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest text-white transition-opacity ${post.isBookmarked ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest transition-opacity ${post.isBookmarked ? 'opacity-100' : 'opacity-50 hover:opacity-100'}`}
                     >
                       <Bookmark className="w-3 h-3" /> Save
                     </button>
@@ -147,9 +147,9 @@ export default function FeedPage() {
         })}
       </div>
 
-      <div className="border-t border-foreground/10 py-6 flex items-center justify-between">
-        <span className="font-ui text-[10px] uppercase tracking-[0.3em] opacity-40">Independent Press of Republic</span>
-        <Link href="/papers" className="font-ui text-[11px] opacity-60 hover:opacity-100 transition-opacity">
+      <div className="border-t border-white/10 py-6 flex items-center justify-between">
+        <span className="font-ui text-[10px] uppercase tracking-[0.3em] text-white/20">Independent Press of Republic</span>
+        <Link href="/papers" className="font-ui text-[11px] text-white/40 hover:text-white transition-colors">
           View All Papers →
         </Link>
       </div>

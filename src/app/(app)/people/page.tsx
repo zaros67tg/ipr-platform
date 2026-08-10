@@ -21,9 +21,9 @@ export default function PeopleDirectoryPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
       {/* Header */}
-      <div className="border-b border-white/10 px-6 lg:px-12 pt-10 pb-8">
+      <div className="border-b border-white/10 pt-4 pb-8">
         <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-4">
           Research Republic Registry
         </p>

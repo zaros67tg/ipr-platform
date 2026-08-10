@@ -28,9 +28,9 @@ const PILLARS = [
 
 export default function AboutPage() {
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="bg-black text-white min-h-screen w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
       {/* ── Hero Manifesto ── */}
-      <div className="border-b border-white/10 px-6 lg:px-16 xl:px-24 pt-16 pb-20">
+      <div className="border-b border-white/10 pt-4 pb-20">
         <motion.p
           className="font-ui text-[10px] uppercase tracking-[0.45em] text-white/25 mb-8"
           initial={{ opacity: 0, y: 12 }}
@@ -72,8 +72,8 @@ export default function AboutPage() {
       </div>
 
       {/* ── Four Pillars ── */}
-      <div className="border-b border-white/10">
-        <div className="px-6 lg:px-16 xl:px-24 py-16">
+      <div className="border-b border-white/10 py-16">
+        <div>
           <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-white/25 mb-10">
             The Four Pillars
           </p>
@@ -111,7 +111,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── Stats Row ── */}
-      <div className="px-6 lg:px-16 xl:px-24 py-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/8 border-b border-white/10">
+      <div className="py-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/8 border-b border-white/10">
         {[
           { value: 'Open', label: 'Always Free' },
           { value: '∞', label: 'No Paywalls' },
@@ -133,7 +133,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="px-6 lg:px-16 xl:px-24 py-20 flex flex-col items-center text-center gap-8">
+      <div className="py-20 flex flex-col items-center text-center gap-8">
         <h3
           className="font-display text-white leading-none"
           style={{ fontSize: 'clamp(2rem, 5vw, 5rem)', fontWeight: 600, letterSpacing: '-0.04em' }}

@@ -10,9 +10,9 @@ export default function ProjectsDirectoryPage() {
   const { projects } = useApp();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
       {/* Header */}
-      <div className="border-b border-white/10 px-6 lg:px-12 pt-10 pb-8">
+      <div className="border-b border-white/10 pt-4 pb-8">
         <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-3">
           Collaborative Research Hubs
         </p>
@@ -37,7 +37,7 @@ export default function ProjectsDirectoryPage() {
       </div>
 
       {/* Projects grid */}
-      <div className="px-6 lg:px-12 py-8">
+      <div className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/8">
           {projects.map(proj => (
             <div key={proj.id} className="bg-black p-8 group flex flex-col justify-between gap-6 min-h-[320px]">

@@ -17,9 +17,9 @@ export default function PapersListPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
       {/* Header */}
-      <div className="border-b border-white/10 px-6 lg:px-12 pt-10 pb-8">
+      <div className="border-b border-white/10 pt-4 pb-8">
         <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-3">
           Publications Archive
         </p>
@@ -45,7 +45,7 @@ export default function PapersListPage() {
       </div>
 
       {/* Papers — editorial list with aligned left edge */}
-      <div className="px-6 lg:px-12 py-8">
+      <div className="py-8">
         <div className="space-y-0">
           {filteredPapers.map((paper, i) => (
             <div

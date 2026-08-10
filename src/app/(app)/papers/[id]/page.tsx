@@ -56,9 +56,9 @@ export default function EditorialPaperReaderPage() {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="bg-black text-white min-h-screen w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-6 pb-20">
       {/* ── Breadcrumb bar ── */}
-      <div className="border-b border-white/8 px-6 lg:px-12 py-4 flex items-center justify-between">
+      <div className="border-b border-white/8 py-4 flex items-center justify-between">
         <Link
           href="/papers"
           className="font-ui text-[11px] text-white/40 hover:text-white transition-colors flex items-center gap-2"

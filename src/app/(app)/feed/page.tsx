@@ -2,132 +2,162 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { ThumbsUp, MessageSquare, Bookmark } from 'lucide-react';
-import { DisciplineTag } from '@/components/common/DisciplineTag';
 import { formatDate } from '@/lib/utils/format';
 
-const FEED_COVER_IMAGES: Record<string, string> = {
-  'temporal-stability-sparse-spiking-architectures': 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1600',
-  'topological-invariants-quantum-gravity': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1600',
-  'formal-constraints-emergent-computation': 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=1600',
-  'geometric-methods-distributed-robotic-navigation': 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1600',
-  'lattice-crypto-microarchitectural-isolation': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1600',
-  'sparse-graph-neural-networks-protein-folding': 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1600'
+const COVER_IMAGES: Record<string, string> = {
+  'temporal-stability-sparse-spiking-architectures':
+    'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1600',
+  'topological-invariants-quantum-gravity':
+    'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1600',
+  'formal-constraints-emergent-computation':
+    'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=1600',
+  'geometric-methods-distributed-robotic-navigation':
+    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1600',
+  'lattice-crypto-microarchitectural-isolation':
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1600',
+  'sparse-graph-neural-networks-protein-folding':
+    'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1600',
 };
+const DEFAULT_IMG =
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1600';
 
-const DEFAULT_COVER = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1600';
+// Asymmetric spanning patterns — 12-col grid chaos
+const SPANS = [
+  'col-span-12 sm:col-span-8',
+  'col-span-12 sm:col-span-4',
+  'col-span-12 sm:col-span-4',
+  'col-span-12 sm:col-span-8',
+  'col-span-12 sm:col-span-6',
+  'col-span-12 sm:col-span-6',
+  'col-span-12',
+  'col-span-12 sm:col-span-5',
+  'col-span-12 sm:col-span-7',
+];
 
-export default function ClassicPrintNewspaperFeedPage() {
+const MIN_HEIGHTS = ['min-h-[520px]', 'min-h-[400px]', 'min-h-[500px]', 'min-h-[460px]', 'min-h-[600px]'];
+
+export default function OrganizedChaosFeedPage() {
   const { posts, toggleUpvotePost, toggleBookmarkPost } = useApp();
 
   return (
-    <div className="space-y-8 font-serif antialiased bg-[#000000] text-[#FFFFFF]">
-      {/* Newspaper Header Banner */}
-      <div className="border-b-2 border-white pb-4 flex items-center justify-between">
+    <div className="bg-black min-h-screen">
+      {/* ── Masthead ── */}
+      <div className="border-b border-white/10 px-6 lg:px-12 py-8 flex items-end justify-between">
         <div>
-          <h1 className="text-3xl sm:text-5xl font-serif font-extrabold uppercase tracking-tight text-white mb-1">
-            THE LIVING STREAM
-          </h1>
-          <p className="text-xs font-serif italic text-white/80 uppercase tracking-widest">
-            Open-Source Research • Dispatch & Review Journal • Est. 2026
+          <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/30 mb-2">
+            Volume I · Issue 1 · Open Edition
           </p>
+          <h1
+            className="font-display text-white leading-none"
+            style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', fontWeight: 700, letterSpacing: '-0.04em' }}
+          >
+            The Living Stream
+          </h1>
         </div>
-
         <Link
           href="/submit"
-          className="px-4 py-2 bg-white text-black font-serif text-xs font-bold uppercase transition-all border border-white hover:bg-black hover:text-white shrink-0"
+          className="hidden sm:inline-block font-ui text-[11px] uppercase tracking-[0.2em] border border-white px-5 py-2.5 text-white hover:bg-white hover:text-black transition-colors"
         >
           + Publish
         </Link>
       </div>
 
-      {/* Classic Print Newspaper Article Stream */}
-      <div className="space-y-8">
-        {posts.map(post => {
-          const coverImg = (post.paperSlug && FEED_COVER_IMAGES[post.paperSlug]) || DEFAULT_COVER;
+      {/* ── Organized Chaos Poster Grid ── */}
+      <div className="poster-grid">
+        {posts.map((post, i) => {
+          const img = (post.paperSlug && COVER_IMAGES[post.paperSlug]) || DEFAULT_IMG;
+          const span = SPANS[i % SPANS.length];
+          const minH = MIN_HEIGHTS[i % MIN_HEIGHTS.length];
+          const href = post.paperSlug ? `/papers/${post.paperSlug}` : '/feed';
 
           return (
-            <div 
+            <motion.article
               key={post.id}
-              className="border border-white p-6 bg-black space-y-4 shadow-none rounded-none"
+              className={`${span} ${minH} relative overflow-hidden group`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
             >
-              {/* Cover Image Banner (Sharp 1px border) */}
-              <div className="relative w-full h-56 sm:h-72 overflow-hidden border border-white bg-black">
-                <img 
-                  src={coverImg} 
-                  alt={post.title || post.authorName}
-                  className="w-full h-full object-cover grayscale contrast-125" 
-                />
-                <div className="absolute top-3 left-3">
-                  <DisciplineTag domain={post.authorDomain} size="sm" />
+              <Link href={href} className="block h-full w-full relative">
+                {/* ── Image (grayscale → color on hover) ── */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={img}
+                    alt={post.title || post.authorName}
+                    className="w-full h-full object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
+                  />
+                  {/* Dark overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
                 </div>
-              </div>
 
-              {/* Author Metadata */}
-              <div className="flex items-center gap-3 border-b border-white/30 pb-2">
-                <img 
-                  src={post.authorAvatar} 
-                  alt={post.authorName} 
-                  className="w-7 h-7 object-cover border border-white" 
-                />
-                <div className="text-xs font-serif">
-                  <span className="font-bold text-white uppercase">{post.authorName}</span>
-                  <span className="text-white/70 italic font-serif"> • {formatDate(post.createdAt)} • {post.type.replace(/_/g, ' ')}</span>
+                {/* ── Domain tag top-left ── */}
+                <div className="absolute top-5 left-5 z-10">
+                  <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-white/60 border border-white/20 px-2 py-1">
+                    {post.authorDomain || 'Research'}
+                  </span>
                 </div>
-              </div>
 
-              {/* Article Serif Title */}
-              {post.title && (
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white leading-tight hover:underline">
-                  <Link href={post.paperSlug ? `/papers/${post.paperSlug}` : '/feed'}>
-                    {post.title}
-                  </Link>
-                </h2>
-              )}
+                {/* ── Bottom content ── */}
+                <div className="absolute bottom-0 left-0 right-0 z-10 p-6">
+                  {post.title && (
+                    <h2
+                      className="font-display text-white leading-none mb-3 group-hover:opacity-90 transition-opacity"
+                      style={{ fontSize: 'clamp(1.4rem, 3.5vw, 3.2rem)', fontWeight: 700, letterSpacing: '-0.03em' }}
+                    >
+                      {post.title}
+                    </h2>
+                  )}
 
-              {/* Print Justified Body Abstract */}
-              <p className="text-sm font-serif leading-relaxed text-white/90 text-justify line-clamp-3">
-                {post.content}
-              </p>
-
-              {/* Bottom Actions Bar */}
-              <div className="flex items-center justify-between pt-3 border-t border-white text-xs font-serif text-white">
-                <div className="flex items-center gap-6">
-                  <button
-                    onClick={() => toggleUpvotePost(post.id)}
-                    className={`flex items-center gap-1.5 uppercase font-bold hover:underline ${post.isUpvoted ? 'underline font-extrabold' : ''}`}
-                  >
-                    <ThumbsUp className="w-3.5 h-3.5" />
-                    <span>{post.upvotes} Upvotes</span>
-                  </button>
-
-                  <div className="flex items-center gap-1.5 uppercase font-bold">
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    <span>{post.commentsCount} Comments</span>
+                  {/* Author + date */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <img
+                      src={post.authorAvatar}
+                      alt={post.authorName}
+                      className="w-6 h-6 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    />
+                    <span className="font-ui text-[10px] uppercase tracking-[0.2em] text-white/60">
+                      {post.authorName} · {formatDate(post.createdAt)}
+                    </span>
                   </div>
 
-                  <button
-                    onClick={() => toggleBookmarkPost(post.id)}
-                    className={`flex items-center gap-1.5 uppercase font-bold hover:underline ${post.isBookmarked ? 'underline font-extrabold' : ''}`}
-                  >
-                    <Bookmark className="w-3.5 h-3.5" />
-                    <span>Save</span>
-                  </button>
+                  {/* Actions */}
+                  <div className="flex items-center gap-5 border-t border-white/10 pt-3">
+                    <button
+                      onClick={e => { e.preventDefault(); toggleUpvotePost(post.id); }}
+                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest transition-opacity ${post.isUpvoted ? 'opacity-100' : 'opacity-40 hover:opacity-80'}`}
+                    >
+                      <ThumbsUp className="w-3 h-3" />
+                      {post.upvotes}
+                    </button>
+                    <span className="flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest opacity-40">
+                      <MessageSquare className="w-3 h-3" />
+                      {post.commentsCount}
+                    </span>
+                    <button
+                      onClick={e => { e.preventDefault(); toggleBookmarkPost(post.id); }}
+                      className={`flex items-center gap-1.5 font-ui text-[10px] uppercase tracking-widest transition-opacity ${post.isBookmarked ? 'opacity-100' : 'opacity-40 hover:opacity-80'}`}
+                    >
+                      <Bookmark className="w-3 h-3" />
+                      Save
+                    </button>
+                  </div>
                 </div>
-
-                {post.paperSlug && (
-                  <Link
-                    href={`/papers/${post.paperSlug}`}
-                    className="px-3 py-1 bg-white text-black font-serif text-xs font-bold uppercase border border-white hover:bg-black hover:text-white"
-                  >
-                    Read Full Article →
-                  </Link>
-                )}
-              </div>
-            </div>
+              </Link>
+            </motion.article>
           );
         })}
+      </div>
+
+      {/* ── Footer rule ── */}
+      <div className="border-t border-white/10 px-6 lg:px-12 py-6 flex items-center justify-between">
+        <span className="font-ui text-[10px] uppercase tracking-[0.3em] text-white/20">Independent Press of Republic</span>
+        <Link href="/papers" className="font-ui text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors">
+          View All Papers →
+        </Link>
       </div>
     </div>
   );

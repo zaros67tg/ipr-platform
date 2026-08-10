@@ -1,30 +1,27 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import { EB_Garamond, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/lib/services/store";
+import { LenisProvider } from "@/components/shell/LenisProvider";
 
-const playfair = Playfair_Display({
-  variable: "--font-serif-editorial",
+const ebGaramond = EB_Garamond({
+  variable: "--font-eb-garamond",
   subsets: ["latin"],
-  display: "swap"
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const inter = Inter({
-  variable: "--font-sans-ui",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  display: "swap"
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono-code",
-  subsets: ["latin"],
-  display: "swap"
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Independent Press of Republic (IPR) — Open Research Network",
-  description: "A research-native social network and publishing ecosystem combining academic publishing, open peer review, researcher dossiers, and co-author matchmaking.",
-  keywords: ["Research", "Academic Publishing", "Peer Review", "Matchmaking", "Open Science", "IPR"]
+  title: "Independent Press of Republic — Open Research Network",
+  description: "A research-native editorial platform combining open publishing, peer review, researcher matchmaking, and intellectual discourse.",
+  keywords: ["Research", "Academic Publishing", "Peer Review", "Matchmaking", "Open Science", "IPR"],
 };
 
 export default function RootLayout({
@@ -35,11 +32,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased dark`}
+      className={`${ebGaramond.variable} ${spaceGrotesk.variable} h-full`}
     >
-      <body className="min-h-full bg-[#0D0C0B] text-[#F4F0E8] font-sans selection:bg-[#C85A32]/30">
+      <body className="min-h-full bg-black text-white font-ui selection:bg-white selection:text-black">
         <AppProvider>
-          {children}
+          <LenisProvider>
+            {children}
+          </LenisProvider>
         </AppProvider>
       </body>
     </html>

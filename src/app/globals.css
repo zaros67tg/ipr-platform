@@ -1,99 +1,114 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
+/* ───────────────────────────────────────────────
+   STRIPE PRESS / BRUTALIST EDITORIAL FOUNDATION
+   Two Colors Only: #000000 + #FFFFFF
+──────────────────────────────────────────────── */
+
 :root {
-  --background: #000000;
-  --card: #000000;
-  --surface: #000000;
-  --foreground: #FFFFFF;
-  --secondary-text: #E0E0E0;
-  --muted-text: #A0A0A0;
-  
-  --border-print: #FFFFFF;
-}
-
-@theme inline {
-  --color-background: #000000;
-  --color-card: #000000;
-  --color-surface: #000000;
-  --color-foreground: #FFFFFF;
-  --color-secondary-text: #E0E0E0;
-  --color-muted-text: #A0A0A0;
-
-  --font-serif: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
-  --font-sans: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
-  --font-mono: "Playfair Display", "Cormorant Garamond", "Times New Roman", Times, serif;
+  --black: #000000;
+  --white: #FFFFFF;
+  --font-display: var(--font-eb-garamond, "EB Garamond", "Playfair Display", Georgia, serif);
+  --font-ui: var(--font-space-grotesk, "Space Grotesk", "JetBrains Mono", monospace);
 }
 
 * {
   box-sizing: border-box;
-  border-radius: 0px !important;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  outline: none;
 }
 
 html {
-  color-scheme: dark;
-  background-color: #000000;
-  color: #FFFFFF;
-  scroll-behavior: smooth;
-  font-size: 15px;
-  font-family: var(--font-serif);
+  background: #000;
+  color: #fff;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
 body {
-  background-color: #000000;
-  color: #FFFFFF;
-  font-family: var(--font-serif);
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-ui);
   min-height: 100vh;
   overflow-x: hidden;
-  selection-background-color: rgba(255, 255, 255, 0.3);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-h1, h2, h3, h4, h5, h6, .serif-title, button, input, a, span, p, div {
-  font-family: var(--font-serif);
+  cursor: none; /* Custom cursor on gate page */
 }
 
 ::selection {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #FFFFFF;
+  background: #ffffff;
+  color: #000000;
 }
 
-/* Page Entry Fade Up Animation */
-@keyframes pageFadeUp {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* ── Custom cursor ── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+  will-change: transform;
+}
+.cursor-dot.expanded {
+  width: 60px;
+  height: 60px;
 }
 
-main {
-  animation: pageFadeUp 0.15s ease-out forwards;
-}
-
-/* Classic Print Newspaper Card Utility */
-.print-newspaper-card {
-  background-color: #000000;
-  border: 1px solid #FFFFFF;
-  border-radius: 0px;
-  box-shadow: none;
-}
-
-/* KaTeX tweaks */
+/* ── KaTeX  ── */
 .katex {
-  color: #FFFFFF !important;
+  color: #fff !important;
   font-size: 1.1em;
-  font-family: var(--font-serif);
 }
 .katex-display {
   margin: 1.2em 0 !important;
   padding: 1rem;
-  background-color: #000000;
-  border-radius: 0px;
-  border: 1px solid #FFFFFF;
-  overflow-x: auto;
+  border: 1px solid #fff;
+}
+
+/* ── Global link reset ── */
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Scrollbar hide ── */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ── Utility ── */
+.font-display { font-family: var(--font-display); }
+.font-ui      { font-family: var(--font-ui); }
+
+/* ── Feed poster grid ── */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  background: #fff; /* gap becomes 1px white lines */
+}
+.poster-grid > * {
+  background: #000;
+}
+
+/* ── Invert hover for buttons ── */
+.btn-invert {
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-invert:hover,
+.btn-invert.active {
+  background: #fff;
+  color: #000;
 }

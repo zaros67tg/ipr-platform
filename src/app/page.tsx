@@ -1,43 +1,134 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 
-export default function ClassicPrintNewspaperSplashPage() {
+const WORDS = ['INDEPENDENT', 'PRESS', 'OF', 'REPUBLIC'];
+
+export default function KineticGatePage() {
+  const router = useRouter();
+  const [phase, setPhase] = useState<'entering' | 'ready' | 'shattering'>('entering');
+  const [hovering, setHovering] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Magnetic custom cursor
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 40 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 40 });
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener('mousemove', move);
+
+    // After words animate in, set ready
+    const timer = setTimeout(() => setPhase('ready'), WORDS.length * 180 + 600);
+    return () => {
+      window.removeEventListener('mousemove', move);
+      clearTimeout(timer);
+    };
+  }, [mouseX, mouseY]);
+
+  const handleClick = () => {
+    if (phase !== 'ready') return;
+    setPhase('shattering');
+    setTimeout(() => router.push('/feed'), 900);
+  };
+
   return (
-    <div className="h-screen w-screen bg-[#000000] text-[#FFFFFF] font-serif flex items-center justify-center selection:bg-white selection:text-black p-6">
-      {/* Newspaper Border Box */}
-      <main className="max-w-4xl mx-auto border-2 border-white p-8 sm:p-12 text-center space-y-8 bg-black">
-        <div className="space-y-6 border-b border-white pb-8">
-          <span className="text-xs font-serif uppercase tracking-widest text-white/80 block">
-            THE OFFICIAL DISPATCH JOURNAL • EST. 2026
-          </span>
+    <div
+      ref={containerRef}
+      onClick={handleClick}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      className="relative h-screen w-screen bg-black overflow-hidden select-none"
+      style={{ cursor: 'none' }}
+    >
+      {/* ── Magnetic Cursor ── */}
+      <motion.div
+        className="cursor-dot pointer-events-none fixed z-[99999]"
+        style={{ x: springX, y: springY }}
+        animate={{ width: hovering ? 56 : 20, height: hovering ? 56 : 20 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      />
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-extrabold text-white tracking-tight uppercase leading-none">
-            INDEPENDENT PRESS <br /> OF REPUBLIC
-          </h1>
+      {/* ── Monochrome background texture lines ── */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 40px)',
+        }}
+      />
 
-          <p className="text-sm sm:text-base font-serif text-white uppercase tracking-widest font-bold">
-            Publish Free. Find Collaborators. Build Together.
-          </p>
-
-          <p className="text-xs sm:text-sm font-serif italic text-white/80 max-w-md mx-auto">
-            "The Open Science & Creative Research Network"
-          </p>
-        </div>
-
-        {/* Entry Gate Button */}
-        <div className="pt-4 flex justify-center">
-          <Link
-            href="/feed"
-            className="px-8 py-3 bg-white text-black font-serif text-sm font-bold uppercase tracking-wider border border-white hover:bg-black hover:text-white transition-colors inline-flex items-center gap-3"
+      {/* ── Word-by-word cinematic title ── */}
+      <AnimatePresence>
+        {phase !== 'shattering' && (
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-2 sm:gap-4 px-6"
+            exit={{
+              y: '-100%',
+              transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+            }}
           >
-            <span>Enter The Republic</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </main>
+            <div className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-1 sm:gap-y-3">
+              {WORDS.map((word, i) => (
+                <motion.span
+                  key={word}
+                  className="font-display block leading-none text-white"
+                  style={{
+                    fontSize: 'clamp(3.5rem, 12vw, 11rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.04em',
+                    lineHeight: 0.9,
+                  }}
+                  initial={{ opacity: 0, y: 60 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: i * 0.18,
+                    duration: 0.7,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </div>
+
+            {/* Subtitle + CTA hint */}
+            <motion.div
+              className="mt-12 flex flex-col items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase === 'ready' ? 1 : 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <p className="font-ui text-xs uppercase tracking-[0.3em] text-white/50">
+                Open Research · Peer Review · Co-Author Matchmaking
+              </p>
+              <motion.div
+                className="mt-4 px-8 py-3 border border-white font-ui text-xs uppercase tracking-[0.25em] text-white"
+                animate={phase === 'ready' ? {
+                  opacity: [0.6, 1, 0.6],
+                } : { opacity: 0 }}
+                transition={{ repeat: Infinity, duration: 2.2 }}
+              >
+                CLICK ANYWHERE TO ENTER
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Subtle corner label ── */}
+      <div className="absolute bottom-8 left-8 font-ui text-[10px] uppercase tracking-[0.3em] text-white/20">
+        IPR — Est. 2026
+      </div>
+      <div className="absolute bottom-8 right-8 font-ui text-[10px] uppercase tracking-[0.3em] text-white/20">
+        Open Edition I
+      </div>
     </div>
   );
 }

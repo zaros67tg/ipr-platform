@@ -84,6 +84,8 @@ interface AppContextType {
   markNotificationRead: (id: string) => void;
   markAllNotificationsRead: () => void;
   
+  updateUserProfile: (updates: { name?: string; institution?: string; researchStatement?: string }) => void;
+
   // Helper derived stats
   unreadNotificationsCount: number;
   availableCredits: number;
@@ -568,6 +570,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         createProject,
         markNotificationRead,
         markAllNotificationsRead,
+        updateUserProfile: (updates: { name?: string; institution?: string; researchStatement?: string }) => {
+          setCurrentUser(prev => ({
+            ...prev,
+            name: updates.name || prev.name,
+            institution: updates.institution !== undefined ? updates.institution : prev.institution,
+            researchStatement: updates.researchStatement !== undefined ? updates.researchStatement : prev.researchStatement,
+          }));
+          setResearchers(prev => prev.map(r => r.id === currentUser.id ? {
+            ...r,
+            name: updates.name || r.name,
+            institution: updates.institution !== undefined ? updates.institution : r.institution,
+            researchStatement: updates.researchStatement !== undefined ? updates.researchStatement : r.researchStatement,
+          } : r));
+        },
         unreadNotificationsCount,
         availableCredits
       }}

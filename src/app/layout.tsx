@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppProvider } from "@/lib/services/store";
 import { LenisProvider } from "@/components/shell/LenisProvider";
 import { GlobalCursor } from "@/components/shell/GlobalCursor";
+import { ThemeProvider } from "@/components/shell/ThemeProvider";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-display",
@@ -33,15 +34,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${cormorant.variable} ${inter.variable} h-full`}
     >
-      <body className="min-h-full bg-black text-white cursor-none selection:bg-white selection:text-black">
-        <AppProvider>
-          <LenisProvider>
-            <GlobalCursor />
-            {children}
-          </LenisProvider>
-        </AppProvider>
+      <body className="min-h-full cursor-none selection:bg-current selection:text-background">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <AppProvider>
+            <LenisProvider>
+              <GlobalCursor />
+              {children}
+            </LenisProvider>
+          </AppProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -7,20 +7,21 @@ export default function AppGroupLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen flex flex-col transition-colors duration-200">
       <TopNav />
-      <main className="flex-1">
+      {/* ── Main layout wrapper — CIRCUIT 1: FORCE THE SPREAD ── */}
+      <main className="flex-1 w-full max-w-screen-2xl mx-auto px-4 md:px-12 pt-24 pb-20">
         {children}
       </main>
       {/* Legal Footer */}
-      <footer className="border-t border-white/10 px-6 md:px-12 lg:px-24 py-6 flex flex-wrap items-center justify-between gap-4">
-        <span className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25">
+      <footer className="border-t border-current/10 px-4 md:px-12 py-6 flex flex-wrap items-center justify-between gap-4 w-full max-w-screen-2xl mx-auto">
+        <span className="font-ui text-[10px] uppercase tracking-[0.25em] opacity-40">
           © 2026 Independent Press of Republic
         </span>
         <div className="flex items-center gap-6">
-          <a href="/terms" className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25 hover:text-white transition-colors">Terms &amp; Conditions</a>
-          <a href="/privacy" className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25 hover:text-white transition-colors">Privacy Policy</a>
-          <a href="/license" className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25 hover:text-white transition-colors">MIT License</a>
+          <a href="/terms" className="font-ui text-[10px] uppercase tracking-[0.25em] opacity-40 hover:opacity-100 transition-opacity">Terms &amp; Conditions</a>
+          <a href="/privacy" className="font-ui text-[10px] uppercase tracking-[0.25em] opacity-40 hover:opacity-100 transition-opacity">Privacy Policy</a>
+          <a href="/license" className="font-ui text-[10px] uppercase tracking-[0.25em] opacity-40 hover:opacity-100 transition-opacity">MIT License</a>
         </div>
       </footer>
     </div>

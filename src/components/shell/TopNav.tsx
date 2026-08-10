@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { authClient } from '@/lib/auth-client';
 import { SearchModal } from '../common/SearchModal';
 import { NotificationsDrawer } from './NotificationsDrawer';
+import { ThemeToggle } from './ThemeToggle';
 import { ChevronDown } from 'lucide-react';
 
 const NAV_LINKS = [
@@ -44,24 +45,24 @@ export function TopNav() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-black border-b border-white/10 flex items-center justify-between px-6 lg:px-12">
-        {/* Logo — links to /about, with placeholder slot for graphical logo */}
+      {/* ── Fixed Top Navigation Bar — CIRCUIT 1 ── */}
+      <header className="fixed top-0 left-0 w-full z-50 h-16 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-black/10 dark:border-white/10 flex items-center justify-between px-4 md:px-12 transition-colors duration-200">
+        {/* Logo — links to /about */}
         <Link
           href="/about"
-          className="flex items-center gap-2.5 hover:opacity-70 transition-opacity"
+          className="flex items-center gap-2.5 hover:opacity-75 transition-opacity"
         >
-          {/* Placeholder image slot — replace src with real logo when ready */}
           <img src="/logo-placeholder.png" alt="" className="w-8 h-8 hidden" />
           <span
-            className="font-display text-white font-bold leading-none"
+            className="font-display font-bold leading-none select-none"
             style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', letterSpacing: '-0.04em' }}
           >
             IPR
           </span>
         </Link>
 
-        {/* Center Nav — generous spacing */}
-        <nav className="hidden md:flex items-center gap-10">
+        {/* Center Nav Links */}
+        <nav className="hidden md:flex items-center gap-8 lg:gap-10">
           {NAV_LINKS.map(link => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
             return (
@@ -75,7 +76,7 @@ export function TopNav() {
                 {isActive && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute -bottom-[1px] left-0 right-0 h-px bg-white"
+                    className="absolute -bottom-[1px] left-0 right-0 h-px bg-current"
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                   />
                 )}
@@ -85,19 +86,21 @@ export function TopNav() {
         </nav>
 
         {/* Right controls */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 sm:gap-6">
           <Link
             href="/submit"
-            className="hidden sm:inline-block font-ui text-[12px] border border-white/30 px-4 py-2 hover:bg-white hover:text-black transition-colors"
+            className="hidden sm:inline-block font-ui text-[12px] border border-current px-4 py-1.5 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
             Publish
           </Link>
+
           <button
             onClick={() => setSearchOpen(true)}
             className="font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity"
           >
             Search
           </button>
+
           <button
             onClick={() => setNotifOpen(true)}
             className="font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity"
@@ -105,7 +108,10 @@ export function TopNav() {
             Alerts
           </button>
 
-          {/* Profile dropdown */}
+          {/* Stark Brutalist Light/Dark Theme Switcher — CIRCUIT 3 */}
+          <ThemeToggle />
+
+          {/* Profile Dropdown */}
           <div ref={profileRef} className="relative">
             <button
               onClick={() => setProfileOpen(o => !o)}
@@ -122,33 +128,26 @@ export function TopNav() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-3 w-40 bg-black border border-white/10 z-50 py-1"
+                  className="absolute right-0 top-full mt-3 w-44 bg-white dark:bg-black border border-black/10 dark:border-white/10 z-50 py-1"
                 >
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                   >
                     Profile
                   </Link>
                   <Link
                     href="/settings"
                     onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                   >
-                    Settings
+                    Settings &amp; Preferences
                   </Link>
-                  <Link
-                    href="/settings"
-                    onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-                  >
-                    Preferences
-                  </Link>
-                  <div className="border-t border-white/10 mt-1 pt-1">
+                  <div className="border-t border-black/10 dark:border-white/10 mt-1 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left font-ui text-[12px] px-4 py-2.5 text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+                      className="w-full text-left font-ui text-[12px] px-4 py-2.5 opacity-40 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                     >
                       Log Out
                     </button>

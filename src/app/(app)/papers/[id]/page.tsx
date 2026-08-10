@@ -111,7 +111,13 @@ export default function EditorialPaperReaderPage() {
             <div className="flex flex-wrap gap-6 border-y border-white/10 py-5 mb-6">
               {paper.authors.map(a => (
                 <div key={a.id} className="flex items-center gap-3">
-                  <img src={a.avatarUrl || ''} alt="" className="w-8 h-8 object-cover grayscale" />
+                  {a.avatarUrl ? (
+                    <img src={a.avatarUrl} alt={a.name} className="w-8 h-8 object-cover grayscale" />
+                  ) : (
+                    <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-ui text-[10px] font-bold uppercase">
+                      {a.name ? a.name.charAt(0) : ''}
+                    </div>
+                  )}
                   <div>
                     <span className="font-ui text-[11px] uppercase tracking-[0.1em] text-white block">{a.name}</span>
                     <span className="font-ui text-[9px] text-white/40">{a.institution}</span>

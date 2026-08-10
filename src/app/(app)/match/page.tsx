@@ -1,47 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { ArrowRight, Send, Bookmark, XCircle } from 'lucide-react';
-import Link from 'next/link';
 
-const DISCIPLINES = [
-  'NEUROSCIENCE',
-  'QUANTUM PHYSICS',
-  'SYSTEMS PROGRAMMING',
-  'ROBOTICS',
-  'CRYPTOGRAPHY',
-  'MATHEMATICS',
-  'MACHINE LEARNING',
-  'PHILOSOPHY',
-  'BIOLOGY',
-  'CLIMATE SCIENCE',
+const SUGGESTION_CHIPS = [
+  'Neuroscience', 'Quantum Physics', 'Systems Programming', 'Robotics',
+  'Cryptography', 'Mathematics', 'Machine Learning', 'Philosophy',
+  'Computational Biology', 'Climate Science', 'Topology', 'Computer Vision',
+  'Formal Verification', 'Distributed Systems', 'Neuromorphic Computing',
 ];
 
-const GOALS = [
-  'PUBLISH A PAPER',
-  'FIND A CO-AUTHOR',
-  'BUILD A PROJECT',
-  'GET PEER REVIEWS',
-  'EXPLORE RESEARCH',
-];
-
-type Phase = 'discipline' | 'goal' | 'matches';
+type Phase = 'input' | 'matches';
 
 export default function VitaMatchmakerPage() {
   const { matches, updateMatchStatus } = useApp();
-  const [phase, setPhase] = useState<Phase>('discipline');
-  const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
-  const [selectedGoal, setSelectedGoal] = useState<string | null>(null);
+  const [phase, setPhase] = useState<Phase>('input');
+  const [query, setQuery] = useState('');
   const [matchIndex, setMatchIndex] = useState(0);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const toggleDiscipline = (d: string) => {
-    setSelectedDisciplines(prev =>
-      prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d]
-    );
-  };
+  const filtered = SUGGESTION_CHIPS.filter(c =>
+    !query || c.toLowerCase().includes(query.toLowerCase())
+  );
+  // Double the chips for infinite marquee
+  const marqueeChips = [...SUGGESTION_CHIPS, ...SUGGESTION_CHIPS];
 
   const activeMatches = matches.filter(m => m.status === 'NEW' || m.status === 'SAVED');
   const currentMatch = activeMatches[matchIndex];
@@ -49,244 +34,203 @@ export default function VitaMatchmakerPage() {
   const handleMatchAction = (status: 'PASSED' | 'SAVED' | 'CONNECTED') => {
     if (!currentMatch) return;
     updateMatchStatus(currentMatch.id, status);
-    const msgs = {
-      PASSED: 'Passed.',
-      SAVED: 'Saved to archive.',
-      CONNECTED: 'Connection request sent.',
-    };
+    const msgs = { PASSED: 'Passed.', SAVED: 'Saved to archive.', CONNECTED: 'Connection request sent.' };
     setFeedbackMsg(msgs[status]);
     setTimeout(() => setFeedbackMsg(null), 2000);
     setMatchIndex(p => Math.min(p + 1, activeMatches.length - 1));
   };
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] bg-black text-white flex flex-col">
-      {/* ── Phase: Discipline Selection ── */}
+    <div className="min-h-[calc(100vh-4rem)] bg-black text-white flex flex-col">
       <AnimatePresence mode="wait">
-        {phase === 'discipline' && (
+
+        {phase === 'input' && (
           <motion.div
-            key="discipline"
-            className="flex flex-col items-start justify-center flex-1 px-6 lg:px-20 py-16 gap-12"
-            initial={{ opacity: 0, y: 40 }}
+            key="input"
+            className="flex flex-col items-center justify-center flex-1 px-6 py-24 gap-16 max-w-4xl mx-auto w-full"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
+            exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <div>
-              <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/30 mb-4">
-                Step 1 of 2 · The Matchmaker
+            {/* Question */}
+            <div className="text-center">
+              <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-white/25 mb-6">
+                Intellectual Co-Author Matchmaker
               </p>
               <h1
                 className="font-display text-white leading-none"
-                style={{ fontSize: 'clamp(2.8rem, 8vw, 8rem)', fontWeight: 700, letterSpacing: '-0.04em' }}
+                style={{ fontSize: 'clamp(3rem, 9vw, 9rem)', fontWeight: 600, letterSpacing: '-0.05em' }}
               >
                 WHAT ARE YOU
                 <br />
-                <span className="text-white/30">BUILDING?</span>
+                <span className="text-white/25">BUILDING?</span>
               </h1>
             </div>
 
-            <div className="flex flex-wrap gap-3 max-w-5xl">
-              {DISCIPLINES.map(d => {
-                const active = selectedDisciplines.includes(d);
-                return (
-                  <motion.button
-                    key={d}
-                    onClick={() => toggleDiscipline(d)}
-                    className={`font-ui text-sm uppercase tracking-[0.15em] px-6 py-4 border border-white transition-colors btn-invert ${active ? 'active' : ''}`}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ type: 'spring', stiffness: 600, damping: 35 }}
-                  >
-                    {d}
-                  </motion.button>
-                );
-              })}
+            {/* Elegant text input — single border-bottom line */}
+            <div className="w-full" onClick={() => inputRef.current?.focus()}>
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && query.trim() && setPhase('matches')}
+                placeholder="Type your field or idea…"
+                className="w-full bg-transparent border-b border-white/25 py-5 font-display text-white focus:outline-none focus:border-white transition-colors text-center placeholder-white/20"
+                style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', letterSpacing: '-0.03em' }}
+                autoFocus
+              />
+              <p className="font-ui text-[10px] text-white/20 text-center mt-3 tracking-widest uppercase">
+                Press Enter or click below to find matches
+              </p>
             </div>
 
+            {/* Suggestion Circuit — scrolling marquee */}
+            <div className="w-full overflow-hidden">
+              <div className="marquee-track gap-3 flex">
+                {marqueeChips.map((chip, i) => {
+                  const isMatch = query && chip.toLowerCase().includes(query.toLowerCase());
+                  return (
+                    <button
+                      key={`${chip}-${i}`}
+                      onClick={() => { setQuery(chip); inputRef.current?.focus(); }}
+                      className={`font-ui text-[11px] uppercase tracking-[0.15em] px-5 py-2.5 border whitespace-nowrap flex-shrink-0 transition-all ${isMatch ? 'border-white bg-white text-black' : 'border-white/20 text-white/40 hover:border-white/50 hover:text-white/70'}`}
+                    >
+                      {chip}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Continue */}
             <motion.button
-              onClick={() => selectedDisciplines.length > 0 && setPhase('goal')}
-              className={`flex items-center gap-3 font-ui text-sm uppercase tracking-[0.2em] border border-white px-8 py-4 transition-all ${selectedDisciplines.length === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white hover:text-black'}`}
+              onClick={() => query.trim() && setPhase('matches')}
+              className={`flex items-center gap-3 font-ui text-[13px] border border-white px-10 py-4 transition-all ${!query.trim() ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white hover:text-black'}`}
               whileTap={{ scale: 0.97 }}
             >
-              Continue <ArrowRight className="w-4 h-4" />
+              Find My Match <ArrowRight className="w-4 h-4" />
             </motion.button>
-          </motion.div>
-        )}
-
-        {phase === 'goal' && (
-          <motion.div
-            key="goal"
-            className="flex flex-col items-start justify-center flex-1 px-6 lg:px-20 py-16 gap-12"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <div>
-              <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/30 mb-4">
-                Step 2 of 2 · Your Goal
-              </p>
-              <h1
-                className="font-display text-white leading-none"
-                style={{ fontSize: 'clamp(2.8rem, 8vw, 8rem)', fontWeight: 700, letterSpacing: '-0.04em' }}
-              >
-                WHAT DO YOU
-                <br />
-                <span className="text-white/30">NEED?</span>
-              </h1>
-            </div>
-
-            <div className="flex flex-col gap-2 w-full max-w-xl">
-              {GOALS.map(g => {
-                const active = selectedGoal === g;
-                return (
-                  <motion.button
-                    key={g}
-                    onClick={() => setSelectedGoal(g)}
-                    className={`w-full text-left font-display text-2xl sm:text-4xl px-0 py-4 border-b border-white/10 transition-all ${active ? 'text-white' : 'text-white/30 hover:text-white/70'}`}
-                    style={{ letterSpacing: '-0.03em', fontWeight: 700 }}
-                    whileTap={{ scale: 0.99 }}
-                  >
-                    {g}
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setPhase('discipline')}
-                className="font-ui text-[11px] uppercase tracking-[0.2em] text-white/30 hover:text-white transition-colors"
-              >
-                ← Back
-              </button>
-              <motion.button
-                onClick={() => selectedGoal && setPhase('matches')}
-                className={`flex items-center gap-3 font-ui text-sm uppercase tracking-[0.2em] border border-white px-8 py-4 transition-all ${!selectedGoal ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white hover:text-black'}`}
-                whileTap={{ scale: 0.97 }}
-              >
-                Find My Match <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </div>
           </motion.div>
         )}
 
         {phase === 'matches' && (
           <motion.div
             key="matches"
-            className="flex flex-col flex-1 px-6 lg:px-20 py-12 gap-8"
-            initial={{ opacity: 0, y: 40 }}
+            className="flex flex-col flex-1 max-w-6xl mx-auto w-full px-6 py-12 gap-8"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
+            exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <div className="border-b border-white/10 pb-6">
-              <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/30 mb-2">
-                Your Results · {activeMatches.length} Candidates
-              </p>
-              <h2
-                className="font-display text-white leading-none"
-                style={{ fontSize: 'clamp(2rem, 5vw, 5rem)', fontWeight: 700, letterSpacing: '-0.04em' }}
+            <div className="border-b border-white/10 pb-6 flex items-end justify-between">
+              <div>
+                <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-2">
+                  Results for "{query}" · {activeMatches.length} candidates
+                </p>
+                <h2
+                  className="font-display text-white leading-none"
+                  style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)', fontWeight: 600, letterSpacing: '-0.04em' }}
+                >
+                  YOUR MATCHES
+                </h2>
+              </div>
+              <button
+                onClick={() => setPhase('input')}
+                className="font-ui text-[11px] text-white/30 hover:text-white transition-colors"
               >
-                YOUR MATCHES
-              </h2>
+                ← Refine Search
+              </button>
             </div>
 
             {feedbackMsg && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="font-ui text-xs uppercase tracking-widest text-white/50"
-              >
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="font-ui text-[12px] text-white/40 uppercase tracking-widest">
                 {feedbackMsg}
               </motion.p>
             )}
 
             {currentMatch ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white">
-                {/* Left: Candidate portrait */}
-                <div className="relative min-h-[360px] lg:min-h-[500px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white">
+              <div className="grid grid-cols-1 lg:grid-cols-2 border border-white/10 overflow-hidden">
+                {/* Portrait */}
+                <div className="relative min-h-[400px] lg:min-h-[560px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
                   <img
                     src={currentMatch.candidate.avatarUrl}
                     alt={currentMatch.candidate.name}
-                    className="absolute inset-0 w-full h-full object-cover grayscale"
+                    className="absolute inset-0 w-full h-full object-cover brightness-75"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                  <div className="absolute bottom-6 left-6">
-                    <div className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/50 mb-1">
-                      {currentMatch.scoreBreakdown.domainComplementarity + currentMatch.scoreBreakdown.skillComplementarity}% Match
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  <div className="absolute bottom-8 left-8 right-8">
+                    <div className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/50 mb-2">
+                      {currentMatch.compatibilityScore}% Compatibility
                     </div>
                     <h3
-                      className="font-display text-white leading-none"
-                      style={{ fontSize: 'clamp(1.5rem, 3vw, 2.8rem)', fontWeight: 700, letterSpacing: '-0.03em' }}
+                      className="font-display text-white leading-none mb-1"
+                      style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 600, letterSpacing: '-0.04em' }}
                     >
                       {currentMatch.candidate.name}
                     </h3>
-                    <p className="font-ui text-[10px] uppercase tracking-[0.2em] text-white/50 mt-1">
-                      {currentMatch.candidate.title} · {currentMatch.candidate.institution}
+                    <p className="font-ui text-[11px] text-white/50 uppercase tracking-widest">
+                      {currentMatch.candidate.title}
                     </p>
                   </div>
                 </div>
 
-                {/* Right: Details */}
-                <div className="flex flex-col justify-between p-8 gap-6">
-                  <div className="space-y-6">
+                {/* Details */}
+                <div className="flex flex-col justify-between p-8 lg:p-10 gap-8">
+                  <div className="space-y-8">
                     <div>
-                      <p className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/30 mb-2">Research Direction</p>
-                      <p className="font-display text-lg sm:text-xl text-white/80 italic leading-snug" style={{ letterSpacing: '-0.02em' }}>
+                      <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-white/25 mb-3">Research Direction</p>
+                      <p
+                        className="font-display italic text-white/80 leading-snug"
+                        style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', letterSpacing: '-0.02em' }}
+                      >
                         "{currentMatch.candidate.researchStatement}"
                       </p>
                     </div>
                     <div>
-                      <p className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/30 mb-2">Why This Match</p>
-                      <p className="font-ui text-xs text-white/60 leading-relaxed">
-                        {currentMatch.reason}
-                      </p>
+                      <p className="font-ui text-[10px] uppercase tracking-[0.3em] text-white/25 mb-2">Why This Match</p>
+                      <p className="font-ui text-[12px] text-white/50 leading-relaxed">{currentMatch.reason}</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {currentMatch.candidate.primaryDomains.map(d => (
-                        <span key={d} className="font-ui text-[9px] uppercase tracking-[0.2em] border border-white/20 px-2 py-1 text-white/50">
+                        <span key={d} className="font-ui text-[9px] uppercase tracking-widest border border-white/15 px-2.5 py-1 text-white/40">
                           {d}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Action row */}
-                  <div className="flex items-center gap-3 border-t border-white/10 pt-6">
-                    <button
-                      onClick={() => handleMatchAction('PASSED')}
-                      className="font-ui text-[10px] uppercase tracking-[0.2em] border border-white/20 px-4 py-3 text-white/40 hover:text-white hover:border-white transition-colors flex items-center gap-2"
-                    >
-                      <XCircle className="w-3 h-3" /> Pass
+                  <div className="flex items-center gap-3 border-t border-white/10 pt-8">
+                    <button onClick={() => handleMatchAction('PASSED')}
+                      className="font-ui text-[10px] uppercase tracking-widest border border-white/20 px-4 py-3 text-white/30 hover:text-white hover:border-white transition-colors flex items-center gap-2">
+                      <XCircle className="w-3.5 h-3.5" /> Pass
                     </button>
-                    <button
-                      onClick={() => handleMatchAction('SAVED')}
-                      className="font-ui text-[10px] uppercase tracking-[0.2em] border border-white/20 px-4 py-3 text-white/40 hover:text-white hover:border-white transition-colors flex items-center gap-2"
-                    >
-                      <Bookmark className="w-3 h-3" /> Save
+                    <button onClick={() => handleMatchAction('SAVED')}
+                      className="font-ui text-[10px] uppercase tracking-widest border border-white/20 px-4 py-3 text-white/30 hover:text-white hover:border-white transition-colors flex items-center gap-2">
+                      <Bookmark className="w-3.5 h-3.5" /> Save
                     </button>
-                    <button
-                      onClick={() => handleMatchAction('CONNECTED')}
-                      className="flex-1 font-ui text-[10px] uppercase tracking-[0.2em] border border-white px-4 py-3 bg-white text-black hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2"
-                    >
-                      <Send className="w-3 h-3" /> Connect
+                    <button onClick={() => handleMatchAction('CONNECTED')}
+                      className="flex-1 font-ui text-[10px] uppercase tracking-widest border border-white px-4 py-3 bg-white text-black hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2 font-bold">
+                      <Send className="w-3.5 h-3.5" /> Connect
                     </button>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="border border-white/10 p-16 text-center">
-                <p className="font-display text-2xl text-white/30 italic" style={{ letterSpacing: '-0.02em' }}>
-                  "No more candidates in queue."
-                </p>
-                <button
-                  onClick={() => { setMatchIndex(0); setPhase('discipline'); setSelectedDisciplines([]); setSelectedGoal(null); }}
-                  className="mt-8 font-ui text-[11px] uppercase tracking-[0.2em] border border-white px-6 py-3 hover:bg-white hover:text-black transition-colors"
-                >
-                  Start Over
-                </button>
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-center space-y-6">
+                  <p className="font-display text-3xl text-white/20 italic" style={{ letterSpacing: '-0.03em' }}>
+                    "No more candidates in queue."
+                  </p>
+                  <button
+                    onClick={() => { setMatchIndex(0); setPhase('input'); setQuery(''); }}
+                    className="font-ui text-[11px] uppercase tracking-widest border border-white px-6 py-3 hover:bg-white hover:text-black transition-colors"
+                  >
+                    Start Over
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>

@@ -1,25 +1,21 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
-/* ───────────────────────────────────────────────
-   STRIPE PRESS / BRUTALIST EDITORIAL FOUNDATION
-   Two Colors Only: #000000 + #FFFFFF
+/* ────────────────────────────────────────────────
+   APEX EDITORIAL — Black/White + Global Cursor
 ──────────────────────────────────────────────── */
 
 :root {
   --black: #000000;
-  --white: #FFFFFF;
-  --font-display: var(--font-eb-garamond, "EB Garamond", "Playfair Display", Georgia, serif);
-  --font-ui: var(--font-space-grotesk, "Space Grotesk", "JetBrains Mono", monospace);
+  --white: #ffffff;
+  --font-display: var(--font-display, "Cormorant Garamond", "Playfair Display", Georgia, serif);
+  --font-ui: var(--font-ui, "Inter", system-ui, -apple-system, sans-serif);
 }
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   border-radius: 0 !important;
   box-shadow: none !important;
-  outline: none;
 }
 
 html {
@@ -28,87 +24,95 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  scroll-behavior: auto;
 }
 
 body {
-  background: #000000;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
   font-family: var(--font-ui);
   min-height: 100vh;
   overflow-x: hidden;
-  cursor: none; /* Custom cursor on gate page */
+  cursor: none;
 }
 
 ::selection {
-  background: #ffffff;
-  color: #000000;
+  background: #fff;
+  color: #000;
 }
 
-/* ── Custom cursor ── */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #ffffff;
-  mix-blend-mode: difference;
-  border-radius: 50% !important;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
-  will-change: transform;
+/* ── Typography ── */
+.font-display {
+  font-family: var(--font-display);
 }
-.cursor-dot.expanded {
-  width: 60px;
-  height: 60px;
+.font-ui {
+  font-family: var(--font-ui);
 }
 
-/* ── KaTeX  ── */
-.katex {
-  color: #fff !important;
-  font-size: 1.1em;
-}
-.katex-display {
-  margin: 1.2em 0 !important;
-  padding: 1rem;
-  border: 1px solid #fff;
-}
-
-/* ── Global link reset ── */
-a { color: inherit; text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* ── Scrollbar hide ── */
-.scrollbar-hide { scrollbar-width: none; }
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-
-/* ── Utility ── */
-.font-display { font-family: var(--font-display); }
-.font-ui      { font-family: var(--font-ui); }
-
-/* ── Feed poster grid ── */
+/* ── Poster grid — 1px white lines as dividers ── */
 .poster-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 1px;
-  background: #fff; /* gap becomes 1px white lines */
+  background: rgba(255, 255, 255, 0.1);
 }
 .poster-grid > * {
   background: #000;
 }
 
-/* ── Invert hover for buttons ── */
-.btn-invert {
-  background: #000;
+/* ── KaTeX ── */
+.katex { color: #fff !important; font-size: 1.1em; }
+.katex-display {
+  margin: 1.2em 0 !important;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── Scrollbar hide ── */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ── Links ── */
+a { color: inherit; text-decoration: none; }
+
+/* ── Social Dock glass panel ── */
+.social-dock {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ── Marquee animation for suggestion chips ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ── Form inputs editorial style ── */
+.editorial-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
   color: #fff;
-  border: 1px solid #fff;
-  transition: background 0.15s, color 0.15s;
+  font-family: var(--font-display);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
 }
-.btn-invert:hover,
-.btn-invert.active {
-  background: #fff;
-  color: #000;
+.editorial-input:focus { border-bottom-color: #fff; }
+.editorial-input::placeholder { color: rgba(255,255,255,0.25); }
+
+/* ── People masonry ── */
+.people-masonry {
+  columns: 1;
+  gap: 1px;
 }
+@media (min-width: 640px)  { .people-masonry { columns: 2; } }
+@media (min-width: 1024px) { .people-masonry { columns: 3; } }

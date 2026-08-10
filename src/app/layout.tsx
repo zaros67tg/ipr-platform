@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/lib/services/store";
 import { LenisProvider } from "@/components/shell/LenisProvider";
+import { GlobalCursor } from "@/components/shell/GlobalCursor";
 
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const inter = Inter({
+  variable: "--font-ui",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,11 +33,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ebGaramond.variable} ${spaceGrotesk.variable} h-full`}
+      className={`${cormorant.variable} ${inter.variable} h-full`}
     >
-      <body className="min-h-full bg-black text-white font-ui selection:bg-white selection:text-black">
+      <body className="min-h-full bg-black text-white cursor-none selection:bg-white selection:text-black">
         <AppProvider>
           <LenisProvider>
+            <GlobalCursor />
             {children}
           </LenisProvider>
         </AppProvider>

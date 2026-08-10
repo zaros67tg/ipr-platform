@@ -3,80 +3,130 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { Users, Search, Award, ShieldCheck, ArrowRight } from 'lucide-react';
-import { DisciplineTag } from '@/components/common/DisciplineTag';
-import { VerificationBadge } from '@/components/common/VerificationBadge';
+import { Search } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// Portrait aspect ratios — alternating for masonry variety
+const HEIGHTS = ['pb-[120%]', 'pb-[100%]', 'pb-[140%]', 'pb-[110%]', 'pb-[130%]', 'pb-[95%]'];
 
 export default function PeopleDirectoryPage() {
   const { researchers } = useApp();
   const [search, setSearch] = useState('');
 
-  const filtered = researchers.filter(r => 
-    !search || r.name.toLowerCase().includes(search.toLowerCase()) || r.title.toLowerCase().includes(search.toLowerCase()) || r.primaryDomains.some(d => d.toLowerCase().includes(search.toLowerCase()))
+  const filtered = researchers.filter(r =>
+    !search ||
+    r.name.toLowerCase().includes(search.toLowerCase()) ||
+    r.title.toLowerCase().includes(search.toLowerCase()) ||
+    r.primaryDomains.some(d => d.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <div className="border-b border-white/10 pb-6">
-        <span className="text-xs font-mono text-[#5A6B43] uppercase tracking-widest block font-bold mb-1">
-          RESEARCH REPUBLIC REGISTRY
-        </span>
-        <h1 className="text-3xl sm:text-4xl serif-title text-[#F4F0E8] mb-2">
-          Researcher Dossiers & Directory
-        </h1>
-        <p className="text-sm font-serif text-[#A8A198] max-w-xl">
-          Discover independent researchers, theoretical physicists, systems programmers, and mathematicians across the Republic.
+      <div className="border-b border-white/10 px-6 lg:px-12 pt-10 pb-8">
+        <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-4">
+          Research Republic Registry
         </p>
-      </div>
-
-      {/* Search Bar */}
-      <div className="relative max-w-md">
-        <Search className="w-4 h-4 text-[#746F69] absolute left-3 top-1/2 -translate-y-1/2" />
-        <input
-          type="text"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search researchers by name, domain, institution..."
-          className="w-full bg-[#151311] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-xs text-[#F4F0E8] placeholder-[#746F69] focus:outline-none focus:border-[#5A6B43]"
-        />
-      </div>
-
-      {/* Researcher Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map(r => (
-          <Link
-            key={r.id}
-            href={`/people/${r.id}`}
-            className="ipr-card p-6 flex flex-col justify-between group"
+        <div className="flex items-end justify-between gap-6">
+          <h1
+            className="font-display text-white leading-none"
+            style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 600, letterSpacing: '-0.05em' }}
           >
-            <div>
-              <div className="flex items-center gap-4 mb-4">
-                <img src={r.avatarUrl} alt={r.name} className="w-14 h-14 rounded-full object-cover border border-white/10 group-hover:scale-105 transition-transform" />
-                <div>
-                  <h2 className="text-base font-semibold text-[#F4F0E8] group-hover:text-[#C85A32] transition-colors">{r.name}</h2>
-                  <p className="text-xs font-mono text-[#746F69] line-clamp-1">{r.title}</p>
-                  <VerificationBadge status={r.verificationStatus} showText={false} className="mt-1" />
-                </div>
-              </div>
+            The People
+          </h1>
+          {/* Search — elegant editorial style */}
+          <div className="relative pb-1 border-b border-white/20 flex items-center gap-3 min-w-[240px]">
+            <Search className="w-4 h-4 text-white/30 flex-shrink-0" />
+            <input
+              type="text" value={search} onChange={e => setSearch(e.target.value)}
+              placeholder="Search by name, domain…"
+              className="bg-transparent font-ui text-[13px] text-white placeholder-white/25 focus:outline-none w-full"
+            />
+          </div>
+        </div>
+      </div>
 
-              <p className="text-xs text-[#A8A198] font-serif italic line-clamp-2 mb-4 leading-relaxed">
-                "{r.researchStatement}"
-              </p>
+      {/* Masonry grid — cinematic portrait cards */}
+      <div className="people-masonry px-0 pt-px gap-px bg-white/8">
+        {filtered.map((r, i) => {
+          const padHeight = HEIGHTS[i % HEIGHTS.length];
+          return (
+            <div key={r.id} className="break-inside-avoid bg-black mb-px">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.07 }}
+              >
+                <Link href={`/people/${r.id}`} className="block group relative overflow-hidden">
+                  {/* Portrait image */}
+                  <div className={`relative w-full ${padHeight} overflow-hidden`}>
+                    <img
+                      src={r.avatarUrl}
+                      alt={r.name}
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-[1.04] group-hover:brightness-110"
+                    />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                  </div>
 
-              <div className="flex flex-wrap gap-1 mb-4">
-                {r.primaryDomains.map(d => (
-                  <DisciplineTag key={d} domain={d} size="sm" />
-                ))}
-              </div>
+                  {/* Card footer — bottom of portrait */}
+                  <div className="p-6 space-y-3 border-b border-white/8">
+                    {/* Availability badge */}
+                    <div className="flex items-center gap-2">
+                      <span className={`w-1.5 h-1.5 rounded-full ${r.availability === 'AVAILABLE' ? 'bg-white' : r.availability === 'SELECTIVE' ? 'bg-white/50' : 'bg-white/20'}`} />
+                      <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-white/35">
+                        {r.availability === 'AVAILABLE' ? 'Open to Collaborate' : r.availability === 'SELECTIVE' ? 'Selective' : 'Not Available'}
+                      </span>
+                    </div>
+
+                    {/* Name */}
+                    <h2
+                      className="font-display text-white leading-tight group-hover:opacity-80 transition-opacity"
+                      style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', fontWeight: 600, letterSpacing: '-0.03em' }}
+                    >
+                      {r.name}
+                    </h2>
+
+                    {/* Title + institution */}
+                    <p className="font-ui text-[11px] text-white/40 leading-snug">
+                      {r.title} · {r.institution}
+                    </p>
+
+                    {/* Research statement quote */}
+                    {r.researchStatement && (
+                      <p
+                        className="font-display italic text-white/55 leading-snug line-clamp-2"
+                        style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.15rem)', letterSpacing: '0.01em' }}
+                      >
+                        "{r.researchStatement}"
+                      </p>
+                    )}
+
+                    {/* Domain pills */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {r.primaryDomains.slice(0, 2).map(d => (
+                        <span key={d} className="font-ui text-[9px] uppercase tracking-widest border border-white/15 px-2 py-0.5 text-white/35">
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Stats footer */}
+                    <div className="flex items-center justify-between pt-2 border-t border-white/8">
+                      <span className="font-ui text-[10px] text-white/25">
+                        {r.stats.papersCount} papers · {r.stats.citationsCount} citations
+                      </span>
+                      <span className="font-ui text-[10px] text-white/25 group-hover:text-white transition-colors">
+                        View →
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
-
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono text-[#746F69]">
-              <span>{r.stats.papersCount} Papers • {r.stats.citationsCount} Citations</span>
-              <ArrowRight className="w-4 h-4 text-[#746F69] group-hover:text-[#C85A32] transition-colors" />
-            </div>
-          </Link>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

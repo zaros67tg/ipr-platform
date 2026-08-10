@@ -41,7 +41,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
       <div className="w-full max-w-3xl bg-[#151311] border border-white/15 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
         {/* Search Input Bar */}
         <div className="flex items-center gap-3 p-4 border-b border-white/10 bg-[#0D0C0B]">
-          <Search className="w-5 h-5 text-[#C85A32]" />
+          <Search className="w-5 h-5 text-[#FFFFFF]" />
           <input
             type="text"
             autoFocus
@@ -66,7 +66,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               onClick={() => setActiveFilter(tab)}
               className={`px-3 py-1 rounded transition-colors ${
                 activeFilter === tab 
-                  ? 'bg-[#C85A32] text-[#F4F0E8] font-semibold' 
+                  ? 'bg-[#FFFFFF] text-[#F4F0E8] font-semibold' 
                   : 'text-[#A8A198] hover:text-[#F4F0E8]'
               }`}
             >
@@ -81,7 +81,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           {(activeFilter === 'ALL' || activeFilter === 'PAPERS') && filteredPapers.length > 0 && (
             <div>
               <div className="flex items-center justify-between text-xs font-mono text-[#746F69] mb-3 uppercase tracking-wider">
-                <span className="flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-[#C85A32]" /> Papers ({filteredPapers.length})</span>
+                <span className="flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-[#FFFFFF]" /> Papers ({filteredPapers.length})</span>
               </div>
               <div className="space-y-2">
                 {filteredPapers.map(paper => (
@@ -89,13 +89,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                     key={paper.id}
                     href={`/papers/${paper.slug}`}
                     onClick={onClose}
-                    className="block p-3 rounded-lg bg-[#0D0C0B] hover:bg-[#1C1917] border border-white/5 hover:border-[#C85A32]/40 transition-colors group"
+                    className="block p-3 rounded-lg bg-[#0D0C0B] hover:bg-[#1C1917] border border-white/5 hover:border-[#FFFFFF]/40 transition-colors group"
                   >
                     <div className="flex items-center justify-between mb-1">
                       <DisciplineTag domain={paper.primaryDomain} size="sm" />
                       <span className="text-[11px] font-mono text-[#746F69]">{paper.readingTimeMinutes} min read • {paper.citationCount} citations</span>
                     </div>
-                    <h4 className="text-sm font-semibold text-[#F4F0E8] group-hover:text-[#C85A32] transition-colors">{paper.title}</h4>
+                    <h4 className="text-sm font-semibold text-[#F4F0E8] group-hover:text-[#FFFFFF] transition-colors">{paper.title}</h4>
                     <p className="text-xs text-[#A8A198] line-clamp-1 mt-1">By {paper.authors.map(a => a.name).join(', ')}</p>
                   </Link>
                 ))}
@@ -132,7 +132,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           {(activeFilter === 'ALL' || activeFilter === 'PROJECTS') && filteredProjects.length > 0 && (
             <div>
               <div className="flex items-center justify-between text-xs font-mono text-[#746F69] mb-3 uppercase tracking-wider">
-                <span className="flex items-center gap-1.5"><FolderGit2 className="w-3.5 h-3.5 text-[#D97706]" /> Projects ({filteredProjects.length})</span>
+                <span className="flex items-center gap-1.5"><FolderGit2 className="w-3.5 h-3.5 text-[#FFFFFF]" /> Projects ({filteredProjects.length})</span>
               </div>
               <div className="space-y-2">
                 {filteredProjects.map(proj => (
@@ -143,7 +143,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                     className="block p-3 rounded-lg bg-[#0D0C0B] hover:bg-[#1C1917] border border-white/5 hover:border-white/20 transition-colors"
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-mono text-[#D97706]">{proj.status.replace(/_/g, ' ')}</span>
+                      <span className="text-xs font-mono text-[#FFFFFF]">{proj.status.replace(/_/g, ' ')}</span>
                       <DisciplineTag domain={proj.domain} size="sm" />
                     </div>
                     <h4 className="text-sm font-semibold text-[#F4F0E8]">{proj.title}</h4>
@@ -166,3 +166,4 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     </div>
   );
 };
+

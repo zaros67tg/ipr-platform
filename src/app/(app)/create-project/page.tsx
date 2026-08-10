@@ -38,13 +38,13 @@ export default function CreateProjectPage() {
 
   return (
     <div className="space-y-8 max-w-2xl mx-auto">
-      <Link href="/projects" className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A8A198] hover:text-[#C85A32]">
+      <Link href="/projects" className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A8A198] hover:text-[#FFFFFF]">
         <ArrowLeft className="w-4 h-4" />
         <span>Cancel</span>
       </Link>
 
       <div className="border-b border-white/10 pb-4">
-        <span className="text-xs font-mono text-[#C85A32] uppercase font-bold tracking-wider">COLLABORATION INITIATION</span>
+        <span className="text-xs font-mono text-[#FFFFFF] uppercase font-bold tracking-wider">COLLABORATION INITIATION</span>
         <h1 className="text-3xl serif-title text-[#F4F0E8]">Create Research Project Hub</h1>
       </div>
 
@@ -57,7 +57,7 @@ export default function CreateProjectPage() {
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g., Low-Power Neuromorphic Vision Under Severe Constraints"
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
           />
         </div>
 
@@ -69,7 +69,7 @@ export default function CreateProjectPage() {
             value={researchQuestion}
             onChange={e => setResearchQuestion(e.target.value)}
             placeholder="e.g., Can event-driven spike vision algorithms achieve zero-latency object tracking on sub-milliwatt ASIC hardware?"
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
           />
         </div>
 
@@ -78,7 +78,7 @@ export default function CreateProjectPage() {
           <select
             value={domain}
             onChange={e => setDomain(e.target.value as ResearchDomain)}
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
           >
             {[
               'Theoretical Physics',
@@ -106,7 +106,7 @@ export default function CreateProjectPage() {
             value={description}
             onChange={e => setDescription(e.target.value)}
             placeholder="Outline the scientific goals, hardware requirements, or theoretical framework..."
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32] resize-none"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF] resize-none"
           />
         </div>
 
@@ -118,7 +118,7 @@ export default function CreateProjectPage() {
               value={requiredSkills}
               onChange={e => setRequiredSkills(e.target.value)}
               placeholder="C++, CUDA, Spiking Networks"
-              className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+              className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
             />
           </div>
           <div>
@@ -128,14 +128,14 @@ export default function CreateProjectPage() {
               value={openRoles}
               onChange={e => setOpenRoles(e.target.value)}
               placeholder="Mathematical modeller, FPGA Engineer"
-              className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+              className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
             />
           </div>
         </div>
 
         <button
           type="submit"
-          className="w-full py-3 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] font-bold rounded-lg text-xs font-mono shadow-lg transition-colors inline-flex items-center justify-center gap-2"
+          className="w-full py-3 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] font-bold rounded-lg text-xs font-mono shadow-lg transition-colors inline-flex items-center justify-center gap-2"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Publish Project Hub to Republic</span>
@@ -144,3 +144,4 @@ export default function CreateProjectPage() {
     </div>
   );
 }
+

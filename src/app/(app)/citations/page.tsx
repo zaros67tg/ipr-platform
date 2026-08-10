@@ -13,7 +13,7 @@ export default function CitationsPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div className="border-b border-white/10 pb-6">
-        <span className="text-xs font-mono text-[#C85A32] uppercase font-bold tracking-wider">INTELLECTUAL LINEAGE</span>
+        <span className="text-xs font-mono text-[#FFFFFF] uppercase font-bold tracking-wider">INTELLECTUAL LINEAGE</span>
         <h1 className="text-3xl serif-title text-[#F4F0E8] mt-1">Citations & Provenance</h1>
         <p className="text-sm font-serif text-[#A8A198] max-w-xl">
           Track research citations, derivative paper forks, and export citations in APA, MLA, Chicago, and BibTeX.
@@ -32,7 +32,7 @@ export default function CitationsPage() {
             </div>
             <button
               onClick={() => setSelectedPaper(p)}
-              className="px-4 py-2 bg-[#C85A32] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#B54E29] shrink-0"
+              className="px-4 py-2 bg-[#FFFFFF] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#FFFFFF] shrink-0"
             >
               Export Citation
             </button>
@@ -44,3 +44,4 @@ export default function CitationsPage() {
     </div>
   );
 }
+

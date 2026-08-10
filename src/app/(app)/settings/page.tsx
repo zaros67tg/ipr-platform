@@ -19,7 +19,7 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8 max-w-3xl mx-auto font-mono text-xs">
       <div className="border-b border-white/10 pb-6">
-        <span className="text-xs text-[#C85A32] uppercase font-bold tracking-wider">PREFERENCES & CREDS</span>
+        <span className="text-xs text-[#FFFFFF] uppercase font-bold tracking-wider">PREFERENCES & CREDS</span>
         <h1 className="text-3xl serif-title text-[#F4F0E8] mt-1 font-sans">Researcher Settings</h1>
       </div>
 
@@ -46,7 +46,7 @@ export default function SettingsPage() {
             type="text"
             value={institution}
             onChange={e => setInstitution(e.target.value)}
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32]"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF]"
           />
         </div>
 
@@ -56,14 +56,14 @@ export default function SettingsPage() {
             rows={3}
             value={researchStatement}
             onChange={e => setResearchStatement(e.target.value)}
-            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32] font-serif italic resize-none"
+            className="w-full bg-[#0D0C0B] border border-white/10 rounded p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF] font-serif italic resize-none"
           />
         </div>
 
         <div className="pt-2">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] rounded font-bold transition-colors inline-flex items-center gap-2"
+            className="px-6 py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded font-bold transition-colors inline-flex items-center gap-2"
           >
             <Check className="w-4 h-4" />
             <span>Save Preferences</span>
@@ -73,3 +73,4 @@ export default function SettingsPage() {
     </div>
   );
 }
+

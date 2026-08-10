@@ -15,13 +15,13 @@ export default function BookmarksPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div className="border-b border-white/10 pb-6">
-        <span className="text-xs font-mono text-[#D97706] uppercase font-bold tracking-wider">SAVED ARCHIVE</span>
+        <span className="text-xs font-mono text-[#FFFFFF] uppercase font-bold tracking-wider">SAVED ARCHIVE</span>
         <h1 className="text-3xl serif-title text-[#F4F0E8] mt-1">My Bookmarks</h1>
       </div>
 
       <div className="space-y-6">
         <h2 className="text-lg serif-title text-[#F4F0E8] flex items-center gap-2">
-          <FileText className="w-5 h-5 text-[#C85A32]" />
+          <FileText className="w-5 h-5 text-[#FFFFFF]" />
           Saved Manuscripts ({savedPapers.length})
         </h2>
 
@@ -38,7 +38,7 @@ export default function BookmarksPage() {
                   <h3 className="text-base font-semibold text-[#F4F0E8]">{p.title}</h3>
                   <p className="text-xs text-[#746F69] font-mono">By {p.authors.map(a => a.name).join(', ')}</p>
                 </div>
-                <Link href={`/papers/${p.slug}`} className="px-4 py-2 bg-[#C85A32] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#B54E29]">
+                <Link href={`/papers/${p.slug}`} className="px-4 py-2 bg-[#FFFFFF] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#FFFFFF]">
                   Read →
                 </Link>
               </div>
@@ -49,3 +49,4 @@ export default function BookmarksPage() {
     </div>
   );
 }
+

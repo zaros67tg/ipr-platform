@@ -52,7 +52,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
         </button>
 
         <div className="flex items-center gap-2 mb-2">
-          <GitFork className="w-5 h-5 text-[#C85A32]" />
+          <GitFork className="w-5 h-5 text-[#FFFFFF]" />
           <h2 className="text-xl serif-title text-[#F4F0E8]">Fork Research Manuscript</h2>
         </div>
         <p className="text-sm text-[#A8A198] mb-6">
@@ -65,11 +65,11 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
           <div className="text-sm font-semibold text-[#F4F0E8]">{paper.title}</div>
           <div className="text-xs text-[#A8A198] mb-3">By {paper.authors.map(a => a.name).join(', ')} ({paper.currentVersion})</div>
 
-          <div className="flex justify-center my-1 text-[#C85A32]">
+          <div className="flex justify-center my-1 text-[#FFFFFF]">
             <ArrowDown className="w-4 h-4" />
           </div>
 
-          <div className="text-xs font-mono text-[#C85A32] mb-1">YOUR DERIVATIVE FORK</div>
+          <div className="text-xs font-mono text-[#FFFFFF] mb-1">YOUR DERIVATIVE FORK</div>
           <div className="text-sm font-semibold text-[#E8E0D2]">By {currentUser.name}</div>
           <div className="text-xs text-[#746F69]">Branch status: Active Draft</div>
         </div>
@@ -85,7 +85,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
             </p>
             <button
               onClick={handleGoToFork}
-              className="w-full py-2.5 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] rounded-md text-sm font-mono font-medium transition-colors"
+              className="w-full py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-sm font-mono font-medium transition-colors"
             >
               Open Derivative Manuscript
             </button>
@@ -102,7 +102,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
                 value={changesSummary}
                 onChange={e => setChangesSummary(e.target.value)}
                 placeholder="Describe what mathematical derivations, code fixes, or experimental variations you are introducing in this derivative fork..."
-                className="w-full bg-[#0D0C0B] border border-white/10 rounded-lg p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#C85A32] resize-none"
+                className="w-full bg-[#0D0C0B] border border-white/10 rounded-lg p-3 text-sm text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF] resize-none"
               />
             </div>
 
@@ -117,7 +117,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
               <button
                 type="submit"
                 disabled={isSubmitting || !changesSummary.trim()}
-                className="px-5 py-2 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors disabled:opacity-50 inline-flex items-center gap-2"
+                className="px-5 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors disabled:opacity-50 inline-flex items-center gap-2"
               >
                 <GitFork className="w-4 h-4" />
                 <span>Create Fork Branch</span>
@@ -129,3 +129,4 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
     </div>
   );
 };
+

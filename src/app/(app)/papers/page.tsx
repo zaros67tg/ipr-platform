@@ -3,87 +3,118 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { FileText, GitFork, BookOpen, Search } from 'lucide-react';
+import { FileText, GitFork, Search } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 
 export default function PapersListPage() {
   const { papers } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredPapers = papers.filter(p => {
-    return !searchQuery || p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.abstract.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+  const filteredPapers = papers.filter(p =>
+    !searchQuery ||
+    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.abstract.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="space-y-8">
+    <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <div className="border-b border-white/10 pb-6">
-        <h1 className="text-3xl sm:text-4xl serif-title font-bold text-white/90 mb-2">
+      <div className="border-b border-white/10 px-6 lg:px-12 pt-10 pb-8">
+        <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-3">
           Publications Archive
-        </h1>
-        <p className="text-base font-serif text-white/50 max-w-2xl">
-          Open access interactive publications with native block-level marginalia and repository code links.
         </p>
-      </div>
-
-      {/* Search Bar */}
-      <div className="bg-neutral-900/40 backdrop-blur-2xl p-4 rounded-2xl border border-white/10 shadow-2xl">
-        <div className="relative w-full">
-          <Search className="w-4 h-4 text-white/40 absolute left-4 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search publications by title or topic..."
-            className="w-full bg-neutral-950/60 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-xs font-mono text-white/90 placeholder-white/40 focus:outline-none focus:border-white/30"
-          />
+        <div className="flex items-end justify-between gap-6">
+          <h1
+            className="font-display text-white leading-none"
+            style={{ fontSize: 'clamp(2.5rem, 7vw, 6.5rem)', fontWeight: 600, letterSpacing: '-0.05em' }}
+          >
+            Manuscripts
+          </h1>
+          {/* Editorial search */}
+          <div className="relative pb-1 border-b border-white/20 flex items-center gap-3 min-w-[260px]">
+            <Search className="w-4 h-4 text-white/30 flex-shrink-0" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search by title or topic…"
+              className="bg-transparent font-ui text-[13px] text-white placeholder-white/25 focus:outline-none w-full"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Papers List */}
-      <div className="space-y-6">
-        {filteredPapers.map(paper => (
-          <div key={paper.id} className="bg-neutral-900/40 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-2xl p-6 sm:p-8 flex flex-col justify-between group transition-all hover:border-white/25">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <DisciplineTag domain={paper.primaryDomain} size="sm" />
-                <span className="text-xs font-mono text-white/40">
-                  {paper.readingTimeMinutes} MIN READ • {paper.citationCount} CITATIONS
-                </span>
-              </div>
+      {/* Papers — editorial list with aligned left edge */}
+      <div className="px-6 lg:px-12 py-8">
+        <div className="space-y-0">
+          {filteredPapers.map((paper, i) => (
+            <div
+              key={paper.id}
+              className="group border-b border-white/8 py-8 flex flex-col sm:flex-row sm:items-start gap-6 hover:bg-white/2 transition-colors -mx-6 lg:-mx-12 px-6 lg:px-12"
+            >
+              {/* Index number */}
+              <span className="font-ui text-[11px] text-white/20 shrink-0 pt-1 w-8">
+                {String(i + 1).padStart(2, '0')}
+              </span>
 
-              <h2 className="text-2xl sm:text-3xl serif-title font-bold text-white/90 group-hover:text-white transition-colors mb-3 leading-snug">
-                <Link href={`/papers/${paper.slug}`}>
-                  {paper.title}
-                </Link>
-              </h2>
-
-              <p className="text-base text-white/60 line-clamp-2 mb-4 leading-relaxed font-serif italic">
-                "{paper.abstract}"
-              </p>
-
-              {paper.parentPaperTitle && (
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/70 mb-4 flex items-center gap-2">
-                  <GitFork className="w-4 h-4" />
-                  <span>FORKED FROM: {paper.parentPaperTitle}</span>
+              {/* Main content */}
+              <div className="flex-1 min-w-0 space-y-3">
+                {/* Domain + meta */}
+                <div className="flex items-center gap-3 flex-wrap">
+                  <DisciplineTag domain={paper.primaryDomain} size="sm" />
+                  <span className="font-ui text-[10px] text-white/25 uppercase tracking-widest">
+                    {paper.readingTimeMinutes} min · {paper.citationCount} citations
+                  </span>
+                  <span className="font-ui text-[9px] uppercase tracking-widest border border-white/20 px-2 py-0.5 text-white/40">
+                    {paper.status}
+                  </span>
                 </div>
-              )}
-            </div>
 
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-              <div className="flex items-center gap-2.5">
-                <img src={paper.authors[0].avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'} alt="" className="w-7 h-7 rounded-full object-cover border border-white/20" />
-                <span className="text-white/80 font-semibold">{paper.authors.map(a => a.name).join(', ')}</span>
+                {/* Title — serif, large, italic */}
+                <h2 className="font-display text-white leading-tight group-hover:opacity-80 transition-opacity" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.5rem)', fontWeight: 600, letterSpacing: '-0.03em' }}>
+                  <Link href={`/papers/${paper.slug}`} className="hover:underline decoration-white/20 underline-offset-4">
+                    <em>{paper.title}</em>
+                  </Link>
+                </h2>
+
+                {/* Abstract */}
+                <p className="font-display italic text-white/45 leading-snug line-clamp-2" style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)', letterSpacing: '0.01em' }}>
+                  "{paper.abstract}"
+                </p>
+
+                {/* Fork lineage */}
+                {paper.parentPaperTitle && (
+                  <div className="flex items-center gap-2 font-ui text-[10px] text-white/30">
+                    <GitFork className="w-3 h-3" />
+                    <span>Forked from: {paper.parentPaperTitle}</span>
+                  </div>
+                )}
+
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center gap-3">
+                    {paper.authors[0]?.avatarUrl && (
+                      <img
+                        src={paper.authors[0].avatarUrl}
+                        alt=""
+                        className="w-6 h-6 object-cover"
+                      />
+                    )}
+                    <span className="font-ui text-[11px] text-white/40">
+                      {paper.authors.map(a => a.name).join(', ')}
+                    </span>
+                  </div>
+                  <Link
+                    href={`/papers/${paper.slug}`}
+                    className="font-ui text-[11px] uppercase tracking-widest text-white/30 hover:text-white transition-colors"
+                  >
+                    Read →
+                  </Link>
+                </div>
               </div>
-              <Link
-                href={`/papers/${paper.slug}`}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold transition-all border border-white/15 shadow-lg"
-              >
-                Read Interactive →
-              </Link>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

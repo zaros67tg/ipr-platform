@@ -52,7 +52,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
         </button>
 
         <div className="flex items-center gap-2 mb-2">
-          <BookOpen className="w-5 h-5 text-[#C85A32]" />
+          <BookOpen className="w-5 h-5 text-[#FFFFFF]" />
           <h2 className="text-xl serif-title text-[#F4F0E8]">Export Native Citation</h2>
         </div>
         <p className="text-sm text-[#A8A198] mb-6">
@@ -67,7 +67,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
               onClick={() => setActiveFormat(fmt)}
               className={`px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
                 activeFormat === fmt 
-                  ? 'bg-[#C85A32] text-[#F4F0E8] font-bold' 
+                  ? 'bg-[#FFFFFF] text-[#F4F0E8] font-bold' 
                   : 'bg-[#1C1917] text-[#A8A198] hover:text-[#F4F0E8] border border-white/5'
               }`}
             >
@@ -77,7 +77,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
         </div>
 
         {/* Citation Box */}
-        <div className="bg-[#0D0C0B] border border-white/10 rounded-lg p-4 mb-6 font-mono text-xs text-[#E8E0D2] whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto selection:bg-[#C85A32]/40">
+        <div className="bg-[#0D0C0B] border border-white/10 rounded-lg p-4 mb-6 font-mono text-xs text-[#E8E0D2] whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto selection:bg-[#FFFFFF]/40">
           {citations[activeFormat]}
         </div>
 
@@ -87,7 +87,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
           </span>
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'Copied to Clipboard' : `Copy ${activeFormat}`}</span>
@@ -97,3 +97,4 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
     </div>
   );
 };
+

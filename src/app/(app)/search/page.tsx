@@ -19,18 +19,18 @@ export default function GlobalSearchPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div className="border-b border-white/10 pb-6">
-        <span className="text-xs font-mono text-[#C85A32] uppercase font-bold tracking-wider">SCHOLARLY ARCHIVE SEARCH</span>
+        <span className="text-xs font-mono text-[#FFFFFF] uppercase font-bold tracking-wider">SCHOLARLY ARCHIVE SEARCH</span>
         <h1 className="text-3xl serif-title text-[#F4F0E8] mt-1">Search the Republic</h1>
       </div>
 
       <div className="relative">
-        <Search className="w-5 h-5 text-[#C85A32] absolute left-4 top-1/2 -translate-y-1/2" />
+        <Search className="w-5 h-5 text-[#FFFFFF] absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search papers, mathematical equations, researchers, projects, code..."
-          className="w-full bg-[#151311] border border-white/15 rounded-xl pl-12 pr-4 py-4 text-base text-[#F4F0E8] placeholder-[#746F69] focus:outline-none focus:border-[#C85A32] shadow-xl"
+          className="w-full bg-[#151311] border border-white/15 rounded-xl pl-12 pr-4 py-4 text-base text-[#F4F0E8] placeholder-[#746F69] focus:outline-none focus:border-[#FFFFFF] shadow-xl"
         />
       </div>
 
@@ -38,7 +38,7 @@ export default function GlobalSearchPage() {
         {/* Papers */}
         <div>
           <h2 className="text-sm font-mono text-[#746F69] uppercase mb-3 flex items-center gap-1.5">
-            <FileText className="w-4 h-4 text-[#C85A32]" /> Papers ({filteredPapers.length})
+            <FileText className="w-4 h-4 text-[#FFFFFF]" /> Papers ({filteredPapers.length})
           </h2>
           <div className="space-y-2">
             {filteredPapers.map(p => (
@@ -75,3 +75,4 @@ export default function GlobalSearchPage() {
     </div>
   );
 }
+

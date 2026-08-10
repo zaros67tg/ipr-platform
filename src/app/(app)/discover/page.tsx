@@ -13,7 +13,7 @@ export default function DiscoverPage() {
     <div className="space-y-12 max-w-5xl mx-auto">
       {/* Header */}
       <div className="border-b border-white/10 pb-6">
-        <span className="text-xs font-mono text-[#C85A32] uppercase tracking-widest block font-bold mb-1">
+        <span className="text-xs font-mono text-[#FFFFFF] uppercase tracking-widest block font-bold mb-1">
           RESEARCH EXPLORATION
         </span>
         <h1 className="text-3xl sm:text-4xl serif-title text-[#F4F0E8] mb-2">
@@ -30,10 +30,10 @@ export default function DiscoverPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
             <h2 className="text-lg serif-title text-[#F4F0E8] flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-[#C85A32]" />
+              <BookOpen className="w-4 h-4 text-[#FFFFFF]" />
               Trending Manuscripts
             </h2>
-            <Link href="/papers" className="text-xs font-mono text-[#C85A32] hover:underline">View All →</Link>
+            <Link href="/papers" className="text-xs font-mono text-[#FFFFFF] hover:underline">View All →</Link>
           </div>
 
           <div className="space-y-3">
@@ -41,7 +41,7 @@ export default function DiscoverPage() {
               <div key={p.id} className="ipr-card p-4">
                 <DisciplineTag domain={p.primaryDomain} size="sm" className="mb-1" />
                 <h3 className="text-sm font-semibold text-[#F4F0E8] mb-1">
-                  <Link href={`/papers/${p.slug}`} className="hover:text-[#C85A32]">
+                  <Link href={`/papers/${p.slug}`} className="hover:text-[#FFFFFF]">
                     {p.title}
                   </Link>
                 </h3>
@@ -57,17 +57,17 @@ export default function DiscoverPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-2">
               <h2 className="text-lg serif-title text-[#F4F0E8] flex items-center gap-2">
-                <FolderGit2 className="w-4 h-4 text-[#D97706]" />
+                <FolderGit2 className="w-4 h-4 text-[#FFFFFF]" />
                 Projects Seeking Team
               </h2>
-              <Link href="/projects" className="text-xs font-mono text-[#D97706] hover:underline">View All →</Link>
+              <Link href="/projects" className="text-xs font-mono text-[#FFFFFF] hover:underline">View All →</Link>
             </div>
 
             <div className="space-y-3">
               {projects.map(pr => (
                 <div key={pr.id} className="ipr-card p-4">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-mono text-[#D97706]">{pr.status}</span>
+                    <span className="text-[10px] font-mono text-[#FFFFFF]">{pr.status}</span>
                     <DisciplineTag domain={pr.domain} size="sm" />
                   </div>
                   <h3 className="text-sm font-semibold text-[#F4F0E8]">{pr.title}</h3>
@@ -104,3 +104,4 @@ export default function DiscoverPage() {
     </div>
   );
 }
+

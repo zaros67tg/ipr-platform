@@ -34,7 +34,7 @@ export default function ReviewsDashboardPage() {
 
         <Link
           href="/submit"
-          className="px-5 py-2.5 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] rounded-lg text-xs font-mono font-bold transition-colors inline-flex items-center gap-2 shadow-lg shrink-0"
+          className="px-5 py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-lg text-xs font-mono font-bold transition-colors inline-flex items-center gap-2 shadow-lg shrink-0"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Submit Manuscript (3 Credits)</span>
@@ -43,10 +43,10 @@ export default function ReviewsDashboardPage() {
 
       {/* CREDIT BALANCE DASHBOARD */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="ipr-card p-6 bg-[#151311] border-l-4 border-l-[#C85A32]">
+        <div className="ipr-card p-6 bg-[#151311] border-l-4 border-l-[#FFFFFF]">
           <div className="text-[10px] font-mono text-[#746F69] uppercase">AVAILABLE CREDITS</div>
           <div className="text-4xl font-mono font-bold text-[#F4F0E8] my-1">{availableCredits.toString().padStart(2, '0')}</div>
-          <div className="text-[11px] font-mono text-[#C85A32]">
+          <div className="text-[11px] font-mono text-[#FFFFFF]">
             {isEligibleForSubmission ? '✓ Eligible for Manuscript Submission' : '✗ Need 3 Credits to Submit'}
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function ReviewsDashboardPage() {
 
       {/* UNLOCK THRESHOLDS */}
       <div className="p-6 rounded-xl bg-[#151311] border border-white/10 space-y-4">
-        <h3 className="text-xs font-mono font-bold text-[#C85A32] uppercase tracking-wider">
+        <h3 className="text-xs font-mono font-bold text-[#FFFFFF] uppercase tracking-wider">
           Contribution Unlock Thresholds
         </h3>
 
@@ -103,7 +103,7 @@ export default function ReviewsDashboardPage() {
             )}
           </div>
 
-          <div className={`p-4 rounded-lg border ${isEligibleForFeatured ? 'bg-[#D97706]/10 border-[#D97706]/40' : 'bg-[#0D0C0B] border-white/10'}`}>
+          <div className={`p-4 rounded-lg border ${isEligibleForFeatured ? 'bg-[#FFFFFF]/10 border-[#FFFFFF]/40' : 'bg-[#0D0C0B] border-white/10'}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="font-bold text-[#F4F0E8]">10 CREDITS</span>
               {isEligibleForFeatured ? <CheckCircle2 className="w-4 h-4 text-amber-400" /> : <AlertCircle className="w-4 h-4 text-[#746F69]" />}
@@ -162,12 +162,12 @@ export default function ReviewsDashboardPage() {
                     <td className="p-3 text-[#746F69]">{tx.id}</td>
                     <td className="p-3">
                       <span className={`px-2 py-0.5 rounded text-[10px] ${
-                        tx.amount > 0 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-[#C85A32]/20 text-[#E89574]'
+                        tx.amount > 0 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-[#FFFFFF]/20 text-[rgba(255,255,255,0.6)]'
                       }`}>
                         {tx.type}
                       </span>
                     </td>
-                    <td className={`p-3 font-bold ${tx.amount > 0 ? 'text-emerald-400' : 'text-[#C85A32]'}`}>
+                    <td className={`p-3 font-bold ${tx.amount > 0 ? 'text-emerald-400' : 'text-[#FFFFFF]'}`}>
                       {tx.amount > 0 ? `+${tx.amount}` : tx.amount}
                     </td>
                     <td className="p-3 text-xs max-w-xs truncate">{tx.reason}</td>
@@ -204,3 +204,4 @@ export default function ReviewsDashboardPage() {
     </div>
   );
 }
+

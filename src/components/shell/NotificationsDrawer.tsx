@@ -23,13 +23,13 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({ isOpen
           {/* Header */}
           <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#0D0C0B]">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-[#C85A32]" />
+              <Bell className="w-4 h-4 text-[#FFFFFF]" />
               <h3 className="text-sm font-semibold font-serif text-[#F4F0E8]">Notifications</h3>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={markAllNotificationsRead}
-                className="text-[11px] font-mono text-[#A8A198] hover:text-[#C85A32] transition-colors"
+                className="text-[11px] font-mono text-[#A8A198] hover:text-[#FFFFFF] transition-colors"
               >
                 Mark all read
               </button>
@@ -56,7 +56,7 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({ isOpen
                   className={`p-3 rounded-lg border transition-colors ${
                     n.isRead 
                       ? 'bg-[#0D0C0B]/50 border-white/5 opacity-75' 
-                      : 'bg-[#1C1917] border-[#C85A32]/30 shadow-xs'
+                      : 'bg-[#1C1917] border-[#FFFFFF]/30 shadow-xs'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-1">
@@ -69,7 +69,7 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({ isOpen
                   <Link
                     href={n.link}
                     onClick={onClose}
-                    className="inline-flex items-center gap-1 text-[11px] font-mono text-[#C85A32] hover:underline"
+                    className="inline-flex items-center gap-1 text-[11px] font-mono text-[#FFFFFF] hover:underline"
                   >
                     <span>View details</span>
                     <ExternalLink className="w-3 h-3" />
@@ -83,3 +83,4 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({ isOpen
     </div>
   );
 };
+

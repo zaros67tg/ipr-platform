@@ -67,7 +67,7 @@ export default function OnboardingPage() {
         {/* Step Indicator */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs">
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-[#C85A32] text-[#F4F0E8] font-bold flex items-center justify-center">
+            <span className="w-6 h-6 rounded-full bg-[#FFFFFF] text-[#F4F0E8] font-bold flex items-center justify-center">
               {step}
             </span>
             <span className="text-[#F4F0E8] font-bold">
@@ -93,7 +93,7 @@ export default function OnboardingPage() {
                     onClick={() => toggleDomain(d)}
                     className={`p-3 rounded-lg border text-left transition-colors ${
                       isSelected
-                        ? 'bg-[#C85A32]/20 border-[#C85A32] text-[#F4F0E8] font-bold'
+                        ? 'bg-[#FFFFFF]/20 border-[#FFFFFF] text-[#F4F0E8] font-bold'
                         : 'bg-[#0D0C0B] border-white/10 text-[#A8A198] hover:text-[#F4F0E8]'
                     }`}
                   >
@@ -146,7 +146,7 @@ export default function OnboardingPage() {
                 value={lookingFor}
                 onChange={e => setLookingFor(e.target.value)}
                 placeholder="e.g., Seeking a numerical implementation programmer experienced with CUDA kernels to formalize stability proofs..."
-                className="w-full bg-[#0D0C0B] border border-white/10 rounded-lg p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#C85A32] resize-none"
+                className="w-full bg-[#0D0C0B] border border-white/10 rounded-lg p-3 text-xs text-[#F4F0E8] focus:outline-none focus:border-[#FFFFFF] resize-none"
               />
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function OnboardingPage() {
           {step < 3 ? (
             <button
               onClick={() => setStep(step + 1)}
-              className="px-5 py-2.5 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] font-bold rounded-lg flex items-center gap-1.5"
+              className="px-5 py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] font-bold rounded-lg flex items-center gap-1.5"
             >
               Next Step <ArrowRight className="w-4 h-4" />
             </button>
@@ -183,3 +183,4 @@ export default function OnboardingPage() {
     </div>
   );
 }
+

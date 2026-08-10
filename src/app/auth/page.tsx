@@ -37,7 +37,7 @@ export default function AuthPage() {
     <div className="min-h-[80vh] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-[#151311]/90 backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl p-8 relative space-y-6">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#C85A32]/20 border border-[#C85A32]/40 text-[#C85A32] mb-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#FFFFFF]/20 border border-[#FFFFFF]/40 text-[#FFFFFF] mb-2">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h1 className="text-2xl serif-title text-[#F4F0E8]">Sign In to The Press</h1>
@@ -53,7 +53,7 @@ export default function AuthPage() {
             onClick={() => setAuthMode('GITHUB')}
             className={`py-2 rounded transition-colors ${
               authMode === 'GITHUB'
-                ? 'bg-[#C85A32] text-[#F4F0E8] font-bold'
+                ? 'bg-[#FFFFFF] text-[#F4F0E8] font-bold'
                 : 'text-[#A8A198] hover:text-[#F4F0E8]'
             }`}
           >
@@ -124,3 +124,4 @@ export default function AuthPage() {
     </div>
   );
 }
+

@@ -40,9 +40,9 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       return (
         <span 
           title="Community Verified - Active Contributor" 
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#C85A32]/20 text-[#E89574] border border-[#C85A32]/40 ${className}`}
+          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#FFFFFF]/20 text-[rgba(255,255,255,0.6)] border border-[#FFFFFF]/40 ${className}`}
         >
-          <CheckCircle2 className="w-3 h-3 text-[#E89574]" />
+          <CheckCircle2 className="w-3 h-3 text-[rgba(255,255,255,0.6)]" />
           {showText && <span>Community Verified</span>}
         </span>
       );
@@ -59,3 +59,4 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       );
   }
 };
+

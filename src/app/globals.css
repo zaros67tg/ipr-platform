@@ -2,12 +2,28 @@
 @import "katex/dist/katex.min.css";
 
 /* ────────────────────────────────────────────────
-   BRUTALIST EDITORIAL FOUNDATION — Light / Dark
+   THE ROOT VARIABLE CIRCUIT (globals.css)
+   Pure Monochrome Semantic Theme Variables
 ──────────────────────────────────────────────── */
 
+@theme {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-border: rgb(var(--border));
+}
+
 :root {
+  --background: 255 255 255;
+  --foreground: 0 0 0;
+  --border: 0 0 0;
   --font-display: var(--font-display, "Cormorant Garamond", "Playfair Display", Georgia, serif);
   --font-ui: var(--font-ui, "Inter", system-ui, -apple-system, sans-serif);
+}
+
+.dark {
+  --background: 0 0 0;
+  --foreground: 255 255 255;
+  --border: 255 255 255;
 }
 
 * {
@@ -23,32 +39,20 @@ html {
   scroll-behavior: auto;
 }
 
-/* Default Light Theme */
 html, body {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
   font-family: var(--font-ui);
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
   cursor: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-/* Dark Theme */
-html.dark, html.dark body {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-html.dark ::selection {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: rgb(var(--foreground));
+  color: rgb(var(--background));
 }
 
 /* Typography */
@@ -60,18 +64,11 @@ html.dark ::selection {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 1px;
-  background: rgba(0, 0, 0, 0.15);
-}
-html.dark .poster-grid {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--foreground), 0.15);
 }
 .poster-grid > * {
-  background-color: #ffffff;
-  color: #000000;
-}
-html.dark .poster-grid > * {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
 }
 
 /* KaTeX */
@@ -79,7 +76,7 @@ html.dark .poster-grid > * {
 .katex-display {
   margin: 1.2em 0 !important;
   padding: 1rem;
-  border: 1px solid currentColor;
+  border: 1px solid rgba(var(--foreground), 0.2);
 }
 
 /* Scrollbar hide */
@@ -91,14 +88,11 @@ a { color: inherit; text-decoration: none; }
 
 /* Social Dock glass panel */
 .social-dock {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(var(--background), 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-}
-html.dark .social-dock {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(var(--foreground), 0.2);
+  color: rgb(var(--foreground));
 }
 
 /* Marquee animation */
@@ -117,34 +111,37 @@ html.dark .social-dock {
 .editorial-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid currentColor;
-  color: inherit;
+  border-bottom: 1px solid rgba(var(--foreground), 0.3);
+  color: rgb(var(--foreground));
   font-family: var(--font-display);
   width: 100%;
   outline: none;
   transition: border-color 0.2s;
 }
+.editorial-input:focus {
+  border-bottom-color: rgb(var(--foreground));
+}
 
 /* Global form elements */
 input, textarea, select {
   background: transparent;
-  color: inherit;
-  border-color: currentColor;
+  color: rgb(var(--foreground));
+  border-color: rgba(var(--foreground), 0.3);
 }
 
 option {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-html.dark option {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--foreground)) !important;
 }
 
 /* People masonry */
 .people-masonry {
   columns: 1;
   gap: 1px;
+  background-color: rgba(var(--foreground), 0.1);
+}
+.people-masonry > * {
+  background-color: rgb(var(--background));
 }
 @media (min-width: 640px)  { .people-masonry { columns: 2; } }
 @media (min-width: 1024px) { .people-masonry { columns: 3; } }

@@ -45,16 +45,16 @@ export function TopNav() {
 
   return (
     <>
-      {/* ── Fixed Top Navigation Bar — CIRCUIT 1 ── */}
-      <header className="fixed top-0 left-0 w-full z-50 h-16 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-black/10 dark:border-white/10 flex items-center justify-between px-4 md:px-12 transition-colors duration-200">
+      {/* ── Fixed Top Navigation Bar — Semantic Light/Dark ── */}
+      <header className="fixed top-0 left-0 w-full z-50 h-16 bg-background/90 backdrop-blur-md border-b border-foreground/10 flex items-center justify-between px-4 md:px-12 transition-colors duration-300">
         {/* Logo — links to /about */}
         <Link
           href="/about"
-          className="flex items-center gap-2.5 hover:opacity-75 transition-opacity"
+          className="flex items-center gap-2.5 hover:opacity-75 transition-opacity text-foreground"
         >
           <img src="/logo-placeholder.png" alt="" className="w-8 h-8 hidden" />
           <span
-            className="font-display font-bold leading-none select-none"
+            className="font-display font-bold leading-none select-none text-foreground"
             style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', letterSpacing: '-0.04em' }}
           >
             IPR
@@ -69,14 +69,14 @@ export function TopNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative font-ui text-[13px] transition-opacity"
+                className="relative font-ui text-[13px] text-foreground transition-opacity"
                 style={{ opacity: isActive ? 1 : 0.5, fontWeight: isActive ? 600 : 400 }}
               >
                 {link.label}
                 {isActive && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute -bottom-[1px] left-0 right-0 h-px bg-current"
+                    className="absolute -bottom-[1px] left-0 right-0 h-px bg-foreground"
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                   />
                 )}
@@ -89,33 +89,33 @@ export function TopNav() {
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
             href="/submit"
-            className="hidden sm:inline-block font-ui text-[12px] border border-current px-4 py-1.5 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+            className="hidden sm:inline-block font-ui text-[12px] border border-foreground/30 px-4 py-1.5 bg-foreground text-background hover:opacity-80 transition-opacity font-bold"
           >
             Publish
           </Link>
 
           <button
             onClick={() => setSearchOpen(true)}
-            className="font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity"
+            className="font-ui text-[12px] text-foreground opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
           >
             Search
           </button>
 
           <button
             onClick={() => setNotifOpen(true)}
-            className="font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity"
+            className="font-ui text-[12px] text-foreground opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
           >
             Alerts
           </button>
 
-          {/* Stark Brutalist Light/Dark Theme Switcher — CIRCUIT 3 */}
+          {/* Stark Brutalist Light/Dark Theme Switcher */}
           <ThemeToggle />
 
           {/* Profile Dropdown */}
           <div ref={profileRef} className="relative">
             <button
               onClick={() => setProfileOpen(o => !o)}
-              className="flex items-center gap-1 font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity"
+              className="flex items-center gap-1 font-ui text-[12px] text-foreground opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
             >
               {session?.user?.name?.split(' ')[0] || 'Profile'}
               <ChevronDown className={`w-3 h-3 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
@@ -128,26 +128,26 @@ export function TopNav() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-3 w-44 bg-white dark:bg-black border border-black/10 dark:border-white/10 z-50 py-1"
+                  className="absolute right-0 top-full mt-3 w-44 bg-background border border-foreground/20 z-50 py-1"
                 >
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-foreground/5 transition-colors"
                   >
                     Profile
                   </Link>
                   <Link
                     href="/settings"
                     onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                    className="block font-ui text-[12px] px-4 py-2.5 opacity-60 hover:opacity-100 hover:bg-foreground/5 transition-colors"
                   >
                     Settings &amp; Preferences
                   </Link>
-                  <div className="border-t border-black/10 dark:border-white/10 mt-1 pt-1">
+                  <div className="border-t border-foreground/10 mt-1 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left font-ui text-[12px] px-4 py-2.5 opacity-40 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                      className="w-full text-left font-ui text-[12px] px-4 py-2.5 opacity-40 hover:opacity-100 hover:bg-foreground/5 transition-colors cursor-pointer"
                     >
                       Log Out
                     </button>
@@ -158,7 +158,7 @@ export function TopNav() {
           </div>
 
           {!session?.user && (
-            <Link href="/auth" className="font-ui text-[12px] opacity-50 hover:opacity-100 transition-opacity">
+            <Link href="/auth" className="font-ui text-[12px] text-foreground opacity-50 hover:opacity-100 transition-opacity">
               Sign In
             </Link>
           )}

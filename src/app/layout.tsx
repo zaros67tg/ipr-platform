@@ -37,7 +37,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${cormorant.variable} ${inter.variable} h-full`}
     >
-      <body className="min-h-full cursor-none selection:bg-current selection:text-background">
+      <body className="min-h-full bg-background text-foreground transition-colors duration-300 cursor-none selection:bg-foreground selection:text-background">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AppProvider>
             <LenisProvider>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useApp } from '@/lib/services/store';
 import { authClient } from '@/lib/auth-client';
 import { updateProfile } from '@/lib/actions/user';
-import { Check, ShieldCheck, User, Bell, Lock } from 'lucide-react';
+import { Check, ShieldCheck } from 'lucide-react';
 
 export default function SettingsPage() {
   const { currentUser, updateUserProfile } = useApp();
@@ -27,7 +27,6 @@ export default function SettingsPage() {
     setStatusMsg(null);
 
     try {
-      // 1. Execute Server Action (Updates Supabase DB via Drizzle ORM & calls revalidatePath('/', 'layout'))
       const res = await updateProfile({
         userId,
         name,
@@ -36,7 +35,6 @@ export default function SettingsPage() {
       });
 
       if (res.success) {
-        // 2. Update local state store
         updateUserProfile({
           name,
           institution,
@@ -48,11 +46,10 @@ export default function SettingsPage() {
           text: 'Settings & preferences saved to database successfully. Application state revalidated globally.',
         });
       } else {
-        // Fallback update local store even if DB connection fails
         updateUserProfile({ name, institution, researchStatement });
         setStatusMsg({
           type: 'success',
-          text: `Preferences updated locally. DB note: ${res.error}`,
+          text: `Preferences updated locally. Note: ${res.error}`,
         });
       }
     } catch (err: any) {
@@ -68,14 +65,14 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-12 w-full">
+    <div className="space-y-12 w-full text-foreground">
       {/* ── Page Header ── */}
-      <div className="border-b border-current/10 pb-8">
+      <div className="border-b border-foreground/10 pb-8">
         <p className="font-ui text-[10px] uppercase tracking-[0.35em] opacity-40 mb-3">
-          Circuit 2 · Account &amp; Preferences
+          Account &amp; Preferences
         </p>
         <h1
-          className="font-display leading-none"
+          className="font-display leading-none text-foreground"
           style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)', fontWeight: 600, letterSpacing: '-0.04em' }}
         >
           Researcher Settings
@@ -130,7 +127,7 @@ export default function SettingsPage() {
               type="email"
               disabled
               value={defaultEmail}
-              className="w-full bg-black/5 dark:bg-white/5 border border-current/20 p-3.5 font-ui text-sm opacity-60 cursor-not-allowed"
+              className="w-full bg-foreground/5 border border-foreground/20 p-3.5 font-ui text-sm opacity-60 cursor-not-allowed text-foreground"
             />
             <p className="font-ui text-[11px] opacity-40">
               Verified via GitHub / OAuth session. Used for academic credentials and alerts.
@@ -161,16 +158,16 @@ export default function SettingsPage() {
               value={researchStatement}
               onChange={e => setResearchStatement(e.target.value)}
               placeholder="Describe your primary research focus and non-equilibrium dynamical systems interest..."
-              className="w-full bg-transparent border border-current/20 p-4 font-display text-lg italic leading-relaxed focus:outline-none focus:border-current resize-none"
+              className="w-full bg-transparent border border-foreground/20 p-4 font-display text-lg italic leading-relaxed focus:outline-none focus:border-foreground resize-none text-foreground"
             />
           </div>
 
-          {/* Save Button — Stark Brutalist Styling */}
+          {/* Save Button — Inverts cleanly: bg-foreground text-background */}
           <div className="pt-4">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-black text-white dark:bg-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors px-8 py-4 font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="bg-foreground text-background hover:opacity-80 transition-opacity px-8 py-4 font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <Check className="w-4 h-4" />
               <span>{isSubmitting ? 'Mutating Database...' : 'Save Preferences'}</span>
@@ -180,7 +177,7 @@ export default function SettingsPage() {
 
         {/* Right Column: Status & Integrity Dossier (4 Cols) */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="border border-current/15 p-6 space-y-4">
+          <div className="border border-foreground/15 p-6 space-y-4">
             <div className="flex items-center gap-2 font-ui text-[11px] uppercase tracking-widest font-bold">
               <ShieldCheck className="w-4 h-4" />
               <span>Dossier Verification</span>
@@ -198,7 +195,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="border border-current/15 p-6 space-y-3">
+          <div className="border border-foreground/15 p-6 space-y-3">
             <div className="font-ui text-[11px] uppercase tracking-widest font-bold">
               Preferences Summary
             </div>

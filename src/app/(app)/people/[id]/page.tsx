@@ -23,7 +23,7 @@ export default function ResearcherDossierPage() {
 
   return (
     <div className="space-y-10 max-w-5xl mx-auto">
-      <Link href="/people" className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A8A198] hover:text-[#C85A32]">
+      <Link href="/people" className="inline-flex items-center gap-1.5 text-xs font-mono text-white/50 hover:text-white">
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Researcher Registry</span>
       </Link>
@@ -35,15 +35,15 @@ export default function ResearcherDossierPage() {
             <img
               src={researcher.avatarUrl}
               alt={researcher.name}
-              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-[#5A6B43]/50 shadow-xl"
+              className="w-24 h-24 sm:w-28 sm:h-28 object-cover border-2 border-[#5A6B43]/50 shadow-xl"
             />
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <h1 className="text-2xl sm:text-4xl serif-title text-[#F4F0E8]">{researcher.name}</h1>
+                <h1 className="text-2xl sm:text-4xl serif-title text-white">{researcher.name}</h1>
                 <VerificationBadge status={researcher.verificationStatus} />
               </div>
-              <p className="text-sm font-mono text-[#A8A198]">{researcher.title} • {researcher.handle}</p>
-              <p className="text-xs font-mono text-[#746F69] mt-0.5">{researcher.institution}</p>
+              <p className="text-sm font-mono text-white/50">{researcher.title} • {researcher.handle}</p>
+              <p className="text-xs font-mono text-white/35 mt-0.5">{researcher.institution}</p>
               {researcher.orcid && (
                 <p className="text-[11px] font-mono text-[#5A6B43] mt-1">ORCID: {researcher.orcid}</p>
               )}
@@ -52,7 +52,7 @@ export default function ResearcherDossierPage() {
 
           <Link
             href="/match"
-            className="px-5 py-2.5 bg-[#C85A32] hover:bg-[#B54E29] text-[#F4F0E8] font-bold rounded-lg text-xs font-mono inline-flex items-center gap-2 shadow-lg shrink-0"
+            className="px-5 py-2.5 bg-white hover:bg-white/90 text-black font-bold text-xs font-mono inline-flex items-center gap-2 shadow-lg shrink-0"
           >
             <Send className="w-4 h-4" />
             <span>Connect / Offer Collaboration</span>
@@ -60,7 +60,7 @@ export default function ResearcherDossierPage() {
         </div>
 
         {/* Research Statement */}
-        <div className="p-5 rounded-xl bg-[#0D0C0B] border border-white/5 space-y-2">
+        <div className="p-5 bg-black border border-white/5 space-y-2">
           <span className="text-xs font-mono text-[#5A6B43] uppercase tracking-wider font-bold block">RESEARCH STATEMENT</span>
           <p className="text-base font-serif text-[#E8E0D2] italic leading-relaxed">
             "{researcher.researchStatement}"
@@ -70,7 +70,7 @@ export default function ResearcherDossierPage() {
         {/* Domains & Tech Stack */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
           <div>
-            <span className="text-[#746F69] uppercase block mb-2">PRIMARY DOMAINS</span>
+            <span className="text-white/35 uppercase block mb-2">PRIMARY DOMAINS</span>
             <div className="flex flex-wrap gap-1.5">
               {researcher.primaryDomains.map(d => (
                 <DisciplineTag key={d} domain={d} size="sm" />
@@ -78,10 +78,10 @@ export default function ResearcherDossierPage() {
             </div>
           </div>
           <div>
-            <span className="text-[#746F69] uppercase block mb-2">SKILLS & TECH STACK</span>
+            <span className="text-white/35 uppercase block mb-2">SKILLS &amp; TECH STACK</span>
             <div className="flex flex-wrap gap-1">
               {researcher.skills.map(s => (
-                <span key={s} className="px-2 py-0.5 rounded text-[10px] bg-[#1C1917] text-[#A8A198] border border-white/5">
+                <span key={s} className="px-2 py-0.5 text-[10px] bg-black text-white/50 border border-white/5">
                   {s}
                 </span>
               ))}
@@ -97,10 +97,10 @@ export default function ResearcherDossierPage() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-4 py-2 transition-colors ${
                 activeTab === tab 
-                  ? 'bg-[#5A6B43] text-[#F4F0E8] font-bold' 
-                  : 'bg-[#151311] text-[#A8A198] hover:text-[#F4F0E8]'
+                  ? 'bg-[#5A6B43] text-white font-bold' 
+                  : 'bg-black text-white/50 hover:text-white'
               }`}
             >
               {tab}
@@ -114,12 +114,12 @@ export default function ResearcherDossierPage() {
               <div key={paper.id} className="ipr-card p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <DisciplineTag domain={paper.primaryDomain} size="sm" className="mb-2" />
-                  <h3 className="text-lg serif-title text-[#F4F0E8]">{paper.title}</h3>
-                  <p className="text-xs text-[#A8A198] line-clamp-1 mt-1 font-serif">{paper.abstract}</p>
+                  <h3 className="text-lg serif-title text-white">{paper.title}</h3>
+                  <p className="text-xs text-white/50 line-clamp-1 mt-1 font-serif">{paper.abstract}</p>
                 </div>
                 <Link
                   href={`/papers/${paper.slug}`}
-                  className="px-4 py-2 bg-[#C85A32] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#B54E29] shrink-0"
+                  className="px-4 py-2 bg-white text-black font-mono text-xs font-bold hover:bg-white/90 shrink-0"
                 >
                   Read Paper →
                 </Link>
@@ -134,12 +134,12 @@ export default function ResearcherDossierPage() {
               <div key={proj.id} className="ipr-card p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <DisciplineTag domain={proj.domain} size="sm" className="mb-2" />
-                  <h3 className="text-lg font-semibold text-[#F4F0E8]">{proj.title}</h3>
-                  <p className="text-xs text-[#A8A198] line-clamp-1 mt-1">{proj.researchQuestion}</p>
+                  <h3 className="text-lg font-semibold text-white">{proj.title}</h3>
+                  <p className="text-xs text-white/50 line-clamp-1 mt-1">{proj.researchQuestion}</p>
                 </div>
                 <Link
                   href={`/projects/${proj.slug}`}
-                  className="px-4 py-2 bg-[#1C1917] border border-white/10 text-[#F4F0E8] rounded font-mono text-xs hover:bg-[#24201D] shrink-0"
+                  className="px-4 py-2 bg-black border border-white/10 text-white font-mono text-xs hover:bg-[#24201D] shrink-0"
                 >
                   View Project →
                 </Link>
@@ -152,9 +152,9 @@ export default function ResearcherDossierPage() {
           <div className="space-y-4">
             {userReviews.map(rev => (
               <div key={rev.id} className="ipr-card p-6 space-y-2">
-                <div className="text-xs font-mono text-[#746F69]">{formatDate(rev.createdAt)}</div>
-                <h3 className="text-base font-semibold text-[#F4F0E8]">{rev.paperTitle}</h3>
-                <p className="text-xs text-[#A8A198] font-serif italic">"{rev.content.summary}"</p>
+                <div className="text-xs font-mono text-white/35">{formatDate(rev.createdAt)}</div>
+                <h3 className="text-base font-semibold text-white">{rev.paperTitle}</h3>
+                <p className="text-xs text-white/50 font-serif italic">"{rev.content.summary}"</p>
               </div>
             ))}
           </div>

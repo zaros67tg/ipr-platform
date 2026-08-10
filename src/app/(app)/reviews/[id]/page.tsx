@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useApp } from '@/lib/services/store';
 import { MathRenderer } from '@/components/common/MathRenderer';
 import { Recommendation } from '@/types';
-import { Award, CheckCircle2, AlertCircle, ArrowLeft, FileText, Check, ShieldCheck } from 'lucide-react';
+import { Award, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ReviewerWorkspacePage() {
@@ -63,18 +63,18 @@ export default function ReviewerWorkspacePage() {
   };
 
   return (
-    <div className="space-y-6 max-w-[1500px] mx-auto">
+    <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 pt-32 pb-24 space-y-8">
       {/* Top Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <Link href="/reviews" className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A8A198] hover:text-[#C85A32]">
+        <Link href="/reviews" className="inline-flex items-center gap-2 text-xs font-ui uppercase tracking-widest text-white/50 hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" />
           <span>Exit Review Workspace</span>
         </Link>
 
-        <div className="flex items-center gap-4 text-xs font-mono">
-          <span className="text-[#746F69]">MANUSCRIPT: <strong>{paper.title}</strong></span>
-          <span className={`px-2.5 py-1 rounded font-bold ${
-            isWordCountValid ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-[#C85A32]/20 text-[#E89574]'
+        <div className="flex items-center gap-4 text-xs font-ui">
+          <span className="text-white/40">MANUSCRIPT: <strong className="text-white">{paper.title}</strong></span>
+          <span className={`px-3 py-1 uppercase tracking-widest border font-bold ${
+            isWordCountValid ? 'bg-white text-black border-white' : 'border-white/20 text-white/60 bg-black'
           }`}>
             {wordCount} / 300 WORDS {isWordCountValid ? '✓' : '(MIN REQUIRED)'}
           </span>
@@ -82,13 +82,13 @@ export default function ReviewerWorkspacePage() {
       </div>
 
       {successMsg && (
-        <div className="p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 font-mono text-sm text-center animate-in fade-in">
+        <div className="p-4 border border-white bg-white/10 text-white font-ui text-xs uppercase tracking-widest text-center">
           {successMsg}
         </div>
       )}
 
       {errorMsg && (
-        <div className="p-4 rounded-lg bg-[#C85A32]/20 border border-[#C85A32]/50 text-[#E89574] font-mono text-xs text-center">
+        <div className="p-4 border border-white/30 text-white/70 font-ui text-xs uppercase tracking-widest text-center">
           {errorMsg}
         </div>
       )}
@@ -96,46 +96,46 @@ export default function ReviewerWorkspacePage() {
       {/* 3-PANE REVIEWER WORKSPACE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* PANE 1: OUTLINE (2 Cols) */}
-        <div className="lg:col-span-2 p-4 rounded-xl bg-[#151311] border border-white/10 space-y-3 sticky top-20 text-xs font-mono">
-          <div className="text-[11px] text-[#746F69] uppercase font-bold tracking-wider">PAPER OUTLINE</div>
-          <div className="space-y-1.5 text-[#A8A198]">
-            <a href="#abstract" className="block p-1.5 rounded hover:bg-[#1C1917] hover:text-[#F4F0E8]">1. Abstract</a>
-            <a href="#sec-1" className="block p-1.5 rounded hover:bg-[#1C1917] hover:text-[#F4F0E8]">2. LIF Equations</a>
-            <a href="#sec-2" className="block p-1.5 rounded hover:bg-[#1C1917] hover:text-[#F4F0E8]">3. Lyapunov Proof</a>
-            <a href="#sec-3" className="block p-1.5 rounded hover:bg-[#1C1917] hover:text-[#F4F0E8]">4. C++ LIF Kernel</a>
+        <div className="lg:col-span-2 p-5 bg-black border border-white/10 space-y-4 sticky top-24 font-ui text-xs">
+          <div className="text-[10px] text-white/35 uppercase font-bold tracking-widest">PAPER OUTLINE</div>
+          <div className="space-y-2 text-white/60">
+            <a href="#abstract" className="block py-1 hover:text-white transition-colors">1. Abstract</a>
+            <a href="#sec-1" className="block py-1 hover:text-white transition-colors">2. LIF Equations</a>
+            <a href="#sec-2" className="block py-1 hover:text-white transition-colors">3. Lyapunov Proof</a>
+            <a href="#sec-3" className="block py-1 hover:text-white transition-colors">4. C++ LIF Kernel</a>
           </div>
         </div>
 
         {/* PANE 2: MANUSCRIPT CONTENT (5 Cols) */}
-        <div className="lg:col-span-5 p-6 rounded-xl bg-[#151311] border border-white/10 space-y-6 max-h-[80vh] overflow-y-auto font-serif">
+        <div className="lg:col-span-5 p-6 bg-black border border-white/10 space-y-6 max-h-[80vh] overflow-y-auto">
           <div>
-            <span className="text-xs font-mono text-[#C85A32] font-bold block mb-1">READING PANE</span>
-            <h2 className="text-2xl serif-title text-[#F4F0E8] mb-2">{paper.title}</h2>
-            <p className="text-xs font-mono text-[#746F69]">By {paper.authors.map(a => a.name).join(', ')}</p>
+            <span className="text-[10px] font-ui text-white/40 uppercase tracking-widest block mb-1">READING PANE</span>
+            <h2 className="font-display text-2xl text-white font-bold leading-tight mb-2">{paper.title}</h2>
+            <p className="font-ui text-xs text-white/40">By {paper.authors.map(a => a.name).join(', ')}</p>
           </div>
 
-          <div id="abstract" className="p-4 rounded bg-[#0D0C0B] border border-white/5 space-y-1">
-            <span className="text-[10px] font-mono text-[#C85A32] uppercase">Abstract</span>
-            <p className="text-xs text-[#E8E0D2] italic">{paper.abstract}</p>
+          <div id="abstract" className="p-4 border border-white/10 space-y-2">
+            <span className="text-[10px] font-ui text-white/40 uppercase tracking-widest block">Abstract</span>
+            <p className="font-display text-xs text-white/80 italic leading-relaxed">{paper.abstract}</p>
           </div>
 
           {paper.versions[0]?.blocks.map(block => (
             <div key={block.id} className="space-y-2">
               {block.type === 'heading' && (
-                <h3 className="text-base font-bold text-[#F4F0E8] pt-2 border-b border-white/10 font-mono">
+                <h3 className="font-display text-lg font-bold text-white pt-3 border-b border-white/10">
                   {block.content}
                 </h3>
               )}
               {block.type === 'paragraph' && (
-                <p className="text-sm text-[#E8E0D2] leading-relaxed">{block.content}</p>
+                <p className="font-display text-sm text-white/80 leading-relaxed">{block.content}</p>
               )}
               {block.type === 'equation' && (
-                <div className="py-2 text-center bg-[#0D0C0B] rounded border border-white/5">
+                <div className="py-3 text-center bg-black border border-white/10 my-2">
                   <MathRenderer latex={block.metadata?.latex || block.content} />
                 </div>
               )}
               {block.type === 'code' && (
-                <pre className="p-3 bg-[#0D0C0B] rounded text-xs font-mono text-[#E8E0D2] overflow-x-auto">
+                <pre className="p-4 bg-black border border-white/10 text-xs font-ui text-white/70 overflow-x-auto my-2">
                   <code>{block.content}</code>
                 </pre>
               )}
@@ -144,104 +144,84 @@ export default function ReviewerWorkspacePage() {
         </div>
 
         {/* PANE 3: ANNOTATION & EVALUATION WORKSPACE (5 Cols) */}
-        <div className="lg:col-span-5 p-6 rounded-xl bg-[#151311] border border-[#6D4C7D]/40 space-y-6 max-h-[80vh] overflow-y-auto">
+        <div className="lg:col-span-5 p-6 bg-black border border-white/20 space-y-6 max-h-[80vh] overflow-y-auto font-ui text-xs">
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <h3 className="text-base font-serif font-bold text-[#F4F0E8] flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#6D4C7D]" />
-              Peer Review Annotation Form
+            <h3 className="font-display text-lg font-bold text-white flex items-center gap-2">
+              <Award className="w-5 h-5 text-white" />
+              <span>Peer Review Evaluation</span>
             </h3>
-            <span className="text-xs font-mono text-emerald-400 font-bold">+1 CREDIT</span>
+            <span className="text-[10px] uppercase tracking-widest text-white/40">Reciprocal Credit Workflow</span>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
-            <div>
-              <label className="block text-[#A8A198] mb-1 font-bold">1. Manuscript Summary *</label>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <label className="uppercase tracking-widest font-bold text-white/60 text-[10px] block">Summary &amp; Key Findings</label>
               <textarea
-                required
-                rows={2}
+                rows={3}
                 value={summary}
                 onChange={e => setSummary(e.target.value)}
-                placeholder="Provide a concise summary of the core thesis, math derivations, or experimental findings..."
-                className="w-full bg-[#0D0C0B] border border-white/10 rounded p-2.5 text-[#F4F0E8] focus:outline-none focus:border-[#6D4C7D]"
+                placeholder="Summarize the paper's core hypothesis and main conclusions..."
+                className="w-full bg-black border border-white/20 p-3 text-white focus:outline-none focus:border-white resize-none"
               />
             </div>
 
-            <div>
-              <label className="block text-[#A8A198] mb-1 font-bold">2. Methodology & Scientific Rigor *</label>
+            <div className="space-y-2">
+              <label className="uppercase tracking-widest font-bold text-white/60 text-[10px] block">Methodology &amp; Mathematical Rigor</label>
               <textarea
-                required
-                rows={2}
+                rows={3}
                 value={methodology}
                 onChange={e => setMethodology(e.target.value)}
-                placeholder="Assess experimental controls, sampling size, assumptions, or mathematical validity..."
-                className="w-full bg-[#0D0C0B] border border-white/10 rounded p-2.5 text-[#F4F0E8] focus:outline-none focus:border-[#6D4C7D]"
+                placeholder="Evaluate the formal derivations, mathematical stability, or empirical design..."
+                className="w-full bg-black border border-white/20 p-3 text-white focus:outline-none focus:border-white resize-none"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-[#A8A198] mb-1 font-bold">Mathematical Concerns</label>
-                <textarea
-                  rows={2}
-                  value={mathematicalConcerns}
-                  onChange={e => setMathematicalConcerns(e.target.value)}
-                  placeholder="Identify missing variable definitions or invalid steps in derivations..."
-                  className="w-full bg-[#0D0C0B] border border-white/10 rounded p-2.5 text-[#F4F0E8] focus:outline-none focus:border-[#6D4C7D]"
-                />
-              </div>
-              <div>
-                <label className="block text-[#A8A198] mb-1 font-bold">Code & Reproducibility</label>
-                <textarea
-                  rows={2}
-                  value={codeConcerns}
-                  onChange={e => setCodeConcerns(e.target.value)}
-                  placeholder="Assess C++/Rust code cleanliness, memory safety, thread barriers..."
-                  className="w-full bg-[#0D0C0B] border border-white/10 rounded p-2.5 text-[#F4F0E8] focus:outline-none focus:border-[#6D4C7D]"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[#A8A198] mb-1 font-bold">Key Strengths & Actionable Weaknesses *</label>
+            <div className="space-y-2">
+              <label className="uppercase tracking-widest font-bold text-white/60 text-[10px] block">Strengths &amp; Technical Merits</label>
               <textarea
-                required
-                rows={2}
+                rows={3}
                 value={strengths}
                 onChange={e => setStrengths(e.target.value)}
-                placeholder="Highlight unique theoretical contributions and outline required revisions..."
-                className="w-full bg-[#0D0C0B] border border-white/10 rounded p-2.5 text-[#F4F0E8] focus:outline-none focus:border-[#6D4C7D]"
+                placeholder="Highlight novel contributions or hardware/algorithm optimizations..."
+                className="w-full bg-black border border-white/20 p-3 text-white focus:outline-none focus:border-white resize-none"
               />
             </div>
 
-            {/* Recommendation Radio */}
-            <div>
-              <label className="block text-[#A8A198] mb-2 font-bold uppercase">Final Recommendation *</label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {(['ACCEPT', 'MINOR_REVISION', 'MAJOR_REVISION', 'REJECT'] as const).map(rec => (
-                  <button
-                    key={rec}
-                    type="button"
-                    onClick={() => setRecommendation(rec)}
-                    className={`py-2 px-2 rounded text-[11px] font-bold border transition-colors ${
-                      recommendation === rec 
-                        ? 'bg-[#6D4C7D] text-[#F4F0E8] border-purple-400' 
-                        : 'bg-[#0D0C0B] text-[#A8A198] border-white/10 hover:text-[#F4F0E8]'
-                    }`}
-                  >
-                    {rec.replace(/_/g, ' ')}
-                  </button>
-                ))}
-              </div>
+            <div className="space-y-2">
+              <label className="uppercase tracking-widest font-bold text-white/60 text-[10px] block">Weaknesses &amp; Constructive Suggestions</label>
+              <textarea
+                rows={3}
+                value={weaknesses}
+                onChange={e => setWeaknesses(e.target.value)}
+                placeholder="Point out missing baselines, unaddressed edge cases, or clarity issues..."
+                className="w-full bg-black border border-white/20 p-3 text-white focus:outline-none focus:border-white resize-none"
+              />
             </div>
 
-            {/* Submit Button */}
+            <div className="space-y-2">
+              <label className="uppercase tracking-widest font-bold text-white/60 text-[10px] block">Recommendation</label>
+              <select
+                value={recommendation}
+                onChange={e => setRecommendation(e.target.value as Recommendation)}
+                className="w-full bg-black border border-white/20 p-3 text-white focus:outline-none focus:border-white uppercase tracking-widest"
+              >
+                <option value="ACCEPT">ACCEPT (Publish as is)</option>
+                <option value="MINOR_REVISION">MINOR REVISION (Accept conditionally)</option>
+                <option value="MAJOR_REVISION">MAJOR REVISION (Requires re-review)</option>
+                <option value="REJECT">REJECT (Insufficient novelty / flawed)</option>
+              </select>
+            </div>
+
             <button
               type="submit"
               disabled={!isWordCountValid}
-              className="w-full py-3 bg-[#6D4C7D] hover:bg-[#5B3E6A] text-[#F4F0E8] font-bold rounded-lg text-xs font-mono shadow-lg transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2"
+              className={`w-full py-3.5 border font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
+                isWordCountValid
+                  ? 'bg-white text-black border-white hover:bg-neutral-200'
+                  : 'bg-black text-white/30 border-white/10 cursor-not-allowed'
+              }`}
             >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Submit Peer Review (+1 Credit)</span>
+              Submit Peer Review &amp; Earn +1 Credit
             </button>
           </form>
         </div>

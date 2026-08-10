@@ -20,9 +20,9 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       return (
         <span 
           title="Verified Researcher - Publications & Peer Review Record Validated" 
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#5A6B43]/20 text-[#A8C980] border border-[#5A6B43]/40 ${className}`}
+          className={`inline-flex items-center gap-1 px-2 py-0.5 border text-xs font-ui uppercase tracking-wider border-white/30 text-white bg-white/5 ${className}`}
         >
-          <Award className="w-3 h-3 text-[#A8C980]" />
+          <Award className="w-3 h-3 text-white" />
           {showText && <span>Research Verified</span>}
         </span>
       );
@@ -30,9 +30,9 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       return (
         <span 
           title="Institution Verified - Official Academic Credentials" 
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#6D4C7D]/20 text-[#D8B4E2] border border-[#6D4C7D]/40 ${className}`}
+          className={`inline-flex items-center gap-1 px-2 py-0.5 border text-xs font-ui uppercase tracking-wider border-white/30 text-white/80 bg-white/5 ${className}`}
         >
-          <ShieldCheck className="w-3 h-3 text-[#D8B4E2]" />
+          <ShieldCheck className="w-3 h-3 text-white" />
           {showText && <span>Institution Verified</span>}
         </span>
       );
@@ -40,9 +40,9 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       return (
         <span 
           title="Community Verified - Active Contributor" 
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#FFFFFF]/20 text-[rgba(255,255,255,0.6)] border border-[#FFFFFF]/40 ${className}`}
+          className={`inline-flex items-center gap-1 px-2 py-0.5 border text-xs font-ui uppercase tracking-wider border-white/20 text-white/60 bg-white/5 ${className}`}
         >
-          <CheckCircle2 className="w-3 h-3 text-[rgba(255,255,255,0.6)]" />
+          <CheckCircle2 className="w-3 h-3 text-white/60" />
           {showText && <span>Community Verified</span>}
         </span>
       );
@@ -51,12 +51,11 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
       return (
         <span 
           title="Unverified Researcher" 
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-[#24201D] text-[#746F69] border border-white/5 ${className}`}
+          className={`inline-flex items-center gap-1 px-2 py-0.5 border text-xs font-ui uppercase tracking-wider border-white/10 text-white/35 bg-black ${className}`}
         >
-          <AlertCircle className="w-3 h-3 text-[#746F69]" />
+          <AlertCircle className="w-3 h-3 text-white/35" />
           {showText && <span>Unverified</span>}
         </span>
       );
   }
 };
-

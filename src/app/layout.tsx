@@ -35,6 +35,15 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} h-full`}
     >
+      <head>
+        {/* KaTeX CDN for Math Rendering */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+          integrity="sha384-n8MVd4RsNIBMW3Zksd/cgGfpO2lE8t2u15d31Jq5/Z11X6q9E1L2EaaA7n97Y1M"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-full bg-black text-white cursor-none selection:bg-white selection:text-black">
         <AppProvider>
           <LenisProvider>

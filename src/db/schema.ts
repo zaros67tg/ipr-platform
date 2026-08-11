@@ -1,4 +1,17 @@
-import { pgTable, text, timestamp, integer, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, integer, boolean, pgEnum, index } from 'drizzle-orm/pg-core';
+
+// STRICT TYPE ENUMS FOR DATABASE INTEGRITY
+export const paperStatusEnum = pgEnum('paper_status', [
+  'DRAFT', 'SUBMITTED', 'UNDER_REVIEW', 'REVISED', 'PUBLISHED', 'ARCHIVED',
+]);
+
+export const matchStatusEnum = pgEnum('match_status', [
+  'PENDING', 'ACCEPTED', 'DECLINED', 'NEW', 'SAVED', 'PASSED', 'CONNECTED', 'COLLABORATING',
+]);
+
+export const availabilityStatusEnum = pgEnum('availability_status', [
+  'AVAILABLE', 'SELECTIVE', 'BUSY',
+]);
 
 // Better-Auth Core Tables
 export const users = pgTable('users', {
@@ -57,7 +70,7 @@ export const researcherProfiles = pgTable('researcher_profiles', {
   skills: text('skills').array().notNull(),
   researchStatement: text('research_statement'),
   lookingFor: text('looking_for'),
-  availabilityStatus: text('availability_status').default('AVAILABLE').notNull(),
+  availabilityStatus: availabilityStatusEnum('availability_status').default('AVAILABLE').notNull(),
 });
 
 export const papers = pgTable('papers', {
@@ -78,12 +91,18 @@ export const papers = pgTable('papers', {
   forkCount: integer('fork_count').default(0).notNull(),
   upvoteCount: integer('upvote_count').default(1).notNull(),
   currentVersion: text('current_version').default('v1.0.0').notNull(),
-  status: text('status').default('PUBLISHED').notNull(),
+  status: paperStatusEnum('status').default('PUBLISHED').notNull(),
   license: text('license').default('CC-BY-4.0').notNull(),
-  parentPaperId: text('parent_paper_id'),
+  // CRITICAL FIX: Self-referencing foreign key for paper forks
+  parentPaperId: text('parent_paper_id').references(() => papers.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   publishedAt: timestamp('published_at').defaultNow().notNull(),
-});
+}, (table) => ({
+  // PERFORMANCE INDEXES - Prevents full table scans
+  authorIdIdx: index('papers_author_id_idx').on(table.authorId),
+  statusIdx: index('papers_status_idx').on(table.status),
+  createdAtIdx: index('papers_created_at_idx').on(table.createdAt),
+}));
 
 export const reviewCreditsLedger = pgTable('review_credits_ledger', {
   id: text('id').primaryKey(),
@@ -93,7 +112,9 @@ export const reviewCreditsLedger = pgTable('review_credits_ledger', {
   reason: text('reason').notNull(),
   timestamp: timestamp('timestamp').defaultNow().notNull(),
   balanceAfter: integer('balance_after').notNull(),
-});
+}, (table) => ({
+  userIdIdx: index('review_credits_ledger_user_id_idx').on(table.userId),
+}));
 
 export const peerReviews = pgTable('peer_reviews', {
   id: text('id').primaryKey(),
@@ -106,15 +127,21 @@ export const peerReviews = pgTable('peer_reviews', {
   recommendation: text('recommendation').notNull(),
   isVerified: boolean('is_verified').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+}, (table) => ({
+  paperIdIdx: index('peer_reviews_paper_id_idx').on(table.paperId),
+  reviewerIdIdx: index('peer_reviews_reviewer_id_idx').on(table.reviewerId),
+}));
 
 export const matches = pgTable('matches', {
   id: text('id').primaryKey(),
   requesterId: text('requester_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   targetId: text('target_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  status: text('status').default('PENDING').notNull(),
+  status: matchStatusEnum('status').default('PENDING').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+}, (table) => ({
+  requesterIdIdx: index('matches_requester_id_idx').on(table.requesterId),
+  targetIdIdx: index('matches_target_id_idx').on(table.targetId),
+}));
 
 export const topics = pgTable('topics', {
   id: text('id').primaryKey(),
@@ -122,3 +149,15 @@ export const topics = pgTable('topics', {
   slug: text('slug').notNull().unique(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// TYPE EXPORTS
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+export type Session = typeof sessions.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
+export type ResearcherProfileDB = typeof researcherProfiles.$inferSelect;
+export type PaperDB = typeof papers.$inferSelect;
+export type ReviewCreditsLedger = typeof reviewCreditsLedger.$inferSelect;
+export type PeerReviewDB = typeof peerReviews.$inferSelect;
+export type MatchDB = typeof matches.$inferSelect;
+export type Topic = typeof topics.$inferSelect;

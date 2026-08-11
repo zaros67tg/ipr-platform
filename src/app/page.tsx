@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const WORDS = ['INDEPENDENT', 'PRESS', 'OF', 'REPUBLIC'];
 
@@ -12,26 +12,11 @@ export default function KineticGatePage() {
   const [hovering, setHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Magnetic custom cursor
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 500, damping: 40 });
-  const springY = useSpring(mouseY, { stiffness: 500, damping: 40 });
-
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener('mousemove', move);
-
     // After words animate in, set ready
     const timer = setTimeout(() => setPhase('ready'), WORDS.length * 180 + 600);
-    return () => {
-      window.removeEventListener('mousemove', move);
-      clearTimeout(timer);
-    };
-  }, [mouseX, mouseY]);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleClick = () => {
     if (phase !== 'ready') return;
@@ -48,14 +33,6 @@ export default function KineticGatePage() {
       className="relative h-screen w-screen bg-black overflow-hidden select-none"
       style={{ cursor: 'none' }}
     >
-      {/* ── Magnetic Cursor ── */}
-      <motion.div
-        className="cursor-dot pointer-events-none fixed z-[99999]"
-        style={{ x: springX, y: springY }}
-        animate={{ width: hovering ? 56 : 20, height: hovering ? 56 : 20 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-      />
-
       {/* ── Monochrome background texture lines ── */}
       <div
         className="absolute inset-0 opacity-[0.04]"

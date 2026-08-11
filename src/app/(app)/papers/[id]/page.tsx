@@ -1,5 +1,6 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useApp } from '@/lib/services/store';
@@ -20,6 +21,9 @@ export default function EditorialPaperReaderPage() {
   const { papers, comments, addComment, toggleBookmarkPaper, bookmarks } = useApp();
 
   const paper = papers.find(p => p.slug === slugOrId || p.id === slugOrId) || papers[0];
+  if (!paper) {
+    notFound();
+  }
 
   const [selectedVersion, setSelectedVersion] = useState(paper.currentVersion);
   const [activeBlockId, setActiveBlockId] = useState<string | null>(null);
@@ -123,7 +127,7 @@ export default function EditorialPaperReaderPage() {
                     </div>
                   )}
                   <div>
-                    <span className="font-ui text-[12px] font-semibold text-white block">{a.name}</span>
+                    <span className="font-ui text-[12px] font-semibold text-white block w-fit bg-white/10 px-2 py-1 rounded-sm">{a.name}</span>
                     <span className="font-ui text-[10px] text-white/40">{a.institution}</span>
                   </div>
                 </div>

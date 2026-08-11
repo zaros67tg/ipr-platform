@@ -1,27 +1,46 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    // Modern target and libraries; Next.js handles transpilation for older browsers
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // Allow JavaScript files for gradual migration
     "allowJs": true,
+    // Skip type checking of declaration files for performance
     "skipLibCheck": true,
+    // Enable all strict type-checking options
     "strict": true,
+    // Do not emit compiled output (Next.js handles this)
     "noEmit": true,
+    // Improve interoperability between CommonJS and ES modules
     "esModuleInterop": true,
+    // Use ES module system
     "module": "esnext",
+    // Use bundler resolution for Next.js (supports package.json exports)
     "moduleResolution": "bundler",
+    // Allow importing JSON modules
     "resolveJsonModule": true,
+    // Ensure each file can be safely transpiled without cross-file analysis
     "isolatedModules": true,
+    // Use the new JSX transform for React 17+
     "jsx": "react-jsx",
+    // Enable incremental compilation for faster rebuilds
     "incremental": true,
+    // Ensure consistent file name casing across imports
+    "forceConsistentCasingInFileNames": true,
+    // Use class fields semantics as per ES2022 standard
+    "useDefineForClassFields": true,
+    // Plugins for Next.js
     "plugins": [
       {
         "name": "next"
       }
     ],
+    // Path aliases (maps @/* to ./src/*)
     "paths": {
       "@/*": ["./src/*"]
     }
   },
+  // Files to include in the TypeScript project
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -30,5 +49,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
+  // Exclude node_modules and build outputs
   "exclude": ["node_modules"]
 }

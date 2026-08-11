@@ -1,3 +1,8 @@
+// CRITICAL: Validate auth secret at module load - fail fast
+if (!process.env.BETTER_AUTH_SECRET) {
+  throw new Error('FATAL: BETTER_AUTH_SECRET is missing from environment');
+}
+
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from '@/db';

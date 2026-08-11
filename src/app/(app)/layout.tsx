@@ -15,7 +15,7 @@ export default function AppGroupLayout({
       {/* Legal Footer */}
       <footer className="border-t border-white/10 px-6 md:px-12 lg:px-24 py-6 flex flex-wrap items-center justify-between gap-4">
         <span className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25">
-          © 2026 Independent Press of Republic
+          &copy; 2026 Independent Press of Republic
         </span>
         <div className="flex items-center gap-6">
           <a href="/terms" className="font-ui text-[10px] uppercase tracking-[0.25em] text-white/25 hover:text-white transition-colors">Terms &amp; Conditions</a>

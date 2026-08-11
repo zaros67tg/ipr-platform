@@ -1,4 +1,5 @@
 import { pgTable, text, timestamp, integer, boolean, pgEnum, index } from 'drizzle-orm/pg-core';
+import type { AnyPgColumn } from 'drizzle-orm/pg-core';
 
 // STRICT TYPE ENUMS FOR DATABASE INTEGRITY
 export const paperStatusEnum = pgEnum('paper_status', [
@@ -94,7 +95,8 @@ export const papers = pgTable('papers', {
   status: paperStatusEnum('status').default('PUBLISHED').notNull(),
   license: text('license').default('CC-BY-4.0').notNull(),
   // CRITICAL FIX: Self-referencing foreign key for paper forks
-  parentPaperId: text('parent_paper_id').references(() => papers.id, { onDelete: 'set null' }),
+  // Annotate the callback's return type to break the circular inference
+  parentPaperId: text('parent_paper_id').references((): AnyPgColumn => papers.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   publishedAt: timestamp('published_at').defaultNow().notNull(),
 }, (table) => ({

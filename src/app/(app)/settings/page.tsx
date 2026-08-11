@@ -24,7 +24,8 @@ export default function SettingsPage() {
     setMsg(null);
 
     const formData = new FormData();
-    formData.append('userId', currentUser.id);
+    // SECURITY: userId is NOT sent to the server — the authenticated session
+    // on the server side determines the target user.
     formData.append('name', name);
     formData.append('institution', institution);
     formData.append('researchStatement', researchStatement);

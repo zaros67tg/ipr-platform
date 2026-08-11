@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useApp } from '@/lib/services/store';
 import { MathRenderer } from '@/components/common/MathRenderer';
 import { Recommendation } from '@/types';
-import { Award, ArrowLeft } from 'lucide-react';
+import { Award, ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ReviewerWorkspacePage() {
@@ -28,16 +28,20 @@ export default function ReviewerWorkspacePage() {
   const [recommendation, setRecommendation] = useState<Recommendation>('ACCEPT');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fullText = `${summary} ${methodology} ${mathematicalConcerns} ${technicalConcerns} ${codeConcerns} ${strengths} ${weaknesses} ${suggestions}`;
-  const wordCount = fullText.trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = fullText.trim().match(/\b[a-zA-Z0-9]+\b/g)?.length || 0;
   const isWordCountValid = wordCount >= 300;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setErrorMsg(null);
 
-    const res = submitReview({
+    try {
+      const res = await submitReview({
       paperId: paper.id,
       paperTitle: paper.title,
       paperSlug: paper.slug,
@@ -54,12 +58,17 @@ export default function ReviewerWorkspacePage() {
 
     if (!res.success) {
       setErrorMsg(res.message);
+      setIsSubmitting(false);
     } else {
       setSuccessMsg(res.message);
       setTimeout(() => {
         router.push('/reviews');
       }, 2000);
     }
+  } catch {
+    setIsSubmitting(false);
+    setErrorMsg('Failed to submit review. Please try again.');
+  }
   };
 
   return (
@@ -214,14 +223,18 @@ export default function ReviewerWorkspacePage() {
 
             <button
               type="submit"
-              disabled={!isWordCountValid}
+              disabled={!isWordCountValid || isSubmitting}
               className={`w-full py-3.5 border font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
-                isWordCountValid
+                isWordCountValid && !isSubmitting
                   ? 'bg-white text-black border-white hover:bg-neutral-200'
                   : 'bg-black text-white/30 border-white/10 cursor-not-allowed'
               }`}
             >
-              Submit Peer Review &amp; Earn +1 Credit
+              {isSubmitting ? (
+                <span className="inline-flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</span>
+              ) : (
+                'Submit Peer Review & Earn +1 Credit'
+              )}
             </button>
           </form>
         </div>

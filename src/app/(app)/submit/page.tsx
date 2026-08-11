@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/lib/services/store';
-import { ArrowLeft, BookOpen, UploadCloud, Sparkles } from 'lucide-react';
+import { ArrowLeft, BookOpen, UploadCloud, Sparkles, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { getTopics, createCustomTopic } from '@/lib/actions/topics';
-import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import type { ResearchDomain } from '@/types';
 
 export default function SubmitPage() {
   const { submitPaper } = useApp();
@@ -29,6 +29,8 @@ export default function SubmitPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isParsing, setIsParsing] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
+  // FIX (double-submission): block duplicate submits while a request is in flight
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const TITLE_LIMIT = 180;
   const ABSTRACT_LIMIT = 3000;
@@ -67,20 +69,31 @@ export default function SubmitPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setErrorMsg(null);
-    const res = submitPaper({
-      title, abstract,
-      primaryDomain: primaryDomain as any,
-      subdomains: [],
-      keywords: keywords.split(',').map(k => k.trim()).filter(Boolean),
-      license,
-      repositoryUrl: repositoryUrl.trim() || undefined,
-      contentMarkdown,
-    });
-    if (!res.success) setErrorMsg(res.message);
-    else if (res.paper) router.push(`/papers/${res.paper.slug}`);
+    try {
+      const res = await submitPaper({
+        title, abstract,
+        primaryDomain: primaryDomain as ResearchDomain,
+        subdomains: [],
+        keywords: keywords.split(',').map(k => k.trim()).filter(Boolean),
+        license,
+        repositoryUrl: repositoryUrl.trim() || undefined,
+        contentMarkdown,
+      });
+      if (!res.success) {
+        setErrorMsg(res.message);
+        setIsSubmitting(false);
+        return;
+      }
+      if (res.paper) router.push(`/papers/${res.paper.slug}`);
+    } catch {
+      setIsSubmitting(false);
+      setErrorMsg('Failed to submit manuscript. Please try again.');
+    }
   };
 
   return (
@@ -238,10 +251,20 @@ export default function SubmitPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-5 border border-white font-ui text-[12px] uppercase tracking-[0.25em] text-white hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-3"
+            disabled={isSubmitting}
+            className="w-full py-5 border border-white font-ui text-[12px] uppercase tracking-[0.25em] text-white hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-white"
           >
-            <BookOpen className="w-4 h-4" />
-            Submit Manuscript for Peer Review · −3 Credits
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                <BookOpen className="w-4 h-4" />
+                Submit Manuscript for Peer Review · −3 Credits
+              </>
+            )}
           </button>
         </form>
       </div>

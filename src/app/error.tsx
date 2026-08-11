@@ -4,18 +4,26 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AlertTriangle } from 'lucide-react';
 
-export default function GlobalError({
+// Next 16 error boundary:
+// - Must be a Client Component
+// - Receives `error` and `retry` props (retry is stable as of v16.3.0)
+// - For hard navigation after an error, use useRouter().push() (not window.location)
+export default function Error({
   error,
-  reset,
+  retry,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
+  retry: () => void;
 }) {
   const router = useRouter();
 
   useEffect(() => {
     console.error('[FATAL SYSTEM EXCEPTION]', error);
   }, [error]);
+
+  const rebootRoute = () => {
+    router.push('/feed');
+  };
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8">
@@ -29,13 +37,13 @@ export default function GlobalError({
         </p>
         <div className="flex gap-4 justify-center mt-12">
           <button
-            onClick={reset}
+            onClick={retry}
             className="px-8 py-4 border border-white font-mono text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors"
           >
             RETRY OPERATION
           </button>
           <button
-            onClick={() => router.push('/feed')}
+            onClick={rebootRoute}
             className="px-8 py-4 border border-white/30 font-mono text-xs uppercase tracking-widest text-white/50 hover:text-white hover:border-white transition-colors"
           >
             REBOOT ROUTE

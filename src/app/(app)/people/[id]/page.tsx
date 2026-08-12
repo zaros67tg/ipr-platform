@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { VerificationBadge } from '@/components/common/VerificationBadge';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 import { formatDate } from '@/lib/utils/format';
-import { ArrowLeft, Send, Sparkles, Award } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ResearcherDossierPage() {
@@ -32,9 +33,11 @@ export default function ResearcherDossierPage() {
       <div className="ipr-card p-8 sm:p-10 space-y-6 relative overflow-hidden">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <img
+            <Image
               src={researcher.avatarUrl}
               alt={researcher.name}
+              width={112}
+              height={112}
               className="w-24 h-24 sm:w-28 sm:h-28 object-cover border-2 border-[#5A6B43]/50 shadow-xl"
             />
             <div>
@@ -63,7 +66,7 @@ export default function ResearcherDossierPage() {
         <div className="p-5 bg-black border border-white/5 space-y-2">
           <span className="text-xs font-mono text-[#5A6B43] uppercase tracking-wider font-bold block">RESEARCH STATEMENT</span>
           <p className="text-base font-serif text-[#E8E0D2] italic leading-relaxed">
-            "{researcher.researchStatement}"
+            &ldquo;{researcher.researchStatement}&rdquo;
           </p>
         </div>
 
@@ -154,7 +157,7 @@ export default function ResearcherDossierPage() {
               <div key={rev.id} className="ipr-card p-6 space-y-2">
                 <div className="text-xs font-mono text-white/35">{formatDate(rev.createdAt)}</div>
                 <h3 className="text-base font-semibold text-white">{rev.paperTitle}</h3>
-                <p className="text-xs text-white/50 font-serif italic">"{rev.content.summary}"</p>
+                <p className="text-xs text-white/50 font-serif italic">&ldquo;{rev.content.summary}&rdquo;</p>
               </div>
             ))}
           </div>

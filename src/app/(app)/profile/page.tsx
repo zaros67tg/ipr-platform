@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { authClient } from '@/lib/auth-client';
 import { CheckCircle2 } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
-import { formatDate } from '@/lib/utils/format';
 import Link from 'next/link';
 
 export default function UserProfileDossierPage() {
-  const { currentUser, papers, projects, reviews } = useApp();
+  const { currentUser, papers } = useApp();
   const { data: session } = authClient.useSession();
   const [activeTab, setActiveTab] = useState<'PAPERS' | 'PROJECTS' | 'REVIEWS' | 'ACTIVITY'>('PAPERS');
 
@@ -19,8 +19,6 @@ export default function UserProfileDossierPage() {
   const activeEmail = session?.user?.email || 'researcher@republic-academic.org';
 
   const userPapers = papers.filter(p => p.authors.some(a => a.id === currentUser.id));
-  const userProjects = projects.filter(pr => pr.team.some(t => t.id === currentUser.id));
-  const userReviews = reviews.filter(r => r.reviewerId === currentUser.id);
 
   return (
     <motion.div 
@@ -33,9 +31,11 @@ export default function UserProfileDossierPage() {
       <div className="pb-10 border-b border-white/10 space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            <img
+            <Image
               src={activeAvatar}
               alt={activeName}
+              width={128}
+              height={128}
               className="w-32 h-32 rounded-full object-cover ring-2 ring-white/20 shadow-2xl"
             />
             <div className="space-y-2">
@@ -65,7 +65,7 @@ export default function UserProfileDossierPage() {
         <div className="pt-4 space-y-2">
           <span className="text-xs font-mono text-white/40 uppercase tracking-widest font-bold block">RESEARCH STATEMENT</span>
           <p className="text-lg font-serif text-white/80 italic leading-relaxed">
-            "Pioneering open access research, reciprocal peer evaluation, and high-performance formal derivations."
+            &ldquo;Pioneering open access research, reciprocal peer evaluation, and high-performance formal derivations.&rdquo;
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function UserProfileDossierPage() {
             <span className="text-white/40 uppercase block mb-2 font-bold">PRIMARY DOMAINS</span>
             <div className="flex flex-wrap gap-2">
               {['Systems Programming', 'Neuroscience', 'Spiking Neural Networks', 'Quantum Gravity'].map(d => (
-                <DisciplineTag key={d} domain={d as any} size="sm" />
+                <DisciplineTag key={d} domain={d} size="sm" />
               ))}
             </div>
           </div>

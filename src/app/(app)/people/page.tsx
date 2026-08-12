@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -61,10 +62,12 @@ export default function PeopleDirectoryPage() {
                 <Link href={`/people/${r.id}`} className="block group relative overflow-hidden">
                   {/* Portrait image */}
                   <div className={`relative w-full ${padHeight} overflow-hidden`}>
-                    <img
+                    <Image
                       src={r.avatarUrl}
                       alt={r.name}
-                      className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-[1.04] group-hover:brightness-110"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-top transition-all duration-700 group-hover:scale-[1.04] group-hover:brightness-110"
                     />
                     {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
@@ -99,7 +102,7 @@ export default function PeopleDirectoryPage() {
                         className="font-display italic text-white/55 leading-snug line-clamp-2"
                         style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.15rem)', letterSpacing: '0.01em' }}
                       >
-                        "{r.researchStatement}"
+                        &ldquo;{r.researchStatement}&rdquo;
                       </p>
                     )}
 

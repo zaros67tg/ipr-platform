@@ -11,11 +11,17 @@ export function GlobalCursor() {
   const springY = useSpring(mouseY, { stiffness: 600, damping: 35, mass: 0.4 });
 
   useEffect(() => {
+    const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, label';
+
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
 
+    // Event delegation: ONE document-level listener instead of attaching
+    // (and re-attaching on every DOM mutation) listeners to each element.
+    // The old per-element approach leaked listeners every time React
+    // re-rendered or the MutationObserver fired.
     const onEnter = () => {
       if (cursorRef.current) {
         cursorRef.current.style.width = '48px';
@@ -29,26 +35,25 @@ export function GlobalCursor() {
       }
     };
 
+    const onMouseOver = (e: MouseEvent) => {
+      if ((e.target as Element | null)?.closest?.(INTERACTIVE)) {
+        onEnter();
+      }
+    };
+    const onMouseOut = (e: MouseEvent) => {
+      if ((e.target as Element | null)?.closest?.(INTERACTIVE)) {
+        onLeave();
+      }
+    };
+
     window.addEventListener('mousemove', move);
-
-    // Expand cursor over all clickable elements
-    const selectors = 'a, button, [role="button"], input, textarea, select, label';
-    document.querySelectorAll(selectors).forEach(el => {
-      el.addEventListener('mouseenter', onEnter);
-      el.addEventListener('mouseleave', onLeave);
-    });
-
-    const observer = new MutationObserver(() => {
-      document.querySelectorAll(selectors).forEach(el => {
-        el.addEventListener('mouseenter', onEnter);
-        el.addEventListener('mouseleave', onLeave);
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('mouseover', onMouseOver);
+    document.addEventListener('mouseout', onMouseOut);
 
     return () => {
       window.removeEventListener('mousemove', move);
-      observer.disconnect();
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
     };
   }, [mouseX, mouseY]);
 

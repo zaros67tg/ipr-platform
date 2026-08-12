@@ -85,7 +85,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
             </p>
             <button
               onClick={handleGoToFork}
-              className="w-full py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-sm font-mono font-medium transition-colors"
+              className="w-full py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-black rounded-md text-sm font-mono font-medium transition-colors"
             >
               Open Derivative Manuscript
             </button>
@@ -117,7 +117,7 @@ export const ForkModal: React.FC<ForkModalProps> = ({ paper, isOpen, onClose }) 
               <button
                 type="submit"
                 disabled={isSubmitting || !changesSummary.trim()}
-                className="px-5 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors disabled:opacity-50 inline-flex items-center gap-2"
+                className="px-5 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-black rounded-md text-xs font-mono font-medium transition-colors disabled:opacity-50 inline-flex items-center gap-2"
               >
                 <GitFork className="w-4 h-4" />
                 <span>Create Fork Branch</span>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { ThumbsUp, MessageSquare, Bookmark } from 'lucide-react';
@@ -84,10 +85,12 @@ export default function FeedPage() {
               <Link href={href} className="block h-full w-full relative">
                 {/* ── Full Color Image — cinematic zoom on hover ── */}
                 <div className="absolute inset-0 overflow-hidden">
-                  <img
+                  <Image
                     src={img}
                     alt={post.title || post.authorName}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:from-black/70 group-hover:via-black/20" />
@@ -112,9 +115,11 @@ export default function FeedPage() {
                   )}
 
                   <div className="flex items-center gap-3 mb-4">
-                    <img
+                    <Image
                       src={post.authorAvatar}
                       alt={post.authorName}
+                      width={24}
+                      height={24}
                       className="w-6 h-6 object-cover"
                     />
                     <span className="font-ui text-[10px] uppercase tracking-[0.15em] text-white/60">

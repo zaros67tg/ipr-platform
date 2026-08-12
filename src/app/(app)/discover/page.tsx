@@ -2,12 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
-import { Compass, Flame, BookOpen, Users, FolderGit2, Sparkles, Award } from 'lucide-react';
+import { BookOpen, Users, FolderGit2 } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 
 export default function DiscoverPage() {
-  const { papers, projects, researchers, reviews } = useApp();
+  const { papers, projects, researchers } = useApp();
 
   return (
     <div className="space-y-12 max-w-5xl mx-auto">
@@ -90,7 +91,7 @@ export default function DiscoverPage() {
             <div className="grid grid-cols-2 gap-3">
               {researchers.slice(0, 4).map(r => (
                 <Link key={r.id} href={`/people/${r.id}`} className="ipr-card p-3 flex items-center gap-2.5">
-                  <img src={r.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover" />
+                  <Image src={r.avatarUrl} alt="" width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
                   <div className="min-w-0">
                     <h4 className="text-xs font-semibold text-[#F4F0E8] truncate">{r.name}</h4>
                     <p className="text-[10px] font-mono text-[#746F69] truncate">{r.primaryDomains[0]}</p>

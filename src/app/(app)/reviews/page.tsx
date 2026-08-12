@@ -3,13 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { Award, Coins, ArrowUpRight, ShieldCheck, CheckCircle2, AlertCircle, FileText, PlusCircle } from 'lucide-react';
-import { VerificationBadge } from '@/components/common/VerificationBadge';
+import { CheckCircle2, AlertCircle, PlusCircle } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 import { formatDate } from '@/lib/utils/format';
 
 export default function ReviewsDashboardPage() {
-  const { currentUser, transactions, reviews, papers, availableCredits } = useApp();
+  const { transactions, papers, availableCredits } = useApp();
   const [showDoiModal, setShowDoiModal] = useState(false);
 
   const isEligibleForSubmission = availableCredits >= 3;
@@ -31,7 +30,7 @@ export default function ReviewsDashboardPage() {
             Review Credit Ledger
           </h1>
           <p className="font-ui text-[13px] text-white/40 max-w-2xl mt-4">
-            "Give to Get." Earn Review Credits by completing 300+ word verified peer reviews before submitting manuscripts for community review.
+            &ldquo;Give to Get.&rdquo; Earn Review Credits by completing 300+ word verified peer reviews before submitting manuscripts for community review.
           </p>
         </div>
 
@@ -128,11 +127,11 @@ export default function ReviewsDashboardPage() {
                 <span className="font-ui text-[10px] text-white/70 font-bold uppercase tracking-widest">+1 CREDIT UPON QUALIFYING REVIEW</span>
               </div>
               <h3 className="font-display text-white text-xl font-bold leading-snug">{pap.title}</h3>
-              <p className="font-display italic text-xs text-white/50 line-clamp-2">"{pap.abstract}"</p>
+              <p className="font-display italic text-xs text-white/50 line-clamp-2">&ldquo;{pap.abstract}&rdquo;</p>
               <div className="pt-3 border-t border-white/10 flex items-center justify-between font-ui text-xs">
                 <span className="text-white/40">Min 300 words required</span>
                 <Link
-                  href={`/reviews/workspace?paperId=${pap.id}`}
+                  href={`/reviews/${pap.id}`}
                   className="px-4 py-2 border border-white text-white hover:bg-white hover:text-black transition-colors font-ui text-[11px] uppercase tracking-widest"
                 >
                   Open Workspace →

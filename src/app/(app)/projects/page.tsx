@@ -65,7 +65,7 @@ export default function ProjectsDirectoryPage() {
                   className="font-display italic text-white/45 leading-snug"
                   style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.05rem)' }}
                 >
-                  "{proj.researchQuestion}"
+                  &ldquo;{proj.researchQuestion}&rdquo;
                 </p>
 
                 <p className="font-ui text-[12px] text-white/35 leading-relaxed line-clamp-2">

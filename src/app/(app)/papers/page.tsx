@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
-import { FileText, GitFork, Search } from 'lucide-react';
+import { GitFork, Search } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 
 export default function PapersListPage() {
@@ -79,7 +80,7 @@ export default function PapersListPage() {
 
                 {/* Abstract */}
                 <p className="font-display italic text-white/45 leading-snug line-clamp-2" style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)', letterSpacing: '0.01em' }}>
-                  "{paper.abstract}"
+                  &ldquo;{paper.abstract}&rdquo;
                 </p>
 
                 {/* Fork lineage */}
@@ -94,9 +95,11 @@ export default function PapersListPage() {
                 <div className="flex items-center justify-between pt-2">
                   <div className="flex items-center gap-3">
                     {paper.authors[0]?.avatarUrl && (
-                      <img
+                      <Image
                         src={paper.authors[0].avatarUrl}
                         alt=""
+                        width={24}
+                        height={24}
                         className="w-6 h-6 object-cover"
                       />
                     )}

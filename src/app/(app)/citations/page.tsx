@@ -1,14 +1,13 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { BookOpen, GitFork, Copy, Check } from 'lucide-react';
 import { CitationModal } from '@/components/common/CitationModal';
+import type { Paper } from '@/types';
 
 export default function CitationsPage() {
   const { papers } = useApp();
-  const [selectedPaper, setSelectedPaper] = React.useState<any>(null);
+  const [selectedPaper, setSelectedPaper] = React.useState<Paper | null>(null);
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -32,7 +31,7 @@ export default function CitationsPage() {
             </div>
             <button
               onClick={() => setSelectedPaper(p)}
-              className="px-4 py-2 bg-[#FFFFFF] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#FFFFFF] shrink-0"
+              className="px-4 py-2 bg-[#FFFFFF] text-black rounded font-mono text-xs font-bold hover:bg-[#FFFFFF] shrink-0"
             >
               Export Citation
             </button>

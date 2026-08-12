@@ -23,7 +23,7 @@ export const MathRenderer: React.FC<MathRendererProps> = ({
           displayMode,
           throwOnError: false
         });
-      } catch (err) {
+      } catch {
         if (containerRef.current) {
           containerRef.current.innerText = latex;
         }

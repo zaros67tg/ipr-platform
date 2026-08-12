@@ -2,17 +2,32 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
-import { ArrowLeft, Users, FolderGit2, Code, BookOpen, Send, Sparkles } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProjectHubDetailPage() {
   const params = useParams();
   const slugOrId = params?.id as string;
-  const { projects, papers } = useApp();
+  const { projects } = useApp();
 
-  const project = projects.find(p => p.slug === slugOrId || p.id === slugOrId) || projects[0];
+  const project = projects.find(p => p.slug === slugOrId || p.id === slugOrId);
+
+  if (!project) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center p-8">
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl font-serif font-bold text-white">Project not found</h1>
+          <Link href="/projects" className="inline-flex items-center gap-1.5 text-xs font-mono text-white/50 hover:text-white">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Projects Directory
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -32,7 +47,7 @@ export default function ProjectHubDetailPage() {
         <h1 className="text-3xl font-serif font-bold text-white">{project.title}</h1>
 
         <div className="p-4 bg-black border border-white/5 font-serif italic text-base text-[#E8E0D2]">
-          "Research Question: {project.researchQuestion}"
+          &ldquo;Research Question: {project.researchQuestion}&rdquo;
         </div>
 
         <p className="text-sm text-white/50 leading-relaxed font-sans">{project.description}</p>
@@ -67,7 +82,7 @@ export default function ProjectHubDetailPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {project.team.map(member => (
               <div key={member.id} className="flex items-center gap-3 p-3 bg-black border border-white/5">
-                <img src={member.avatarUrl} alt="" className="w-10 h-10 object-cover" />
+                <Image src={member.avatarUrl} alt="" width={40} height={40} className="w-10 h-10 object-cover" />
                 <div>
                   <h4 className="text-xs font-semibold text-white">{member.name}</h4>
                   <p className="text-[11px] font-mono text-white/35">{member.role}</p>

@@ -12,23 +12,36 @@ export default function ReviewerWorkspacePage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { papers, submitReview, availableCredits } = useApp();
+  const { papers, submitReview } = useApp();
 
   const paperIdFromQuery = searchParams?.get('paperId');
-  const paper = papers.find(p => p.id === params?.id || p.id === paperIdFromQuery || p.slug === params?.id) || papers[0];
+  const paper = papers.find(p => p.id === params?.id || p.id === paperIdFromQuery || p.slug === params?.id);
 
   const [summary, setSummary] = useState('');
   const [methodology, setMethodology] = useState('');
-  const [mathematicalConcerns, setMathematicalConcerns] = useState('');
-  const [technicalConcerns, setTechnicalConcerns] = useState('');
-  const [codeConcerns, setCodeConcerns] = useState('');
+  const [mathematicalConcerns] = useState('');
+  const [technicalConcerns] = useState('');
+  const [codeConcerns] = useState('');
   const [strengths, setStrengths] = useState('');
   const [weaknesses, setWeaknesses] = useState('');
-  const [suggestions, setSuggestions] = useState('');
+  const [suggestions] = useState('');
   const [recommendation, setRecommendation] = useState<Recommendation>('ACCEPT');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (!paper) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center p-8">
+        <div className="text-center space-y-4">
+          <h1 className="font-display text-3xl text-white">Manuscript not found</h1>
+          <Link href="/reviews" className="inline-block font-ui text-xs uppercase tracking-widest border border-white px-5 py-2.5 text-white hover:bg-white hover:text-black transition-colors">
+            Back to Reviews
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const fullText = `${summary} ${methodology} ${mathematicalConcerns} ${technicalConcerns} ${codeConcerns} ${strengths} ${weaknesses} ${suggestions}`;
   const wordCount = fullText.trim().match(/\b[a-zA-Z0-9]+\b/g)?.length || 0;

@@ -9,7 +9,6 @@ const WORDS = ['INDEPENDENT', 'PRESS', 'OF', 'REPUBLIC'];
 export default function KineticGatePage() {
   const router = useRouter();
   const [phase, setPhase] = useState<'entering' | 'ready' | 'shattering'>('entering');
-  const [hovering, setHovering] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,8 +27,6 @@ export default function KineticGatePage() {
     <div
       ref={containerRef}
       onClick={handleClick}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
       className="relative h-screen w-screen bg-black overflow-hidden select-none"
       style={{ cursor: 'none' }}
     >

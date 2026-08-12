@@ -67,7 +67,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
               onClick={() => setActiveFormat(fmt)}
               className={`px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
                 activeFormat === fmt 
-                  ? 'bg-[#FFFFFF] text-[#F4F0E8] font-bold' 
+                  ? 'bg-[#FFFFFF] text-black font-bold' 
                   : 'bg-[#1C1917] text-[#A8A198] hover:text-[#F4F0E8] border border-white/5'
               }`}
             >
@@ -87,7 +87,7 @@ export const CitationModal: React.FC<CitationModalProps> = ({ paper, isOpen, onC
           </span>
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] rounded-md text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-black rounded-md text-xs font-mono font-medium transition-colors"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'Copied to Clipboard' : `Copy ${activeFormat}`}</span>

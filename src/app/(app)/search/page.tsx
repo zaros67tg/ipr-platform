@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { Search, FileText, Users, FolderGit2 } from 'lucide-react';
 import Link from 'next/link';
@@ -54,6 +55,25 @@ export default function GlobalSearchPage() {
           </div>
         </div>
 
+        {/* Projects */}
+        <div>
+          <h2 className="text-sm font-mono text-[#746F69] uppercase mb-3 flex items-center gap-1.5">
+            <FolderGit2 className="w-4 h-4 text-[#FFFFFF]" /> Projects ({filteredProjects.length})
+          </h2>
+          <div className="space-y-2">
+            {filteredProjects.map(pr => (
+              <Link key={pr.id} href={`/projects/${pr.slug}`} className="block p-4 ipr-card">
+                <div className="flex items-center justify-between mb-1">
+                  <DisciplineTag domain={pr.domain} size="sm" />
+                  <span className="text-xs font-mono text-[#746F69]">{pr.status.replace(/_/g, ' ')}</span>
+                </div>
+                <h3 className="text-base font-semibold text-[#F4F0E8]">{pr.title}</h3>
+                <p className="text-xs text-[#A8A198] line-clamp-1 mt-1 font-serif">{pr.researchQuestion}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* People */}
         <div>
           <h2 className="text-sm font-mono text-[#746F69] uppercase mb-3 flex items-center gap-1.5">
@@ -62,7 +82,7 @@ export default function GlobalSearchPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {filteredResearchers.map(r => (
               <Link key={r.id} href={`/people/${r.id}`} className="p-3 ipr-card flex items-center gap-3">
-                <img src={r.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover" />
+                <Image src={r.avatarUrl} alt="" width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <h4 className="text-sm font-semibold text-[#F4F0E8]">{r.name}</h4>
                   <p className="text-xs font-mono text-[#746F69]">{r.title}</p>

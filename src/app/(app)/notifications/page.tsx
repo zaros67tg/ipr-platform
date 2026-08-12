@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { Bell, Check, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { formatDate } from '@/lib/utils/format';
 
 export default function NotificationsPage() {

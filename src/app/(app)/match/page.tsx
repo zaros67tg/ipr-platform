@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '@/lib/services/store';
 import { ArrowRight, Send, Bookmark, XCircle } from 'lucide-react';
@@ -22,9 +23,6 @@ export default function VitaMatchmakerPage() {
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filtered = SUGGESTION_CHIPS.filter(c =>
-    !query || c.toLowerCase().includes(query.toLowerCase())
-  );
   // Double the chips for infinite marquee
   const marqueeChips = [...SUGGESTION_CHIPS, ...SUGGESTION_CHIPS];
 
@@ -127,7 +125,7 @@ export default function VitaMatchmakerPage() {
             <div className="border-b border-white/10 pb-6 flex items-end justify-between">
               <div>
                 <p className="font-ui text-[10px] uppercase tracking-[0.35em] text-white/25 mb-2">
-                  Results for "{query}" · {activeMatches.length} candidates
+                  Results for &ldquo;{query}&rdquo; · {activeMatches.length} candidates
                 </p>
                 <h2
                   className="font-display text-white leading-none"
@@ -155,10 +153,13 @@ export default function VitaMatchmakerPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 border border-white/10 overflow-hidden">
                 {/* Portrait */}
                 <div className="relative min-h-[400px] lg:min-h-[560px] overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
-                  <img
+                  <Image
                     src={currentMatch.candidate.avatarUrl}
                     alt={currentMatch.candidate.name}
-                    className="absolute inset-0 w-full h-full object-cover brightness-75"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover brightness-75"
+                    priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 right-8">
@@ -186,7 +187,7 @@ export default function VitaMatchmakerPage() {
                         className="font-display italic text-white/80 leading-snug"
                         style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', letterSpacing: '-0.02em' }}
                       >
-                        "{currentMatch.candidate.researchStatement}"
+                        &ldquo;{currentMatch.candidate.researchStatement}&rdquo;
                       </p>
                     </div>
                     <div>
@@ -222,7 +223,7 @@ export default function VitaMatchmakerPage() {
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center space-y-6">
                   <p className="font-display text-3xl text-white/20 italic" style={{ letterSpacing: '-0.03em' }}>
-                    "No more candidates in queue."
+                    &ldquo;No more candidates in queue.&rdquo;
                   </p>
                   <button
                     onClick={() => { setMatchIndex(0); setPhase('input'); setQuery(''); }}

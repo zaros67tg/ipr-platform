@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/lib/services/store';
 import { ResearchDomain } from '@/types';
-import { PlusCircle, ArrowLeft, Check } from 'lucide-react';
+import { PlusCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CreateProjectPage() {
@@ -17,7 +17,6 @@ export default function CreateProjectPage() {
   const [domain, setDomain] = useState<ResearchDomain>('Systems Programming');
   const [requiredSkills, setRequiredSkills] = useState('');
   const [openRoles, setOpenRoles] = useState('');
-  const [repositoryUrl, setRepositoryUrl] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,11 +25,10 @@ export default function CreateProjectPage() {
     const newProj = createProject({
       title,
       researchQuestion,
-      description,
+description,
       domain,
       requiredSkills: requiredSkills.split(',').map(s => s.trim()).filter(Boolean),
       openRoles: openRoles.split(',').map(r => r.trim()).filter(Boolean),
-      repositoryUrl: repositoryUrl.trim() || undefined
     });
 
     router.push(`/projects/${newProj.slug}`);
@@ -135,7 +133,7 @@ export default function CreateProjectPage() {
 
         <button
           type="submit"
-          className="w-full py-3 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] font-bold rounded-lg text-xs font-mono shadow-lg transition-colors inline-flex items-center justify-center gap-2"
+          className="w-full py-3 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-black font-bold rounded-lg text-xs font-mono shadow-lg transition-colors inline-flex items-center justify-center gap-2"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Publish Project Hub to Republic</span>

@@ -62,7 +62,7 @@ export const LeftRail: React.FC = () => {
       {/* Editorial Motto */}
       <div className="px-1">
         <p className="text-xs font-serif italic text-white/80 leading-relaxed border-l border-white pl-2">
-          "Review to Submit. Match to Collaborate. Publish Free."
+          &ldquo;Review to Submit. Match to Collaborate. Publish Free.&rdquo;
         </p>
       </div>
     </div>

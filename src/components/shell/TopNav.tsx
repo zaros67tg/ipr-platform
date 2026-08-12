@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { authClient } from '@/lib/auth-client';
@@ -19,6 +20,7 @@ const NAV_LINKS = [
 
 export function TopNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session } = authClient.useSession();
   const [searchOpen, setSearchOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -38,7 +40,7 @@ export function TopNav() {
 
   const handleLogout = () => {
     authClient.signOut().then(() => {
-      window.location.href = '/auth';
+      router.push('/auth');
     });
   };
 
@@ -51,7 +53,7 @@ export function TopNav() {
           className="flex items-center gap-2.5 hover:opacity-70 transition-opacity"
         >
           {/* Placeholder image slot — replace src with real logo when ready */}
-          <img src="/logo-placeholder.png" alt="" className="w-8 h-8 hidden" />
+          <Image src="/logo-placeholder.png" alt="" width={32} height={32} className="w-8 h-8 hidden" />
           <span
             className="font-display text-white font-bold leading-none"
             style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', letterSpacing: '-0.04em' }}
@@ -133,13 +135,6 @@ export function TopNav() {
                     className="block font-ui text-[12px] px-4 py-2.5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
                   >
                     Settings
-                  </Link>
-                  <Link
-                    href="/settings"
-                    onClick={() => setProfileOpen(false)}
-                    className="block font-ui text-[12px] px-4 py-2.5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-                  >
-                    Preferences
                   </Link>
                   <div className="border-t border-white/10 mt-1 pt-1">
                     <button

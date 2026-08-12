@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, Mail, ArrowRight, Lock, Award, Code } from 'lucide-react';
+import { ShieldCheck, Mail, ArrowRight } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 
 export default function AuthPage() {
@@ -42,7 +41,7 @@ export default function AuthPage() {
           </div>
           <h1 className="text-2xl serif-title text-[#F4F0E8]">Sign In to The Press</h1>
           <p className="text-xs font-serif text-[#A8A198] italic">
-            "Open Access. Reciprocal Peer-Review. Unbound Science."
+            &ldquo;Open Access. Reciprocal Peer-Review. Unbound Science.&rdquo;
           </p>
         </div>
 
@@ -53,7 +52,7 @@ export default function AuthPage() {
             onClick={() => setAuthMode('GITHUB')}
             className={`py-2 rounded transition-colors ${
               authMode === 'GITHUB'
-                ? 'bg-[#FFFFFF] text-[#F4F0E8] font-bold'
+                ? 'bg-[#FFFFFF] text-black font-bold'
                 : 'text-[#A8A198] hover:text-[#F4F0E8]'
             }`}
           >

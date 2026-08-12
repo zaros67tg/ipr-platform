@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { Sparkles, ArrowUpRight, Users } from 'lucide-react';
 import { DisciplineTag } from '../common/DisciplineTag';
@@ -27,7 +28,7 @@ export const RightRail: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <img src={topMatch.candidate.avatarUrl} alt={topMatch.candidate.name} className="w-8 h-8 object-cover border border-white" />
+            <Image src={topMatch.candidate.avatarUrl} alt={topMatch.candidate.name} width={32} height={32} className="w-8 h-8 object-cover border border-white" />
             <div>
               <h4 className="text-sm font-bold text-white">{topMatch.candidate.name}</h4>
               <p className="text-xs text-white/70">{topMatch.candidate.primaryDomains[0]}</p>
@@ -35,7 +36,7 @@ export const RightRail: React.FC = () => {
           </div>
 
           <p className="text-xs text-white/80 line-clamp-2 leading-relaxed italic border-l border-white/50 pl-2">
-            "{topMatch.reason}"
+            &ldquo;{topMatch.reason}&rdquo;
           </p>
 
           <Link
@@ -87,7 +88,7 @@ export const RightRail: React.FC = () => {
               className="flex items-center justify-between group p-1.5 border border-transparent hover:border-white transition-colors"
             >
               <div className="flex items-center gap-2.5">
-                <img src={r.avatarUrl} alt={r.name} className="w-7 h-7 object-cover border border-white" />
+                <Image src={r.avatarUrl} alt={r.name} width={28} height={28} className="w-7 h-7 object-cover border border-white" />
                 <div>
                   <h4 className="text-sm font-bold text-white group-hover:underline">{r.name}</h4>
                   <p className="text-xs text-white/60 truncate max-w-[120px]">{r.primaryDomains[0]}</p>

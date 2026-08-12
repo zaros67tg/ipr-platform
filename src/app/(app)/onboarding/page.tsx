@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ArrowRight, ArrowLeft, Award, Sparkles } from 'lucide-react';
+import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { ResearchDomain } from '@/types';
 
 const DOMAINS: ResearchDomain[] = [
@@ -67,7 +67,7 @@ export default function OnboardingPage() {
         {/* Step Indicator */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs">
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-[#FFFFFF] text-[#F4F0E8] font-bold flex items-center justify-center">
+            <span className="w-6 h-6 rounded-full bg-[#FFFFFF] text-black font-bold flex items-center justify-center">
               {step}
             </span>
             <span className="text-[#F4F0E8] font-bold">
@@ -166,7 +166,7 @@ export default function OnboardingPage() {
           {step < 3 ? (
             <button
               onClick={() => setStep(step + 1)}
-              className="px-5 py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-[#F4F0E8] font-bold rounded-lg flex items-center gap-1.5"
+              className="px-5 py-2.5 bg-[#FFFFFF] hover:bg-[#FFFFFF] text-black font-bold rounded-lg flex items-center gap-1.5"
             >
               Next Step <ArrowRight className="w-4 h-4" />
             </button>

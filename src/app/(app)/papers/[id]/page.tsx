@@ -3,6 +3,7 @@
 import { notFound } from 'next/navigation';
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { MathRenderer } from '@/components/common/MathRenderer';
 import { CitationModal } from '@/components/common/CitationModal';
@@ -10,7 +11,7 @@ import { ForkModal } from '@/components/common/ForkModal';
 import { formatDate } from '@/lib/utils/format';
 import {
   BookOpen, GitFork, Bookmark, MessageSquare,
-  ThumbsUp, Code, ArrowLeft, Share2
+  ThumbsUp, ArrowLeft, Share2
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -120,7 +121,7 @@ export default function EditorialPaperReaderPage() {
               {paper.authors.map(a => (
                 <div key={a.id} className="flex items-center gap-3">
                   {a.avatarUrl ? (
-                    <img src={a.avatarUrl} alt={a.name} className="w-9 h-9 object-cover" />
+                    <Image src={a.avatarUrl} alt={a.name} width={36} height={36} className="w-9 h-9 object-cover" />
                   ) : (
                     <div className="w-9 h-9 bg-white text-black flex items-center justify-center font-ui text-[11px] font-bold uppercase">
                       {a.name?.charAt(0) || '?'}
@@ -141,7 +142,7 @@ export default function EditorialPaperReaderPage() {
                 className="font-display text-white/80 italic leading-relaxed text-justify"
                 style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', letterSpacing: '-0.01em' }}
               >
-                "{paper.abstract}"
+                &ldquo;{paper.abstract}&rdquo;
               </p>
             </div>
 

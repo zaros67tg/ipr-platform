@@ -13,8 +13,8 @@ async function testConnection() {
     console.log('Direct Connection Success:', res);
     await sql.end();
     return;
-  } catch (err: any) {
-    console.log('Direct connection failed:', err.message);
+  } catch (err) {
+    console.log('Direct connection failed:', err instanceof Error ? err.message : err);
   }
 
   // Test 2: Pooler port 6543
@@ -25,8 +25,8 @@ async function testConnection() {
     const res = await sqlPooler`SELECT 1 as connected`;
     console.log('Pooler Connection Success:', res);
     await sqlPooler.end();
-  } catch (err: any) {
-    console.log('Pooler connection failed:', err.message);
+  } catch (err) {
+    console.log('Pooler connection failed:', err instanceof Error ? err.message : err);
   }
 }
 

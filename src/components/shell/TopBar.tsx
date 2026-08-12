@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { Search, Bell, PlusCircle, User } from 'lucide-react';
 import { CreditBadge } from '../common/CreditBadge';
@@ -75,9 +76,11 @@ export const TopBar: React.FC = () => {
               href="/profile"
               className="flex items-center gap-2 p-1 bg-black border border-white hover:bg-white hover:text-black transition-colors text-xs font-serif"
             >
-              <img
+              <Image
                 src={activeAvatar}
                 alt={activeName}
+                width={24}
+                height={24}
                 className="w-6 h-6 object-cover border border-white"
               />
               <span className="hidden md:inline font-semibold">{activeName}</span>

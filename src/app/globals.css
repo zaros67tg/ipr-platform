@@ -32,7 +32,9 @@ body {
   font-family: var(--font-ui);
   min-height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  /* NOTE: no overflow-y here — body must NOT become a scroll container.
+     Lenis smooth-scrolls the window; if body overflows, Lenis desyncs and
+     scrolling gets stuck mid-page. */
   cursor: none;
 }
 
@@ -45,6 +47,7 @@ body {
 .font-display {
   font-family: var(--font-display);
 }
+
 .font-ui {
   font-family: var(--font-ui);
 }
@@ -56,24 +59,37 @@ body {
   gap: 1px;
   background: rgba(255, 255, 255, 0.1);
 }
-.poster-grid > * {
+
+.poster-grid>* {
   background: #000;
 }
 
 /* ── KaTeX ── */
-.katex { color: #fff !important; font-size: 1.1em; }
+.katex {
+  color: #fff !important;
+  font-size: 1.1em;
+}
+
 .katex-display {
   margin: 1.2em 0 !important;
   padding: 1rem;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ── Scrollbar hide ── */
-.scrollbar-hide { scrollbar-width: none; }
-.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 
 /* ── Links ── */
-a { color: inherit; text-decoration: none; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 /* ── Social Dock glass panel ── */
 .social-dock {
@@ -85,39 +101,59 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Marquee animation for suggestion chips ── */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
+
 .marquee-track {
   display: flex;
   width: max-content;
   animation: marquee 28s linear infinite;
 }
-.marquee-track:hover { animation-play-state: paused; }
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 
 /* ── Form inputs editorial style ── */
 .editorial-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   font-family: var(--font-display);
   width: 100%;
   outline: none;
   transition: border-color 0.2s;
 }
-.editorial-input:focus { border-bottom-color: #fff; }
-.editorial-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.editorial-input:focus {
+  border-bottom-color: #fff;
+}
+
+.editorial-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
 
 /* ── Global form elements — readable against black ── */
-input, textarea, select {
+input,
+textarea,
+select {
   background: transparent;
   color: #fff;
-  border-color: rgba(255,255,255,0.2);
+  border-color: rgba(255, 255, 255, 0.2);
 }
-input::placeholder, textarea::placeholder {
-  color: rgba(255,255,255,0.25);
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
 }
+
 /* Ensure select option dropdowns are readable */
 option {
   background-color: #000 !important;
@@ -129,5 +165,15 @@ option {
   columns: 1;
   gap: 1px;
 }
-@media (min-width: 640px)  { .people-masonry { columns: 2; } }
-@media (min-width: 1024px) { .people-masonry { columns: 3; } }
+
+@media (min-width: 640px) {
+  .people-masonry {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .people-masonry {
+    columns: 3;
+  }
+}

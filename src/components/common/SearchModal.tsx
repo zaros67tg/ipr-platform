@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useApp } from '@/lib/services/store';
 import { X, Search, FileText, Users, FolderGit2 } from 'lucide-react';
 import Link from 'next/link';
@@ -12,7 +13,7 @@ interface SearchModalProps {
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
-  const { papers, researchers, projects, posts } = useApp();
+  const { papers, researchers, projects } = useApp();
   const [query, setQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'PAPERS' | 'PEOPLE' | 'PROJECTS'>('ALL');
 
@@ -113,7 +114,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                     onClick={onClose}
                     className="flex items-center gap-3 p-3 bg-black hover:bg-white/5 border border-white/10 hover:border-white/30 transition-colors"
                   >
-                    <img src={researcher.avatarUrl} alt={researcher.name} className="w-10 h-10 object-cover grayscale" />
+                    <Image src={researcher.avatarUrl} alt={researcher.name} width={40} height={40} className="w-10 h-10 object-cover grayscale" />
                     <div>
                       <h4 className="text-sm font-display font-bold text-white">{researcher.name}</h4>
                       <p className="text-xs text-white/40 line-clamp-1 font-ui">{researcher.title}</p>
@@ -153,7 +154,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           {/* No results */}
           {filteredPapers.length === 0 && filteredResearchers.length === 0 && filteredProjects.length === 0 && (
             <div className="text-center py-12 text-white/40">
-              <p className="text-sm font-display italic text-white/60 mb-1">"Nothing compatible has surfaced yet."</p>
+              <p className="text-sm font-display italic text-white/60 mb-1">&ldquo;Nothing compatible has surfaced yet.&rdquo;</p>
               <p className="text-xs font-ui uppercase tracking-widest text-white/30">Try searching by discipline like Theoretical Physics, Spiking Neural Networks, or Systems Programming.</p>
             </div>
           )}

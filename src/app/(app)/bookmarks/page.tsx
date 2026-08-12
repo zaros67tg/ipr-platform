@@ -3,14 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/lib/services/store';
-import { Bookmark, FileText, FolderGit2 } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { DisciplineTag } from '@/components/common/DisciplineTag';
 
 export default function BookmarksPage() {
-  const { papers, projects, bookmarks, bookmarkedProjects } = useApp();
+  const { papers, bookmarks } = useApp();
 
   const savedPapers = papers.filter(p => bookmarks.includes(p.id));
-  const savedProjects = projects.filter(pr => bookmarkedProjects.includes(pr.id));
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -27,7 +26,7 @@ export default function BookmarksPage() {
 
         {savedPapers.length === 0 ? (
           <div className="p-8 text-center ipr-card font-mono text-xs text-[#746F69]">
-            No bookmarked manuscripts yet. Click "Save" while reading any paper to bookmark it here.
+            No bookmarked manuscripts yet. Click &quot;Save&quot; while reading any paper to bookmark it here.
           </div>
         ) : (
           <div className="space-y-3">
@@ -38,7 +37,7 @@ export default function BookmarksPage() {
                   <h3 className="text-base font-semibold text-[#F4F0E8]">{p.title}</h3>
                   <p className="text-xs text-[#746F69] font-mono">By {p.authors.map(a => a.name).join(', ')}</p>
                 </div>
-                <Link href={`/papers/${p.slug}`} className="px-4 py-2 bg-[#FFFFFF] text-[#F4F0E8] rounded font-mono text-xs font-bold hover:bg-[#FFFFFF]">
+                <Link href={`/papers/${p.slug}`} className="px-4 py-2 bg-[#FFFFFF] text-black rounded font-mono text-xs font-bold hover:bg-[#FFFFFF]">
                   Read →
                 </Link>
               </div>

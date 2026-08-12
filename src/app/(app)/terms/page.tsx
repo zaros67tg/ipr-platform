@@ -40,7 +40,7 @@ export default function TermsPage() {
         <section className="space-y-3 border-b border-white/8 pb-8">
           <h2 className="font-display text-white text-2xl font-bold tracking-tight">3. Reciprocal Peer Review Commons</h2>
           <p>
-            IPR operates on a "Give to Get" reciprocal review credit economy. Peer reviews must meet the minimum standard of technical depth (300+ words of constructive criticism, mathematical evaluation, or code verification). Attempting to game, automate, or spam the peer review ledger will result in credit forfeiture and account suspension.
+            IPR operates on a &ldquo;Give to Get&rdquo; reciprocal review credit economy. Peer reviews must meet the minimum standard of technical depth (300+ words of constructive criticism, mathematical evaluation, or code verification). Attempting to game, automate, or spam the peer review ledger will result in credit forfeiture and account suspension.
           </p>
         </section>
 
@@ -54,7 +54,7 @@ export default function TermsPage() {
         <section className="space-y-3">
           <h2 className="font-display text-white text-2xl font-bold tracking-tight">5. Limitation of Liability</h2>
           <p>
-            IPR provides the publishing platform "as is" without warranties of any kind. Authors and researchers are solely responsible for the technical accuracy and safety of their published algorithms, code repositories, and physical experiment claims.
+            IPR provides the publishing platform &ldquo;as is&rdquo; without warranties of any kind. Authors and researchers are solely responsible for the technical accuracy and safety of their published algorithms, code repositories, and physical experiment claims.
           </p>
         </section>
       </div>
